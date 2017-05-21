@@ -71,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Welcome to CodeIgniter!</h1>
 
 	<div id="body">
+	<iframe src="https://rpm.newrelic.com/public/charts/7M3pSgmzBpf" width="500" height="300" scrolling="no" frameborder="no"></iframe>
 		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
 
 		<p>If you would like to edit this page you'll find it located at:</p>
