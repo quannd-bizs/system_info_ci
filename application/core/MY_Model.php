@@ -36,7 +36,6 @@ class MY_Model extends CI_Model {
     private $_resource;
     private $LastInsertedID;
 
-    // const MEMCACHE_HOST = "10.248.113.2";
     const MEMCACHE_HOST = "127.0.0.1";
     const MEMCACHE_PORT = 11211;
 
@@ -133,96 +132,7 @@ class MY_Model extends CI_Model {
         return $flag;
     }
 
-    /**
-     * Search DAO
-     * 
-     * @author Haimv@d-hearts.com
-     * 
-     */
-    public function searchResult($sql, &$result, $pageKey = "pageNo", $recordPerPage = 20, $orderField = null, $orderType = null, $type = 0, $id = null) {
-        $tmpResult = array();
-        $totalRecord = 0;
-        
-		// $totalRecord = $this->db_slave->query($sql)->num_rows();
-		 $totalRecord = $this->db_master->query($sql)->num_rows();
-        $pageIndex = $pageKey;
-        $pageIndex = (is_numeric($pageIndex) && $pageIndex > 0) ? $pageIndex : 1;
-        $offset = ($pageIndex - 1) * $recordPerPage;
-
-        //order if exits
-        if ($orderField && $orderType) {
-            $order = " ORDER BY $orderField $orderType ";
-        } else {
-            $order = "";
-        }
-
-        $sql .=" $order LIMIT " . $offset . "," . $recordPerPage;
-
-        $flag = $this->getRecord($sql, $tmpResult, $type, $id);
-
-        if ($flag == 1) {
-            $result['totalPage'] = ceil($totalRecord / $recordPerPage);
-            $result['totalRecord'] = $totalRecord;
-            $result['recordFirst'] = $offset + 1;
-            $result['recordLast'] = ($offset + $recordPerPage > $totalRecord) ? $totalRecord : $offset + $recordPerPage;
-            $result['pageIndex'] = $pageIndex;
-            $result['data'] = $tmpResult;
-        }
-        return $flag;
-    }
-
-    /**
-     *
-     * @param <type> $sql
-     * @param <type> $tmpResult
-     * @return <type> 
-     */
-    public function getRecord($sql, &$tmpResult, $type = 0, $id = null,$time = 300) {
-
-        $intIsOk = self::CI_IS_OK;
-        $key = "";
-        try {
-           // $sql = 'SELECT SQL_CALC_FOUND_ROWS ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
-           $sql = 'SELECT ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
-
-
-            $tmpResult = false;
-            //$this->writeLogSqlTime("START : " . date('Y-m-d H:i:s') ." ->", $sql);
-            
-            if ($type > 0 && $id != null) {
-                // $key = "america" . $type . $id;
-                $key = $type . $id;
-                $memcache_obj = $this->createMemcache();
-                $tmpResult = $memcache_obj->get("{$key}");
-            }
-            if ($tmpResult == false) {
-            // use slave database
-				// $this->_resource = $this->db_slave->query($sql);
-			// use master database
-			$this->_resource = $this->db_master->query($sql);
-                if ($this->_resource) {
-                    $result = $this->_resource->result_array();
-                }else{
-                    $this->writeLogSql($result, $sql);
-                }
-                if ($result) {
-                    $tmpResult = $this->_resource->result_array();
-
-                    if ($type > 0 && $id != null) {
-                        $this->setMemcache($memcache_obj, "{$key}", $tmpResult,$time);
-                    }
-                }
-            } else {
-                //  var_dump($tmpResult);
-            }
-            //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
-        } catch (Exception $ex) {
-            //show_error('DB Exception!');
-            $intIsOk = self::CI_ERR_DB_EXCEPTION;
-        }
-
-        return $intIsOk;
-    }
+  
 
     /**
      *
@@ -538,17 +448,16 @@ class MY_Model extends CI_Model {
         @fclose($ourFileHandle);
     }
 
-    public function test() {
+    public function testMemcache() {
         $memcache = new Memcache;
-        $memcache->connect('10.248.113.5', 11211) or die("接続できませんでした");
+        $memcache->connect(self::MEMCACHE_HOST, 11211) or die("Cannot Connect");
 
         $version = $memcache->getVersion();
         echo "サーバーのバージョン: ". $version . "<br/>\n";
     }
 
     /**
-     * @author MiengTQ
-     * @return Memcache
+     * Create Memcache
      */
     public function createMemcache() {
         $memcache_obj = new Memcache;
@@ -557,7 +466,7 @@ class MY_Model extends CI_Model {
     }
 
     /**
-     * MiengTQ
+     * Set Memcache
      * @param <type> $memcache_obj
      * @param <type> $key
      * @param <type> $data
@@ -576,52 +485,6 @@ class MY_Model extends CI_Model {
         
     }
 
-    
-    ///// For testing DB Master/Slave
-    /**
-     * @author: haimv@d-hearts.com
-     * 
-     * get data from slave
-     */
-  /*   function selectData() {
-        //$sql = "SELECT * FROM t_user  WHERE user_name = 'AAASS'";
-        $sql = "SELECT SQL_CALC_FOUND_ROWS T.user_name FROM t_user AS T WHERE user_name = 'AAASS' AND del_flag = 0";
-        
-		// db_master
-        $query= $this->db_master->query($sql);
-		// db_slave
-        //$query = $this->db_slave->get('t_user'); 
-        return $query->result_array();
-    } */
-
-    /**
-     * @author: haimv@d-hearts.com
-     * 
-     * insert data from master
-     */
-   /* function insertData($tableName, $aryData) {
-        $intIsOk = self::CI_IS_OK;
-        try {
-            $this->db_master->trans_begin();
-
-            $test = $this->db_master->insert($tableName, $aryData);
-            $this->writeLogSql($test, "Insert" . $tableName);
-            if ($this->db_master->trans_status() === FALSE) {
-                $this->db_master->trans_rollback();
-            } else {
-                $this->LastInsertedID = $this->db_master->insert_id();
-                $this->db_master->trans_commit();
-            }
-        } catch (Exception $ex) {
-            //show_error('DB Exception!');
-            $intIsOk = self::CI_ERR_DB_EXCEPTION;
-        }
-        return $intIsOk;
-
-//        $this->db_master->insert('t_user', $aryParams); // db_master
-//        return $this->db_master->insert_id();
-    }*/
-
     private function writeLogSqlTime($Title, $sql = "") {
         $folder = FCPATH . self::LOG_FOLDER . "/" ;
         if (@is_dir(FCPATH . self::LOG_FOLDER . "/") == false) {
@@ -637,7 +500,7 @@ class MY_Model extends CI_Model {
         }
         @fclose($ourFileHandle);
     }
-    public function check_slave_state(){
+    public function checkSlaveState(){
         $sql = "SELECT * FROM  INFORMATION_SCHEMA.SESSION_STATUS WHERE VARIABLE_NAME =  'SLAVE_RUNNING'  AND VARIABLE_VALUE = 'OFF'";
         $resultError = $this->db_slave->query($sql)->num_rows();
     return $resultError;
