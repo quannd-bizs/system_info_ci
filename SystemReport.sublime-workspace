@@ -3,32 +3,41 @@
 	{
 		"selected_items":
 		[
+			[
+				"SE",
+				"SERVER_INFO"
+			],
+			[
+				"G",
+				"GetServer"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "application/config/database.php",
+			"file": "application/controllers/SystemInfo.php",
 			"settings":
 			{
-				"buffer_size": 4562,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "application/views/welcome_message.php",
-			"settings":
-			{
-				"buffer_size": 2184,
+				"buffer_size": 2957,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "application/config/routes.php",
+			"file": "application/libraries/common.php",
 			"settings":
 			{
-				"buffer_size": 1970,
+				"buffer_size": 992,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "system/core/Controller.php",
+			"settings":
+			{
+				"buffer_size": 2899,
 				"line_ending": "Windows"
 			}
 		}
@@ -63,13 +72,21 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/D/WWW/system",
+		"/D/WWW/system/application",
+		"/D/WWW/system/application/config",
+		"/D/WWW/system/application/libraries"
+	],
 	"file_history":
 	[
+		"/D/WWW/system/application/views/welcome_message.php",
 		"/D/WWW/system/system/core/Controller.php"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 54.0
 	},
 	"find_in_files":
 	{
@@ -83,6 +100,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"    \n",
+			"curl",
+			"16b31a35130b0023a8d49a86551f5bb45a52bf9069bf384"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -100,82 +120,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "application/config/database.php",
+					"file": "application/controllers/SystemInfo.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4562,
+						"buffer_size": 2957,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3046,
-								3047
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1018.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "application/views/welcome_message.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2184,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1703,
-								1703
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1128.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "application/config/routes.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1970,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1370,
-								1370
+								1530,
+								1530
 							]
 						],
 						"settings":
@@ -183,7 +145,64 @@
 							"syntax": "Packages/PHP/PHP.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 487.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "application/libraries/common.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 992,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								241,
+								241
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "system/core/Controller.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2899,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2072,
+								2216
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 896.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -194,7 +213,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -231,7 +250,7 @@
 	"project": "SystemReport.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -245,12 +264,16 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"",
+				"D:\\WWW\\system\\SystemReport.sublime-project"
+			]
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
