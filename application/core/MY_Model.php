@@ -13,8 +13,8 @@ class MY_Model extends CI_Model {
      *
      */
     const CI_IS_OK = 1;
-
     const LOG_FOLDER = "LogSql";
+
     /**
      * resulf of method when perform fail relate to DB Exception
      *
@@ -52,6 +52,59 @@ class MY_Model extends CI_Model {
                 $this->load->model($model);
             }
         }
+    }
+
+    /**
+     *
+     * @param <type> $sql
+     * @param <type> $tmpResult
+     * @return <type> 
+     */
+    public function getRecord($sql, &$tmpResult, $type = 0, $id = null, $time = 300) {
+
+        $intIsOk = self::CI_IS_OK;
+        $key = "";
+        try {
+            // $sql = 'SELECT SQL_CALC_FOUND_ROWS ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
+            $sql = 'SELECT ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
+
+
+            $tmpResult = false;
+            //$this->writeLogSqlTime("START : " . date('Y-m-d H:i:s') ." ->", $sql);
+
+            if ($type > 0 && $id != null) {
+                // $key = "america" . $type . $id;
+                $key = $type . $id;
+                $memcache_obj = $this->createMemcache();
+                $tmpResult = $memcache_obj->get("{$key}");
+            }
+            if ($tmpResult == false) {
+                // use slave database
+                // $this->_resource = $this->db_slave->query($sql);
+                // use master database
+                $this->_resource = $this->db_master->query($sql);
+                if ($this->_resource) {
+                    $result = $this->_resource->result_array();
+                } else {
+                    $this->writeLogSql($result, $sql);
+                }
+                if ($result) {
+                    $tmpResult = $this->_resource->result_array();
+
+                    if ($type > 0 && $id != null) {
+                        $this->setMemcache($memcache_obj, "{$key}", $tmpResult, $time);
+                    }
+                }
+            } else {
+                //  var_dump($tmpResult);
+            }
+            //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
+        } catch (Exception $ex) {
+            //show_error('DB Exception!');
+            $intIsOk = self::CI_ERR_DB_EXCEPTION;
+        }
+
+        return $intIsOk;
     }
 
     /**
@@ -132,8 +185,6 @@ class MY_Model extends CI_Model {
         return $flag;
     }
 
-  
-
     /**
      *
      * @param string $sql
@@ -143,12 +194,12 @@ class MY_Model extends CI_Model {
 
         $intIsOk = self::CI_IS_OK;
         try {
-  
-			// use master database
-			$result = $this->_resource = $this->db_master->query($sql);
-			// use slave database
-			// $result = $this->_resource = $this->db_slave->query($sql);
-			
+
+            // use master database
+            $result = $this->_resource = $this->db_master->query($sql);
+            // use slave database
+            // $result = $this->_resource = $this->db_slave->query($sql);
+
             $this->writeLogSql($result, $sql);
 //            if ($result != false) {
 //                $tmpResult = $this->_resource->result_array();
@@ -167,7 +218,7 @@ class MY_Model extends CI_Model {
      */
     public function insert($tableName, $aryData) {
         $intIsOk = self::CI_IS_OK;
-       
+
         try {
             $this->db_master->trans_begin();
 
@@ -178,15 +229,13 @@ class MY_Model extends CI_Model {
             } else {
                 $this->LastInsertedID = $this->db_master->insert_id();
                 $this->db_master->trans_commit();
-                       
             }
         } catch (Exception $ex) {
             //show_error('DB Exception!');
             //echo $intIsOk;
             $intIsOk = self::CI_ERR_DB_EXCEPTION;
-            
         }
-      
+
         return $intIsOk;
     }
 
@@ -300,15 +349,15 @@ class MY_Model extends CI_Model {
      * Simple select
      * 
      */
- /* 
-	public function simpleSelect($sql) {
-        // use master database
-		// $query = $this->db_master->query($sql);
-		// use slave database
-		$query = $this->db_slave->query($sql);
-        $this->writeLogSql($query, $sql);
-        return $query->result_array();
-    } */
+    /*
+      public function simpleSelect($sql) {
+      // use master database
+      // $query = $this->db_master->query($sql);
+      // use slave database
+      $query = $this->db_slave->query($sql);
+      $this->writeLogSql($query, $sql);
+      return $query->result_array();
+      } */
 
     /**
      *
@@ -320,9 +369,9 @@ class MY_Model extends CI_Model {
     public function select($table, $condition, &$tmpResult) {
         $intIsOk = self::CI_IS_OK;
         try {
-		// use master database
-		 $query = $this->db_master->get_where($table, $condition);
-		// use slave database
+            // use master database
+            $query = $this->db_master->get_where($table, $condition);
+            // use slave database
             // $query = $this->db_slave->get_where($table, $condition);
             $tmpResult = $query->result_array();
             $this->writeLogSql($query, $table);
@@ -341,8 +390,8 @@ class MY_Model extends CI_Model {
     public function generateCSVData($sql) {
         $this->load->dbutil();
         // $query = $this->db_slave->query($sql);
-		  $query = $this->db_master->query($sql);
-		
+        $query = $this->db_master->query($sql);
+
         return $this->dbutil->csv_from_result($query);
     }
 
@@ -361,7 +410,7 @@ class MY_Model extends CI_Model {
     public function generateXML($sql, $aryConfig) {
         $this->load->dbutil();
         // $query = $this->db_slave->query($sql);
-		$query = $this->db_master->query($sql);
+        $query = $this->db_master->query($sql);
         return $this->dbutil->xml_from_result($query, $aryConfig);
     }
 
@@ -424,8 +473,8 @@ class MY_Model extends CI_Model {
      */
     private function writeLogSql($flag, $sql) {
         if ($flag == false) {
-         // $errMess = $this->db->_error_message();
-			$errMess = $this->db_master->_error_message();
+            // $errMess = $this->db->_error_message();
+            $errMess = $this->db_master->_error_message();
             $this->writeLogLog($errMess, $sql);
         }
     }
@@ -436,7 +485,7 @@ class MY_Model extends CI_Model {
      * @param <type> $sql
      */
     private function writeLogLog($message, $sql) {
-        $folder = FCPATH . self::LOG_FOLDER . "/" ;
+        $folder = FCPATH . self::LOG_FOLDER . "/";
         if (@is_dir(FCPATH . self::LOG_FOLDER . "/") == false) {
             @mkdir(FCPATH . self::LOG_FOLDER . "/", 0777);
         }
@@ -453,7 +502,7 @@ class MY_Model extends CI_Model {
         $memcache->connect(self::MEMCACHE_HOST, 11211) or die("Cannot Connect");
 
         $version = $memcache->getVersion();
-        echo "サーバーのバージョン: ". $version . "<br/>\n";
+        echo "サーバーのバージョン: " . $version . "<br/>\n";
     }
 
     /**
@@ -471,40 +520,41 @@ class MY_Model extends CI_Model {
      * @param <type> $key
      * @param <type> $data
      */
-    public function setMemcache($memcache_obj, $key, $data,$time) {
-        if($time < 0){
+    public function setMemcache($memcache_obj, $key, $data, $time) {
+        if ($time < 0) {
             $time = 300;
         }
         $memcache_obj->set($key, $data, false, $time);
-
     }
+
     public function deleteMemcache($type = 0, $id = null) {
         $key = $type . $id;
         $memcache_obj = $this->createMemcache();
         $memcache_obj->delete($key);
-        
     }
 
     private function writeLogSqlTime($Title, $sql = "") {
-        $folder = FCPATH . self::LOG_FOLDER . "/" ;
+        $folder = FCPATH . self::LOG_FOLDER . "/";
         if (@is_dir(FCPATH . self::LOG_FOLDER . "/") == false) {
             @mkdir(FCPATH . self::LOG_FOLDER . "/", "0777");
         }
         $pathFile = $folder . "sqlList_" . date('Y_m_d') . ".txt";
         $ourFileHandle = @fopen($pathFile, 'a+');
         @fwrite($ourFileHandle, date("Y-m-d H:i:s") . " : " . $Title . "\n");
-        if($sql == ""){
-
-        }else{
+        if ($sql == "") {
+            
+        } else {
             @fwrite($ourFileHandle, date("Y-m-d H:i:s") . " : " . $sql . "\n");
         }
         @fclose($ourFileHandle);
     }
-    public function checkSlaveState(){
+
+    public function checkSlaveState() {
         $sql = "SELECT * FROM  INFORMATION_SCHEMA.SESSION_STATUS WHERE VARIABLE_NAME =  'SLAVE_RUNNING'  AND VARIABLE_VALUE = 'OFF'";
         $resultError = $this->db_slave->query($sql)->num_rows();
-    return $resultError;
-   }
+        return $resultError;
+    }
+
 }
 
 ?>

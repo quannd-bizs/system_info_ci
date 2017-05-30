@@ -40,7 +40,7 @@ function hhmmss_To_Number(hms) {
     var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
     return seconds;
 }
-var MonterController = {
+var AdminController = {
     SEARCHING_TEXT: "Downloading.....",
     CANCEL_CONFIRM: 'Do you want to cancel ?',
     DELETE_CONFIRM: 'Are you sure delete this record ?',
@@ -49,7 +49,7 @@ var MonterController = {
     IMPORTING_CONFIRM: 'Are you sure import data from this Excel File ?',
     showCommonOverlay: function() {
 
-        MonterController.overlayCommon = new YAHOO.widget.Panel('CommonOverlay',
+        AdminController.overlayCommon = new YAHOO.widget.Panel('CommonOverlay',
                 {
                     fixedcenter: true,
                     constraintoviewport: true,
@@ -67,26 +67,26 @@ var MonterController = {
                     keys: 27
                 },
         {
-            fn: MonterController.closeOverlay,
-            scope: MonterController.overlayCommon,
+            fn: AdminController.closeOverlay,
+            scope: AdminController.overlayCommon,
             correctScope: true
         },
         "keyup");
 
-        MonterController.overlayCommon.cfg.setProperty("keylisteners", kt);
+        AdminController.overlayCommon.cfg.setProperty("keylisteners", kt);
         // Render the Dialogs
-        MonterController.overlayCommon.render(document.body);
-        MonterController.overlayCommon.center();
-        MonterController.overlayCommon.cfg.setProperty("y", 14);
+        AdminController.overlayCommon.render(document.body);
+        AdminController.overlayCommon.center();
+        AdminController.overlayCommon.cfg.setProperty("y", 14);
 
         document.getElementById('CommonOverlay').style.display = '';
-        MonterController.overlayCommon.show();
+        AdminController.overlayCommon.show();
         var buttonClose = Dom.getElementsByClassName('container-close', 'span');
-        YAHOO.util.Event.addListener(buttonClose, "click", MonterController.checkFileError);
+        YAHOO.util.Event.addListener(buttonClose, "click", AdminController.checkFileError);
     },
     closeOverlay: function() {
-        if (confirm(MonterController.CANCEL_CONFIRM)) {
-            MonterController.overlayCommon.hide();
+        if (confirm(AdminController.CANCEL_CONFIRM)) {
+            AdminController.overlayCommon.hide();
             if (errorUploadFile == 1) {
                 location.reload(true);
             }
@@ -95,7 +95,7 @@ var MonterController = {
     //Huynv add 2013/07/31
     showStageCatGroupTime: function() {
 
-        MonterController.overlayCommonGT = new YAHOO.widget.Panel('StageCatGroupTime',
+        AdminController.overlayCommonGT = new YAHOO.widget.Panel('StageCatGroupTime',
                 {
                     fixedcenter: true,
                     constraintoviewport: true,
@@ -111,19 +111,19 @@ var MonterController = {
 
 
         // Render the Dialogs
-        MonterController.overlayCommonGT.render(document.body);
-        MonterController.overlayCommonGT.center();
+        AdminController.overlayCommonGT.render(document.body);
+        AdminController.overlayCommonGT.center();
 
 
         document.getElementById('StageCatGroupTime').style.display = '';
-        MonterController.overlayCommonGT.show();
+        AdminController.overlayCommonGT.show();
         //var buttonClose = Dom.getElementsByClassName('container-close', 'span');
-        //YAHOO.util.Event.addListener(buttonClose, "click", MonterController.checkFileError);
+        //YAHOO.util.Event.addListener(buttonClose, "click", AdminController.checkFileError);
     },
     //Huynv added 2013/07/13        
     closeStageCatGroupTime: function() {
-        //if( confirm(MonterController.CANCEL_CONFIRM)){
-        MonterController.overlayCommonGT.hide();
+        //if( confirm(AdminController.CANCEL_CONFIRM)){
+        AdminController.overlayCommonGT.hide();
         if (errorUploadFile == 1) {
             location.reload(true);
         }
@@ -142,16 +142,16 @@ var MonterController = {
     exportLogUserToExcel: function() {
         //alert("Done Report1");
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/export_log_user_to_excel/?user_name=' + document.getElementById('user_name').value + '&log_date_from=' + document.getElementById('log_date_from').value + '&log_date_to=' + document.getElementById('log_date_to').value;
+        var strUrl = base_url + 'SysInfo_Admin/export_log_user_to_excel/?user_name=' + document.getElementById('user_name').value + '&log_date_from=' + document.getElementById('log_date_from').value + '&log_date_to=' + document.getElementById('log_date_to').value;
         strUrl += '&action_id=' + document.getElementById('action_id').value;
         var strPost = '';
 //        YAHOO.util.Connect.setForm('FrmSearch');
 //        YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-//            success: MonterController.exportLogUserToExcelSuccess,
-//            failure: MonterController.asyncRequestFalse
+//            success: AdminController.exportLogUserToExcelSuccess,
+//            failure: AdminController.asyncRequestFalse
 //        },strPost);
         window.open(strUrl);
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     //Huynv added 23/08/2013
     exportLogUserToExcelSuccess: function(xmlhttp) {
@@ -193,15 +193,15 @@ var MonterController = {
 //        strPost+= 'orderType='+orderType+'&orderField='+orderField;
         strPost += 'orderType=' + orderType + '&orderField=' + orderField + '&contSearchFilter=' + contSearchFilter;
 
-        var strUrl = base_url + 'monter_admin/search_log_user/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_log_user/?ajax=1&pageNo=' + page;
         //alert(strUrl);
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchLogUserSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchLogUserSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
 
     },
     //Huynv added 08/08/2013
@@ -244,15 +244,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_user_to_add_list_log/?user_name=' + document.getElementById("user_name").value;
+        var strUrl = base_url + 'SysInfo_Admin/search_user_to_add_list_log/?user_name=' + document.getElementById("user_name").value;
 
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('GET', strUrl, {
-            success: MonterController.searchUserToAddListLogSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchUserToAddListLogSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
 
     },
     //Huynv added 11/09/2013
@@ -268,7 +268,7 @@ var MonterController = {
             $('#listUserToAdd').html('');
             $('#listUserToAdd').append('<form id=\"frmUserListToLog\" name=\"frmUserListToLog\" enctype=\"multipart/form-data\" method=\"POST\" action=\"\">');
             $('#listUserToAdd').append('<table width=\"100%\" cellspacing=\"1\" cellpadding=\"0\" border=\"0\" class=\"tbl\">');
-            $('#listUserToAdd').append('<tr><th align=\"center\">check all:<input type=\"checkbox\" name=\"chkAll\" value=\"\" onclick=\"MonterController.checkAllUserList(this);\"></th><th align=\"center\">user id</th><th align=\"center\">user name</th><th align=\"center\">coin</th><th align=\"center\">stone</th><th align=\"center\">stone present</th><th align=\"center\">point</th><th align=\"center\">item staminar</th><th align=\"center\">item count</th><th align=\"center\">item hp</th><th align=\"center\">ranking</th><th align=\"center\">rank</th><th align=\"center\">user_exp</th><tr>')
+            $('#listUserToAdd').append('<tr><th align=\"center\">check all:<input type=\"checkbox\" name=\"chkAll\" value=\"\" onclick=\"AdminController.checkAllUserList(this);\"></th><th align=\"center\">user id</th><th align=\"center\">user name</th><th align=\"center\">coin</th><th align=\"center\">stone</th><th align=\"center\">stone present</th><th align=\"center\">point</th><th align=\"center\">item staminar</th><th align=\"center\">item count</th><th align=\"center\">item hp</th><th align=\"center\">ranking</th><th align=\"center\">rank</th><th align=\"center\">user_exp</th><tr>')
             var rs = '{"rs":' + strJsonData + '}';
             //console.log("vao day2");
             //alert(doing);
@@ -277,7 +277,7 @@ var MonterController = {
                 var user = json_parsed.rs[u];
                 $('#listUserToAdd').append('<tr><td><input type=\"checkbox\" id=\"chk[]\" name=\"chk[]\" value=\"' + user.user_id + '\">&nbsp;</td><td>' + user.user_id + '</td><td>' + user.user_name + '</td><td>' + user.coin + '</td><td>' + user.stone + '</td><td>' + user.stone_present + '</td><td>' + user.point + '</td><td>' + user.item_staminar + '</td><td>' + user.item_count + '</td><td>' + user.item_hp + '</td><td>' + user.ranking + '</td><td>' + user.rank + '</td><td>' + user.user_exp + '</td></tr>');
             }
-            $('#listUserToAdd').append('<tr><td colspan=11><input type=button onclick=\"MonterController.addUserCheckedToListLog();\" value=\"add to log list\"><input type=button onclick=\"MonterController.closeListUserToLog();\" value=\"close\"></td></tr>');
+            $('#listUserToAdd').append('<tr><td colspan=11><input type=button onclick=\"AdminController.addUserCheckedToListLog();\" value=\"add to log list\"><input type=button onclick=\"AdminController.closeListUserToLog();\" value=\"close\"></td></tr>');
             $('#listUserToAdd').append('</table><input type=\"hidden\" id=\"listUserNeedToLog\" value=\"\">');
             $('#listUserToAdd').append('</form>');
 
@@ -289,12 +289,12 @@ var MonterController = {
     closeListUserToLog: function() {
         $('#listUserToAdd').html('');
     },
-    //Huynv added: 12/09/203, onkeypress="return MonterController.checkAndSearchUserList(event);"  cho vao o user_name
+    //Huynv added: 12/09/203, onkeypress="return AdminController.checkAndSearchUserList(event);"  cho vao o user_name
     //Hien chua chay duoc, need develop        
     checkAndSearchUserList: function(e) {
         //alert(e.keyCode);
         if (e.keyCode === 13) {
-            MonterController.searchUserToAddListLog(null, null, null);
+            AdminController.searchUserToAddListLog(null, null, null);
         }
     },
     //Huynv added 12-09-2013,//search user and add to list follow
@@ -316,15 +316,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_top100_user_ranking_to_log/?top=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_top100_user_ranking_to_log/?top=' + page;
 
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('GET', strUrl, {
-            success: MonterController.top100UserRankingToLogSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.top100UserRankingToLogSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
 
     },
     //Huynv added 12/09/2013, tìm top 100 user
@@ -339,7 +339,7 @@ var MonterController = {
             $('#listUserToAdd').html('');
             $('#listUserToAdd').append('<form id=\"frmUserListToLog\" name=\"frmUserListToLog\" enctype=\"multipart/form-data\" method=\"POST\" action=\"\" >');
             $('#listUserToAdd').append('<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"1\" class=\"tbl\" bgcolor=black>');
-            $('#listUserToAdd').append('<tr><th align=\"center\">check all:<input type=\"checkbox\" name=\"chkAll\" value=\"\" onclick=\"MonterController.checkAllUserList(this);\"></th><th align=\"center\">user id</th><th align=\"center\">user name</th><th align=\"center\">coin</th><th align=\"center\">stone</th><th align=\"center\">stone present</th><th align=\"center\">point</th><th align=\"center\">item staminar</th><th align=\"center\">item count</th><th align=\"center\">item hp</th><th align=\"center\">ranking</th><th align=\"center\">rank</th><th align=\"center\">user_exp</th><tr>')
+            $('#listUserToAdd').append('<tr><th align=\"center\">check all:<input type=\"checkbox\" name=\"chkAll\" value=\"\" onclick=\"AdminController.checkAllUserList(this);\"></th><th align=\"center\">user id</th><th align=\"center\">user name</th><th align=\"center\">coin</th><th align=\"center\">stone</th><th align=\"center\">stone present</th><th align=\"center\">point</th><th align=\"center\">item staminar</th><th align=\"center\">item count</th><th align=\"center\">item hp</th><th align=\"center\">ranking</th><th align=\"center\">rank</th><th align=\"center\">user_exp</th><tr>')
             var rs = '{"rs":' + strJsonData + '}';
             //alert(doing);
             var json_parsed = $.parseJSON(rs);
@@ -348,7 +348,7 @@ var MonterController = {
                 i = i + 1;
                 $('#listUserToAdd').append('<tr><td><input type=\"checkbox\" id=name=\"chk[]\" name=\"chk[]\" value=\"' + user.user_id + '\">' + i + '</td><td>' + user.user_id + '</td><td>' + user.user_name + '</td><td>' + user.coin + '</td><td>' + user.stone + '</td><td>' + user.stone_present + '</td><td>' + user.point + '</td><td>' + user.item_staminar + '</td><td>' + user.item_count + '</td><td>' + user.item_hp + '</td><td>' + user.ranking + '</td><td>' + user.rank + '</td><td>' + user.user_exp + '</td></tr>');
             }
-            $('#listUserToAdd').append('<tr><td colspan=11><input type=button onclick=\"MonterController.addUserCheckedToListLog();\" value=\"add to log list\"><input type=button onclick=\"MonterController.closeListUserToLog();\" value=\"close\"></td></tr>');
+            $('#listUserToAdd').append('<tr><td colspan=11><input type=button onclick=\"AdminController.addUserCheckedToListLog();\" value=\"add to log list\"><input type=button onclick=\"AdminController.closeListUserToLog();\" value=\"close\"></td></tr>');
             $('#listUserToAdd').append('</table><input type=\"hidden\" id=\"listUserNeedToLog\" value=\"\">');
             $('#listUserToAdd').append('</form>');
             Dom.get('loading').innerHTML = '';
@@ -365,12 +365,12 @@ var MonterController = {
             document.getElementById("listUserNeedToLog").value += "," + $(this).val();
         });
         //alert(document.getElementById("listUserNeedToLog").value);
-        var strUrl = base_url + 'monter_admin/add_user_to_list_log/?ajax=1&listUserNeedToLog=' + document.getElementById("listUserNeedToLog").value;
+        var strUrl = base_url + 'SysInfo_Admin/add_user_to_list_log/?ajax=1&listUserNeedToLog=' + document.getElementById("listUserNeedToLog").value;
 
         YAHOO.util.Connect.setForm('frmUserListToLog', true);
         YAHOO.util.Connect.asyncRequest('GET', strUrl, {
-            upload: MonterController.addUserCheckedToListLogSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addUserCheckedToListLogSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
         return true;
@@ -384,8 +384,8 @@ var MonterController = {
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
                 $('#listUserToAdd').html('');
-                MonterController.searchListUserNeedLog();
-                //MonterController.overlayCommon.show();
+                AdminController.searchListUserNeedLog();
+                //AdminController.overlayCommon.show();
             } else {
                 alert('error :' + aryData.strError);
                 return;
@@ -403,12 +403,12 @@ var MonterController = {
             removeList += "," + $(this).val();
         });
         //alert(removeList);
-        var strUrl = base_url + 'monter_admin/remove_user_from_list_log/?ajax=1&listUserNeedToLog=' + removeList;
+        var strUrl = base_url + 'SysInfo_Admin/remove_user_from_list_log/?ajax=1&listUserNeedToLog=' + removeList;
 
         YAHOO.util.Connect.setForm('frmsearch', true);
         YAHOO.util.Connect.asyncRequest('GET', strUrl, {
-            upload: MonterController.removeUserCheckedFromListLogSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.removeUserCheckedFromListLogSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
         return true;
@@ -422,8 +422,8 @@ var MonterController = {
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
                 $('#listUserToAdd').html('');
-                MonterController.searchListUserNeedLog();
-                //MonterController.overlayCommon.show();
+                AdminController.searchListUserNeedLog();
+                //AdminController.overlayCommon.show();
             } else {
                 alert('error :' + aryData.strError);
                 return;
@@ -479,15 +479,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_list_user_need_log/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_list_user_need_log/?ajax=1&pageNo=' + page;
 
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchListUserNeedLogSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchListUserNeedLogSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
 
     },
     //Huynv added 11/09/2013
@@ -521,15 +521,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_group_time/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_group_time/?ajax=1&pageNo=' + page;
         //alert(strUrl);
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchGroupTimeSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchGroupTimeSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
 
     },
     searchGroupTimeSuccess: function(xmlhttp) {
@@ -562,14 +562,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_stages_category/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_stages_category/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchStageCatSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchStageCatSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     searchStageCatSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -587,19 +587,19 @@ var MonterController = {
     view_add_stage_cat: function() {
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/load_add_stage_category/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/load_add_stage_category/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddStagesCateSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddStagesCateSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     //Huynv add 2013/07/30        
     view_add_group_time: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/load_add_group_time/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/load_add_group_time/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddStagesCateSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddStagesCateSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     //Huynv add 2013/07/31        
@@ -611,15 +611,15 @@ var MonterController = {
             //var token_stage_cat_id=Dom.get('token_stage_cat_id').value;
             //var strUrl = base_url+'../view/overlay_add_stage_event_group_time.php?token_stage_cat_id='+token_stage_cat_id;
 
-            var strUrl = base_url + 'monter_admin/load_add_stage_event_group_time/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/load_add_stage_event_group_time/?ajax=1';
             //alert(strUrl);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.LoadAddStagesCateGroupTimeSuccess,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.LoadAddStagesCateGroupTimeSuccess,
+                failure: AdminController.asyncRequestFalse
             });
             firstTimeClickViewGroupTime = 1;
         } else {
-            MonterController.overlayCommonGT.show();
+            AdminController.overlayCommonGT.show();
         }
     },
     //Huynv add 2013/08/01        
@@ -631,15 +631,15 @@ var MonterController = {
             //var token_stage_cat_id=Dom.get('token_stage_cat_id').value;
             //var strUrl = base_url+'../view/overlay_add_stage_event_group_time.php?token_stage_cat_id='+token_stage_cat_id;
 
-            var strUrl = base_url + 'monter_admin/load_edit_stage_event_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
+            var strUrl = base_url + 'SysInfo_Admin/load_edit_stage_event_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
             //alert(strUrl);
             YAHOO.util.Connect.asyncRequest('GET', strUrl, {
-                success: MonterController.LoadAddStagesCateGroupTimeSuccess,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.LoadAddStagesCateGroupTimeSuccess,
+                failure: AdminController.asyncRequestFalse
             });
             firstTimeClickViewGroupTime = 1;
         } else {
-            MonterController.overlayCommonGT.show();
+            AdminController.overlayCommonGT.show();
         }
 
     },
@@ -648,10 +648,10 @@ var MonterController = {
         //alert(strJsonData);
         try {
             var aryData = Json.parse(strJsonData);
-            MonterController.showStageCatGroupTime();
+            AdminController.showStageCatGroupTime();
             Dom.get('StageCatGroupTime').innerHTML = "";
             Dom.get('StageCatGroupTime').innerHTML = aryData.html;
-            //MonterController.showCommonOverlay();
+            //AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -663,7 +663,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -700,14 +700,14 @@ var MonterController = {
         //Nếu tồn tại ít nhất 1 lần mở cửa sổ để chỉnh thời gian Stage Event Time thì mới cập nhật
         if (firstTimeClickViewGroupTime == 1)
         {
-            MonterController.overlayCommonGT.show();
+            AdminController.overlayCommonGT.show();
             //alert(stage_cat_id);
-            var strUrl = base_url + 'monter_admin/add_update_stage_cat_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
+            var strUrl = base_url + 'SysInfo_Admin/add_update_stage_cat_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
 
             YAHOO.util.Connect.setForm('FrmstagePart', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.addNewStageCatGroupTimeSuccess,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.addNewStageCatGroupTimeSuccess,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -717,14 +717,14 @@ var MonterController = {
         var base_url = Dom.get('base_url').value;
 
         if (firstTimeClickViewGroupTime == 1)
-            MonterController.overlayCommonGT.show();
-        var strUrl = base_url + 'monter_admin/add_new_stage_cat_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
-        //var strUrl = base_url+'monter_admin/add_new_stage_cat_group_time/?ajax=1&form_elements='+form_elements;
+            AdminController.overlayCommonGT.show();
+        var strUrl = base_url + 'SysInfo_Admin/add_new_stage_cat_group_time/?ajax=1&stage_cat_id=' + stage_cat_id;
+        //var strUrl = base_url+'SysInfo_Admin/add_new_stage_cat_group_time/?ajax=1&form_elements='+form_elements;
         //alert('ok');
         YAHOO.util.Connect.setForm('FrmstagePart', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewStageCatGroupTimeSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewStageCatGroupTimeSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -736,8 +736,8 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommonGT.hide();
-                //MonterController.overlayCommon.show();
+                AdminController.overlayCommonGT.hide();
+                //AdminController.overlayCommon.show();
             } else {
                 alert(aryData.strError);
                 return;
@@ -777,11 +777,11 @@ var MonterController = {
             return;
         }
 
-        var strUrl = base_url + 'monter_admin/add_new_group_time';
+        var strUrl = base_url + 'SysInfo_Admin/add_new_group_time';
         YAHOO.util.Connect.setForm('Frmstage', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewGroupTimeSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewGroupTimeSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -792,8 +792,8 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchGroupTime();
+                AdminController.overlayCommon.hide();
+                AdminController.searchGroupTime();
             } else {
                 alert(aryData.strError);
                 return;
@@ -810,7 +810,7 @@ var MonterController = {
         var scStartDate = Dom.get('stage_cat_start_date').value;
         var scExpireDate = Dom.get('stage_cat_finish_date').value;
 
-        //if (!MonterController.checkMaxTotalRowTimeEvent()) return;
+        //if (!AdminController.checkMaxTotalRowTimeEvent()) return;
         if (scTitle === "" || scTitleEn === "" || scTitleJP === "") {
             alert("There is no 'Title'");
         }
@@ -825,21 +825,21 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/add_new_stage_category';
+        var strUrl = base_url + 'SysInfo_Admin/add_new_stage_category';
         YAHOO.util.Connect.setForm('Frmstage', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewStageCatSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewStageCatSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
         //Huynv modify 2013/08/01
         //Sau khi chèn thành công stage cat thì update vào bảng stage_cat_group_time 
         //để cập nhật stage_cat_id 
-//        strUrl = base_url+'monter_admin/update_stage_cat_group_time/&ajax=1&token_stage_cat_id='+token_stage_cat_id+"&stage_cat_id="+aryData.intIsOk;
+//        strUrl = base_url+'SysInfo_Admin/update_stage_cat_group_time/&ajax=1&token_stage_cat_id='+token_stage_cat_id+"&stage_cat_id="+aryData.intIsOk;
 //        alert("ok2");
 //        YAHOO.util.Connect.asyncRequest ('GET', strUrl, {
-//            upload: MonterController.updateTokenIdStageCatGroupTimeSuccess,
-//            failure: MonterController.asyncRequestFalse
+//            upload: AdminController.updateTokenIdStageCatGroupTimeSuccess,
+//            failure: AdminController.asyncRequestFalse
 //        });
 //        
 
@@ -851,8 +851,8 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
-                //MonterController.overlayCommon.hide();
-                //MonterController.searchStageCat();
+                //AdminController.overlayCommon.hide();
+                //AdminController.searchStageCat();
             } else {
                 alert("loi:" + aryData.strError);
                 return;
@@ -868,17 +868,17 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
 
             if (aryData.intIsOk >= 1) {
-                MonterController.overlayCommon.hide();
+                AdminController.overlayCommon.hide();
                 if (firstTimeClickViewGroupTime == 1) {
                     //Huynv added;
                     //Nếu có chọn thời gian cho sự kiện
                     //Sau khi chèn vào bảng m_stage_category thành công thì 
                     //Chèn vào bảng m_stage_cat_group_time
                     document.getElementById('token_stage_cat_id').value = aryData.intIsOk;
-                    MonterController.add_stage_cat_group_time(aryData.intIsOk);
+                    AdminController.add_stage_cat_group_time(aryData.intIsOk);
                     firstTimeClickViewGroupTime = 0;
                 }
-                MonterController.searchStageCat();
+                AdminController.searchStageCat();
             } else {
                 alert("loi:" + aryData.strError);
                 return;
@@ -890,11 +890,11 @@ var MonterController = {
     //Huynv added 2013/07/31
     update_stage_event_group_time: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/update_stage_event_group_time';
+        var strUrl = base_url + 'SysInfo_Admin/update_stage_event_group_time';
         YAHOO.util.Connect.setForm('Frmstage', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.updateStateEventGroupTimeSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.updateStateEventGroupTimeSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -930,14 +930,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_stage/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_stage/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchStageSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchStageSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     searchStageSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -955,10 +955,10 @@ var MonterController = {
     },
     view_add_stage: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/load_add_stage/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/load_add_stage/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddStagesSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddStagesSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddStagesSuccess: function(xmlhttp) {
@@ -966,7 +966,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -974,11 +974,11 @@ var MonterController = {
     },
     add_stage: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/add_new_stage';
+        var strUrl = base_url + 'SysInfo_Admin/add_new_stage';
         YAHOO.util.Connect.setForm('Frmstage');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.addNewStageSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.addNewStageSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -987,8 +987,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchStage();
+                AdminController.overlayCommon.hide();
+                AdminController.searchStage();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1015,14 +1015,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/search_stages_battle/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/search_stages_battle/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchStageBattleSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchStageBattleSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     searchStageBattleSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -1040,10 +1040,10 @@ var MonterController = {
     },
     view_add_stage_battle: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/load_add_stage_battle/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/load_add_stage_battle/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddStagesBattleSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddStagesBattleSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddStagesBattleSuccess: function(xmlhttp) {
@@ -1051,7 +1051,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1091,11 +1091,11 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/add_new_stage_battle';
+        var strUrl = base_url + 'SysInfo_Admin/add_new_stage_battle';
         YAHOO.util.Connect.setForm('Frmstage', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewStageBattleSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewStageBattleSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1104,8 +1104,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchStageBattle();
+                AdminController.overlayCommon.hide();
+                AdminController.searchStageBattle();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1117,10 +1117,10 @@ var MonterController = {
     autoCompletedList: function(param) {
         str_param = param;
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/auto_completed_search/?ajax=1&param=' + str_param;
+        var strUrl = base_url + 'SysInfo_Admin/auto_completed_search/?ajax=1&param=' + str_param;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.autoCompletedSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.autoCompletedSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     autoCompletedSuccess: function(xmlhttp) {
@@ -1151,14 +1151,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/mobamon_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/mobamon_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.mobamonSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.mobamonSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     mobamonSearchSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -1175,10 +1175,10 @@ var MonterController = {
     },
     mobamon_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/mobamon_load_add_view/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/mobamon_load_add_view/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddMobamonSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddMobamonSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddMobamonSuccess: function(xmlhttp) {
@@ -1186,7 +1186,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1194,11 +1194,11 @@ var MonterController = {
     },
     add_mobamon: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/mobamon_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/mobamon_addNew';
         YAHOO.util.Connect.setForm('FrmMobamon', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewMobamonSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewMobamonSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1208,7 +1208,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/mobamon_view';
+                window.location = base_url + 'SysInfo_Admin/mobamon_view';
             } else {
                 alert(aryData.strError);
                 return;
@@ -1234,14 +1234,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/skill_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/skill_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.skillSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.skillSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     pass_skill_search: function(orderType, orderField, page) {
         var base_url = Dom.get('base_url').value;
@@ -1260,14 +1260,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/pass_skill_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/pass_skill_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.pass_skillSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.pass_skillSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     pass_skillSearchSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -1297,10 +1297,10 @@ var MonterController = {
     },
     skill_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/skill_load_add_view/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/skill_load_add_view/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddSkillSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddSkillSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddSkillSuccess: function(xmlhttp) {
@@ -1308,7 +1308,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1316,11 +1316,11 @@ var MonterController = {
     },
     add_skill: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/skill_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/skill_addNew';
         YAHOO.util.Connect.setForm('FrmSkill');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.addNewSkillnSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.addNewSkillnSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1329,8 +1329,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.skill_search();
+                AdminController.overlayCommon.hide();
+                AdminController.skill_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1341,10 +1341,10 @@ var MonterController = {
     },
     pass_skill_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/pass_skill_load_add_view/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/pass_skill_load_add_view/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddPassSkillSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddPassSkillSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddPassSkillSuccess: function(xmlhttp) {
@@ -1352,7 +1352,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1360,11 +1360,11 @@ var MonterController = {
     },
     add_pass_skill: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/pass_skill_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/pass_skill_addNew';
         YAHOO.util.Connect.setForm('FrmSkill');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.addNewPassSkillnSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.addNewPassSkillnSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1373,8 +1373,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.pass_skill_search();
+                AdminController.overlayCommon.hide();
+                AdminController.pass_skill_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1400,14 +1400,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/partner_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/partner_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchPartnerSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchPartnerSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     searchPartnerSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -1424,10 +1424,10 @@ var MonterController = {
     },
     partner_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/partner_load_addNew/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/partner_load_addNew/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddPartnerSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddPartnerSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddPartnerSuccess: function(xmlhttp) {
@@ -1435,7 +1435,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         }
         catch (e) {
             alert(e.message);
@@ -1444,11 +1444,11 @@ var MonterController = {
     },
     partner_save: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/partner_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/partner_addNew';
         YAHOO.util.Connect.setForm('FrmPartner', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.partner_save_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.partner_save_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1457,8 +1457,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.partner_search();
+                AdminController.overlayCommon.hide();
+                AdminController.partner_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1469,12 +1469,12 @@ var MonterController = {
     },
     partner_delete_record: function(partner_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
-            var strUrl = base_url + 'monter_admin/partner_delete/?ajax=1&partner_id=' + partner_id;
+            var strUrl = base_url + 'SysInfo_Admin/partner_delete/?ajax=1&partner_id=' + partner_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.delPartnerSuccess,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.delPartnerSuccess,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -1483,7 +1483,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.partner_search();
+                AdminController.partner_search();
 
             } else {
                 alert(aryData.strError);
@@ -1495,10 +1495,10 @@ var MonterController = {
     //add by cuongvm
     partner_load_edit: function(partner_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/partner_load_edit/?ajax=1&partner_id=' + partner_id;
+        var strUrl = base_url + 'SysInfo_Admin/partner_load_edit/?ajax=1&partner_id=' + partner_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadCategorySuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadCategorySuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadCategorySuccess: function(xmlhttp) {
@@ -1506,7 +1506,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1514,12 +1514,12 @@ var MonterController = {
     },
     partner_update: function(partner_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/partner_update/?ajax=1&partner_id=' + partner_id;
+        var strUrl = base_url + 'SysInfo_Admin/partner_update/?ajax=1&partner_id=' + partner_id;
 
         YAHOO.util.Connect.setForm('FrmPartner', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.partner_save_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.partner_save_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -1528,8 +1528,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.partner_search();
+                AdminController.overlayCommon.hide();
+                AdminController.partner_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1541,11 +1541,11 @@ var MonterController = {
     //Huynv added 2013/07/30        
     groupTime_load_edit: function(group_time_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/groupTime_load_update/?ajax=1&group_time_id=' + group_time_id;
+        var strUrl = base_url + 'SysInfo_Admin/groupTime_load_update/?ajax=1&group_time_id=' + group_time_id;
         //alert(strUrl);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadGroupTimeSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadGroupTimeSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     //Huynv added 2013/07/30        
@@ -1554,7 +1554,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1562,10 +1562,10 @@ var MonterController = {
     },
     stageCat_load_edit: function(stageCat_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/stageCat_load_update/?ajax=1&stageCat_id=' + stageCat_id;
+        var strUrl = base_url + 'SysInfo_Admin/stageCat_load_update/?ajax=1&stageCat_id=' + stageCat_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadStageCatSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadStageCatSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadStageCatSuccess: function(xmlhttp) {
@@ -1573,7 +1573,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1584,7 +1584,7 @@ var MonterController = {
         var base_url = Dom.get('base_url').value;
 
         if (group_time_id) {
-            var strUrl = base_url + 'monter_admin/groupTime_update/?ajax=1&group_time_id=' + group_time_id;
+            var strUrl = base_url + 'SysInfo_Admin/groupTime_update/?ajax=1&group_time_id=' + group_time_id;
 
             if (YAHOO.lang.trim(Dom.get('name_group_time').value) == '') {
                 alert("enter group time name!");
@@ -1613,8 +1613,8 @@ var MonterController = {
             }
             YAHOO.util.Connect.setForm('Frmstage', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.groupTime_update_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.groupTime_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -1627,8 +1627,8 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchGroupTime();
+                AdminController.overlayCommon.hide();
+                AdminController.searchGroupTime();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1640,13 +1640,13 @@ var MonterController = {
     //Huynv added 2013/08/08        
     logUser_delete_record: function(log_user_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (log_user_id) {
-                var strUrl = base_url + 'monter_admin/logUser_delete/?ajax=1&log_user_id=' + log_user_id;
+                var strUrl = base_url + 'SysInfo_Admin/logUser_delete/?ajax=1&log_user_id=' + log_user_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delLogUserSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delLogUserSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1659,7 +1659,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
-                MonterController.searchLogUser();
+                AdminController.searchLogUser();
 
             } else {
                 alert(aryData.strError);
@@ -1671,13 +1671,13 @@ var MonterController = {
     //Huynv added 2013/07/31        
     groupTime_delete_record: function(group_time_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (group_time_id) {
-                var strUrl = base_url + 'monter_admin/groupTime_delete/?ajax=1&group_time_id=' + group_time_id;
+                var strUrl = base_url + 'SysInfo_Admin/groupTime_delete/?ajax=1&group_time_id=' + group_time_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delGroupTimeSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delGroupTimeSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1689,7 +1689,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             //alert(aryData.intIsOk);
             if (aryData.intIsOk == 1) {
-                MonterController.searchGroupTime();
+                AdminController.searchGroupTime();
 
             } else {
                 alert(aryData.strError);
@@ -1700,9 +1700,9 @@ var MonterController = {
     },
     //Huynvd added 02/08/2013
     checkItemStageCategoryGroupTimeCheckBox: function() {
-        //if (!MonterController.checkMaxTotalRowTimeEvent()) return;
-        MonterController.overlayCommonGT.hide();
-        MonterController.overlayCommon.show();
+        //if (!AdminController.checkMaxTotalRowTimeEvent()) return;
+        AdminController.overlayCommonGT.hide();
+        AdminController.overlayCommon.show();
     },
     update_stage_category: function(stageCat_id) {
         var scTitle = Dom.get('stage_cat_name_vn').value;
@@ -1723,16 +1723,16 @@ var MonterController = {
             alert("'End Date' Invalid date format ");
             return;
         }
-        //if (!MonterController.checkMaxTotalRowTimeEvent()) return;
+        //if (!AdminController.checkMaxTotalRowTimeEvent()) return;
         if (stageCat_id) {
             if (firstTimeClickViewGroupTime == 1)
-                MonterController.overlayCommonGT.show();
+                AdminController.overlayCommonGT.show();
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/stageCat_update/?ajax=1&stageCat_id=' + stageCat_id;
+            var strUrl = base_url + 'SysInfo_Admin/stageCat_update/?ajax=1&stageCat_id=' + stageCat_id;
             YAHOO.util.Connect.setForm('Frmstage', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.stageCat_update_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.stageCat_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -1742,17 +1742,17 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
+                AdminController.overlayCommon.hide();
                 if (firstTimeClickViewGroupTime == 1) {
                     //Huynv added;
                     //Nếu có chọn thời gian cho sự kiện
                     //Sau khi chèn vào bảng m_stage_category thành công thì 
                     //Chèn vào bảng m_stage_cat_group_time
                     //document.getElementById('token_stage_cat_id').value=aryData.intIsOk;
-                    MonterController.update_stage_cat_group_time(document.getElementById('token_stage_cat_id').value);
+                    AdminController.update_stage_cat_group_time(document.getElementById('token_stage_cat_id').value);
 
                 }
-                MonterController.searchStageCat();
+                AdminController.searchStageCat();
             } else {
                 alert("loi:" + aryData.strError);
                 return;
@@ -1765,13 +1765,13 @@ var MonterController = {
     //Huynv add 12/09/2013        
     list_user_need_log_delete_record: function(user_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (user_id) {
-                var strUrl = base_url + 'monter_admin/user_need_log_delete_record/?ajax=1&user_id=' + user_id;
+                var strUrl = base_url + 'SysInfo_Admin/user_need_log_delete_record/?ajax=1&user_id=' + user_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delListUserNeedLogDeleteRecordSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delListUserNeedLogDeleteRecordSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1782,7 +1782,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.searchListUserNeedLog();
+                AdminController.searchListUserNeedLog();
 
             } else {
                 alert(aryData.strError);
@@ -1793,13 +1793,13 @@ var MonterController = {
     },
     stageCat_delete_record: function(stageCat_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (stageCat_id) {
-                var strUrl = base_url + 'monter_admin/stageCat_delete/?ajax=1&stageCat_id=' + stageCat_id;
+                var strUrl = base_url + 'SysInfo_Admin/stageCat_delete/?ajax=1&stageCat_id=' + stageCat_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delStageCatSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delStageCatSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1809,7 +1809,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.searchStageCat();
+                AdminController.searchStageCat();
 
             } else {
                 alert(aryData.strError);
@@ -1820,13 +1820,13 @@ var MonterController = {
     },
     stage_delete_record: function(stage_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (stage_id) {
-                var strUrl = base_url + 'monter_admin/stage_delete/?ajax=1&stage_id=' + stage_id;
+                var strUrl = base_url + 'SysInfo_Admin/stage_delete/?ajax=1&stage_id=' + stage_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delStageSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delStageSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1836,7 +1836,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.searchStage();
+                AdminController.searchStage();
 
             } else {
                 alert(aryData.strError);
@@ -1847,10 +1847,10 @@ var MonterController = {
     },
     stage_load_sort: function(type, sort) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/stage_load_sort/?ajax=1&type=' + type + '&sort=' + sort;
+        var strUrl = base_url + 'SysInfo_Admin/stage_load_sort/?ajax=1&type=' + type + '&sort=' + sort;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.stage_load_sort_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.stage_load_sort_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     stage_load_sort_success: function(xmlhttp) {
@@ -1858,7 +1858,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1866,10 +1866,10 @@ var MonterController = {
     },
     stage_load_update: function(stage_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/stage_load_update/?ajax=1&stage_id=' + stage_id;
+        var strUrl = base_url + 'SysInfo_Admin/stage_load_update/?ajax=1&stage_id=' + stage_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.stage_load_update_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.stage_load_update_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     stage_load_update_success: function(xmlhttp) {
@@ -1877,7 +1877,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1886,11 +1886,11 @@ var MonterController = {
     update_stage: function(stage_id) {
         var base_url = Dom.get('base_url').value;
         if (stage_id) {
-            var strUrl = base_url + 'monter_admin/stage_update/?ajax=1&stage_id=' + stage_id;
+            var strUrl = base_url + 'SysInfo_Admin/stage_update/?ajax=1&stage_id=' + stage_id;
             YAHOO.util.Connect.setForm('Frmstage');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.stage_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.stage_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -1900,8 +1900,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchStage();
+                AdminController.overlayCommon.hide();
+                AdminController.searchStage();
             } else {
                 alert(aryData.strError);
                 return;
@@ -1912,13 +1912,13 @@ var MonterController = {
     },
     stage_battle_delete_record: function(stage_battle_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (stage_battle_id) {
-                var strUrl = base_url + 'monter_admin/stage_battle_delete/?ajax=1&stage_battle_id=' + stage_battle_id;
+                var strUrl = base_url + 'SysInfo_Admin/stage_battle_delete/?ajax=1&stage_battle_id=' + stage_battle_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delStageBattleSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delStageBattleSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -1928,7 +1928,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.searchStageBattle();
+                AdminController.searchStageBattle();
 
             } else {
                 alert(aryData.strError);
@@ -1939,10 +1939,10 @@ var MonterController = {
     },
     stage_battle_load_update: function(stage_battle_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/stage_battle_load_update/?ajax=1&stage_battle_id=' + stage_battle_id;
+        var strUrl = base_url + 'SysInfo_Admin/stage_battle_load_update/?ajax=1&stage_battle_id=' + stage_battle_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.stage_battle_load_update_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.stage_battle_load_update_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     stage_battle_load_update_success: function(xmlhttp) {
@@ -1950,7 +1950,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -1990,11 +1990,11 @@ var MonterController = {
 
         var base_url = Dom.get('base_url').value;
         if (stage_battle_id) {
-            var strUrl = base_url + 'monter_admin/stage_battle_update/?ajax=1&stage_battle_id=' + stage_battle_id;
+            var strUrl = base_url + 'SysInfo_Admin/stage_battle_update/?ajax=1&stage_battle_id=' + stage_battle_id;
             YAHOO.util.Connect.setForm('Frmstage', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.stage_battle_update_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.stage_battle_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -2004,8 +2004,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.searchStageBattle();
+                AdminController.overlayCommon.hide();
+                AdminController.searchStageBattle();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2016,13 +2016,13 @@ var MonterController = {
     },
     mobamon_delete_record: function(mobamon_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (mobamon_id) {
-                var strUrl = base_url + 'monter_admin/mobamon_delete/?ajax=1&mobamon_id=' + mobamon_id;
+                var strUrl = base_url + 'SysInfo_Admin/mobamon_delete/?ajax=1&mobamon_id=' + mobamon_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.mobamon_delete_record_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.mobamon_delete_record_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -2032,7 +2032,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.mobamon_search();
+                AdminController.mobamon_search();
 
             } else {
                 alert(aryData.strError);
@@ -2044,10 +2044,10 @@ var MonterController = {
     mobamon_load_edit: function(mobamon_id) {
         var base_url = Dom.get('base_url').value;
         if (mobamon_id) {
-            var strUrl = base_url + 'monter_admin/mobamon_load_update/?ajax=1&mobamon_id=' + mobamon_id;
+            var strUrl = base_url + 'SysInfo_Admin/mobamon_load_update/?ajax=1&mobamon_id=' + mobamon_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.mobamon_load_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.mobamon_load_update_success,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -2056,7 +2056,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2065,11 +2065,11 @@ var MonterController = {
     update_mobamon: function(mobamon_id) {
         var base_url = Dom.get('base_url').value;
         if (mobamon_id) {
-            var strUrl = base_url + 'monter_admin/mobamon_update/?ajax=1&mobamon_id=' + mobamon_id;
+            var strUrl = base_url + 'SysInfo_Admin/mobamon_update/?ajax=1&mobamon_id=' + mobamon_id;
             YAHOO.util.Connect.setForm('FrmMobamon', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.update_mobamon_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.update_mobamon_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -2080,7 +2080,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/mobamon_view/';
+                window.location = base_url + 'SysInfo_Admin/mobamon_view/';
 
             } else {
                 alert(aryData.strError);
@@ -2116,11 +2116,11 @@ var MonterController = {
             Dom.get('member_password').focus();
             return;
         }
-        var strUrl = base_url + 'monter_admin/admin_login/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/admin_login/?ajax=1';
         YAHOO.util.Connect.setForm('frmLogin');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.loginSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.loginSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2130,7 +2130,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/';
+                window.location = base_url + 'SysInfo_Admin/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -2141,13 +2141,13 @@ var MonterController = {
     },
     skill_delete_record: function(skill_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (skill_id) {
-                var strUrl = base_url + 'monter_admin/skill_delete/?ajax=1&skill_id=' + skill_id;
+                var strUrl = base_url + 'SysInfo_Admin/skill_delete/?ajax=1&skill_id=' + skill_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.skill_delete_record_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.skill_delete_record_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -2157,7 +2157,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.skill_search();
+                AdminController.skill_search();
 
             } else {
                 alert(aryData.strError);
@@ -2169,10 +2169,10 @@ var MonterController = {
     skill_load_edit: function(skill_id) {
         var base_url = Dom.get('base_url').value;
         if (skill_id) {
-            var strUrl = base_url + 'monter_admin/skill_load_update/?ajax=1&skill_id=' + skill_id;
+            var strUrl = base_url + 'SysInfo_Admin/skill_load_update/?ajax=1&skill_id=' + skill_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.skill_load_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.skill_load_update_success,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -2181,7 +2181,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2190,11 +2190,11 @@ var MonterController = {
     update_skill: function(skill_id) {
         var base_url = Dom.get('base_url').value;
         if (skill_id) {
-            var strUrl = base_url + 'monter_admin/skill_update/?ajax=1&skill_id=' + skill_id;
+            var strUrl = base_url + 'SysInfo_Admin/skill_update/?ajax=1&skill_id=' + skill_id;
             YAHOO.util.Connect.setForm('FrmSkill');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.update_skill_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.update_skill_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -2204,8 +2204,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.skill_search();
+                AdminController.overlayCommon.hide();
+                AdminController.skill_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2216,13 +2216,13 @@ var MonterController = {
     },
     pass_skill_delete_record: function(pass_skill_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (pass_skill_id) {
-                var strUrl = base_url + 'monter_admin/pass_skill_delete/?ajax=1&pass_skill_id=' + pass_skill_id;
+                var strUrl = base_url + 'SysInfo_Admin/pass_skill_delete/?ajax=1&pass_skill_id=' + pass_skill_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.pass_skill_delete_record_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.pass_skill_delete_record_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -2232,7 +2232,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.pass_skill_search();
+                AdminController.pass_skill_search();
 
             } else {
                 alert(aryData.strError);
@@ -2244,10 +2244,10 @@ var MonterController = {
     pass_skill_load_edit: function(pass_skill_id) {
         var base_url = Dom.get('base_url').value;
         if (pass_skill_id) {
-            var strUrl = base_url + 'monter_admin/pass_skill_load_update/?ajax=1&pass_skill_id=' + pass_skill_id;
+            var strUrl = base_url + 'SysInfo_Admin/pass_skill_load_update/?ajax=1&pass_skill_id=' + pass_skill_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.pass_skill_load_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.pass_skill_load_update_success,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -2256,7 +2256,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2265,11 +2265,11 @@ var MonterController = {
     pass_update_skill: function(pass_skill_id) {
         var base_url = Dom.get('base_url').value;
         if (pass_skill_id) {
-            var strUrl = base_url + 'monter_admin/pass_skill_update/?ajax=1&pass_skill_id=' + pass_skill_id;
+            var strUrl = base_url + 'SysInfo_Admin/pass_skill_update/?ajax=1&pass_skill_id=' + pass_skill_id;
             YAHOO.util.Connect.setForm('FrmSkill');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.pass_update_skill_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.pass_update_skill_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -2279,8 +2279,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.pass_skill_search();
+                AdminController.overlayCommon.hide();
+                AdminController.pass_skill_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2309,14 +2309,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/fragment_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/fragment_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchFragmentSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchFragmentSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     searchFragmentSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -2333,10 +2333,10 @@ var MonterController = {
     },
     fragment_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/fragment_load_add_view/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/fragment_load_add_view/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadFragmentSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadFragmentSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadFragmentSuccess: function(xmlhttp) {
@@ -2344,7 +2344,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2355,11 +2355,11 @@ var MonterController = {
         // if(this.ValidateZiseUpload('fragment_avata',this.fragment_width,this.fragment_height) == false) return;
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/fragment_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/fragment_addNew';
         YAHOO.util.Connect.setForm('FrmFragment', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.fragmentAddSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.fragmentAddSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2368,8 +2368,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.fragment_search();
+                AdminController.overlayCommon.hide();
+                AdminController.fragment_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2381,10 +2381,10 @@ var MonterController = {
     fragment_load_edit: function(fragment_id) {
         var base_url = Dom.get('base_url').value;
         if (fragment_id) {
-            var strUrl = base_url + 'monter_admin/fragment_load_edit/?ajax=1&fragment_id=' + fragment_id;
+            var strUrl = base_url + 'SysInfo_Admin/fragment_load_edit/?ajax=1&fragment_id=' + fragment_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.fragment_load_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.fragment_load_update_success,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -2393,7 +2393,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2401,11 +2401,11 @@ var MonterController = {
     },
     fragment_update: function(fragment_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/fragment_update/?ajax=1&fragment_id=' + fragment_id;
+        var strUrl = base_url + 'SysInfo_Admin/fragment_update/?ajax=1&fragment_id=' + fragment_id;
         YAHOO.util.Connect.setForm('FrmFragment', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.fragment_save_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.fragment_save_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2414,8 +2414,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.fragment_search();
+                AdminController.overlayCommon.hide();
+                AdminController.fragment_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2456,12 +2456,12 @@ var MonterController = {
     fragment_delete_record: function(fragment_id) {
         var base_url = Dom.get('base_url').value;
         if (fragment_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/fragment_delete/?ajax=1&fragment_id=' + fragment_id;
+                var strUrl = base_url + 'SysInfo_Admin/fragment_delete/?ajax=1&fragment_id=' + fragment_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delFragmentSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delFragmentSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -2471,7 +2471,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.fragment_search();
+                AdminController.fragment_search();
 
             } else {
                 alert(aryData.strError);
@@ -2498,15 +2498,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/news_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/news_search/?ajax=1&pageNo=' + page;
 
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.newsSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.newsSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     newsSearchSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -2537,11 +2537,11 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/news_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/news_addNew';
         YAHOO.util.Connect.setForm('FrmNews', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.newsAddSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.newsAddSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2552,7 +2552,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
 
-                window.location = base_url + 'monter_admin/news_view/';
+                window.location = base_url + 'SysInfo_Admin/news_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -2582,11 +2582,11 @@ var MonterController = {
             return;
         }
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/news_update/?ajax=1&news_id=' + news_id + '&news_created_date=' + news_created_date;
+        var strUrl = base_url + 'SysInfo_Admin/news_update/?ajax=1&news_id=' + news_id + '&news_created_date=' + news_created_date;
         YAHOO.util.Connect.setForm('FrmNews', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.newsUpdateSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.newsUpdateSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2596,7 +2596,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/news_view/';
+                window.location = base_url + 'SysInfo_Admin/news_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -2624,15 +2624,15 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/user_news_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/user_news_search/?ajax=1&pageNo=' + page;
 
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.userNewsSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.userNewsSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     userNewsSearch_userID: function(orderType, orderField, page, user_id) {
 
@@ -2657,14 +2657,14 @@ var MonterController = {
         if (user_id !== undefined) {
             strPost += '&user_id=' + user_id;
         }
-		strUrl = base_url + 'monter_admin/user_news_search_user/?ajax=1&pageNo=' + page;
+		strUrl = base_url + 'SysInfo_Admin/user_news_search_user/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch1');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.userNewsSearchSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.userNewsSearchSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     userNewsSearchSuccess: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -2694,11 +2694,11 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/user_news_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/user_news_addNew';
         YAHOO.util.Connect.setForm('FrmNews', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.userNewsAddSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.userNewsAddSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2709,7 +2709,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
 
-                window.location = base_url + 'monter_admin/user_news_view/';
+                window.location = base_url + 'SysInfo_Admin/user_news_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -2739,11 +2739,11 @@ var MonterController = {
             return;
         }
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/user_news_update/?ajax=1&news_id=' + news_id + '&news_created_date=' + news_created_date;
+        var strUrl = base_url + 'SysInfo_Admin/user_news_update/?ajax=1&news_id=' + news_id + '&news_created_date=' + news_created_date;
         YAHOO.util.Connect.setForm('FrmNews', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.userNewsUpdateSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.userNewsUpdateSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2753,7 +2753,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/user_news_view/';
+                window.location = base_url + 'SysInfo_Admin/user_news_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -2767,26 +2767,26 @@ var MonterController = {
     checkPresent: function(object, monsterListElement, quantityBoxElement, multiPresentElement1, multiPresentElement2) {
         if (object.selectedIndex == 0)
         {
-            MonterController.hideElement(monsterListElement);
-            MonterController.hideElement(quantityBoxElement);
-            MonterController.hideElement(multiPresentElement1);
-            MonterController.hideElement(multiPresentElement2);
+            AdminController.hideElement(monsterListElement);
+            AdminController.hideElement(quantityBoxElement);
+            AdminController.hideElement(multiPresentElement1);
+            AdminController.hideElement(multiPresentElement2);
         } else if (object.selectedIndex == 1)
         {
-            MonterController.showElement(monsterListElement);
-            MonterController.hideElement(quantityBoxElement);
-            MonterController.hideElement(multiPresentElement1);
-            MonterController.hideElement(multiPresentElement2);
+            AdminController.showElement(monsterListElement);
+            AdminController.hideElement(quantityBoxElement);
+            AdminController.hideElement(multiPresentElement1);
+            AdminController.hideElement(multiPresentElement2);
         } else if (object.selectedIndex >= 2 && object.selectedIndex <= 8) {
-            MonterController.showElement(quantityBoxElement);
-            MonterController.hideElement(monsterListElement);
-            MonterController.hideElement(multiPresentElement1);
-            MonterController.hideElement(multiPresentElement2);
+            AdminController.showElement(quantityBoxElement);
+            AdminController.hideElement(monsterListElement);
+            AdminController.hideElement(multiPresentElement1);
+            AdminController.hideElement(multiPresentElement2);
         } else {
-            MonterController.hideElement(quantityBoxElement);
-            MonterController.showElement(monsterListElement);
-            MonterController.showElement(multiPresentElement1);
-            MonterController.showElement(multiPresentElement2);
+            AdminController.hideElement(quantityBoxElement);
+            AdminController.showElement(monsterListElement);
+            AdminController.showElement(multiPresentElement1);
+            AdminController.showElement(multiPresentElement2);
 
         }
     },
@@ -2802,17 +2802,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import/?ajax=1';
             YAHOO.util.Connect.setForm('frmUpload', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingSkill').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingSkill').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_success: function(xmlhttp) {
@@ -2840,17 +2840,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_mobamon/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_mobamon/?ajax=1';
             YAHOO.util.Connect.setForm('frmUploadMobamon', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_mobamon_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_mobamon_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_mobamon_success: function(xmlhttp) {
@@ -2877,11 +2877,11 @@ var MonterController = {
     },
     export_mobamon_data: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/export_mobamon_data/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/export_mobamon_data/?ajax=1';
         //        YAHOO.util.Connect.setForm('frmUpload');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.export_mobamon_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.export_mobamon_success,
+            failure: AdminController.asyncRequestFalse
         });
 
     },
@@ -2914,14 +2914,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/growth_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/growth_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.growth_search_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.growth_search_success,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     growth_search_success: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -2938,10 +2938,10 @@ var MonterController = {
     },
     growth_load_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/growth_load_add_view/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/growth_load_add_view/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.growth_load_add_view_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.growth_load_add_view_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     growth_load_add_view_success: function(xmlhttp) {
@@ -2949,7 +2949,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -2957,11 +2957,11 @@ var MonterController = {
     },
     growth_add: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/growth_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/growth_addNew';
         YAHOO.util.Connect.setForm('FrmGrowth');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.growth_add_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.growth_add_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -2970,8 +2970,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.growth_search();
+                AdminController.overlayCommon.hide();
+                AdminController.growth_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -2983,10 +2983,10 @@ var MonterController = {
     growth_load_edit: function(growth_id) {
         var base_url = Dom.get('base_url').value;
         if (growth_id) {
-            var strUrl = base_url + 'monter_admin/growth_load_update/?ajax=1&growth_id=' + growth_id;
+            var strUrl = base_url + 'SysInfo_Admin/growth_load_update/?ajax=1&growth_id=' + growth_id;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.growth_load_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.growth_load_update_success,
+                failure: AdminController.asyncRequestFalse
             });
         }
     },
@@ -2995,7 +2995,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -3004,11 +3004,11 @@ var MonterController = {
     growth_update: function(growth_id) {
         var base_url = Dom.get('base_url').value;
         if (growth_id) {
-            var strUrl = base_url + 'monter_admin/growth_update/?ajax=1&growth_id=' + growth_id;
+            var strUrl = base_url + 'SysInfo_Admin/growth_update/?ajax=1&growth_id=' + growth_id;
             YAHOO.util.Connect.setForm('FrmGrowth');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.growth_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.growth_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -3018,8 +3018,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.growth_search();
+                AdminController.overlayCommon.hide();
+                AdminController.growth_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -3030,13 +3030,13 @@ var MonterController = {
     },
     growth_delete: function(growth_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (growth_id) {
-                var strUrl = base_url + 'monter_admin/growth_delete/?ajax=1&growth_id=' + growth_id;
+                var strUrl = base_url + 'SysInfo_Admin/growth_delete/?ajax=1&growth_id=' + growth_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.growth_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.growth_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3046,7 +3046,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.growth_search();
+                AdminController.growth_search();
 
             } else {
                 alert(aryData.strError);
@@ -3059,10 +3059,10 @@ var MonterController = {
         ////alert(monter_id+'xxx'+monter_lv_field);
         var base_url = Dom.get('base_url').value;
         if (monter_id) {
-            var strUrl = base_url + 'monter_admin/getMonterLv/?ajax=1&monter_id=' + monter_id + '&monter_lv_field=' + monter_lv_field;
+            var strUrl = base_url + 'SysInfo_Admin/getMonterLv/?ajax=1&monter_id=' + monter_id + '&monter_lv_field=' + monter_lv_field;
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.getMonterLvSuccess,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.getMonterLvSuccess,
+                failure: AdminController.asyncRequestFalse
             });
         } else {
             alert('Plz choice monter ..!');
@@ -3101,14 +3101,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/help_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/help_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.help_search_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.help_search_success,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     help_search_success: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -3125,11 +3125,11 @@ var MonterController = {
     },
     help_add: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/help_addNew';
+        var strUrl = base_url + 'SysInfo_Admin/help_addNew';
         YAHOO.util.Connect.setForm('FrmAdd', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.help_add_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.help_add_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -3139,7 +3139,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/help_view/';
+                window.location = base_url + 'SysInfo_Admin/help_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -3150,11 +3150,11 @@ var MonterController = {
     },
     help_update: function(help_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/help_update/?ajax=1&help_id=' + help_id;
+        var strUrl = base_url + 'SysInfo_Admin/help_update/?ajax=1&help_id=' + help_id;
         YAHOO.util.Connect.setForm('FrmUpdate', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.help_update_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.help_update_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -3164,7 +3164,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/help_view/';
+                window.location = base_url + 'SysInfo_Admin/help_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -3176,12 +3176,12 @@ var MonterController = {
     help_delete_record: function(help_id) {
         var base_url = Dom.get('base_url').value;
         if (help_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/help_delete/?ajax=1&help_id=' + help_id;
+                var strUrl = base_url + 'SysInfo_Admin/help_delete/?ajax=1&help_id=' + help_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.help_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.help_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3191,7 +3191,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.help_search();
+                AdminController.help_search();
 
             } else {
                 alert(aryData.strError);
@@ -3203,12 +3203,12 @@ var MonterController = {
     news_delete_record: function(news_id) {
         var base_url = Dom.get('base_url').value;
         if (news_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/news_delete/?ajax=1&news_id=' + news_id;
+                var strUrl = base_url + 'SysInfo_Admin/news_delete/?ajax=1&news_id=' + news_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.news_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.news_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3218,7 +3218,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.news_search();
+                AdminController.news_search();
 
             } else {
                 alert(aryData.strError);
@@ -3230,12 +3230,12 @@ var MonterController = {
     user_news_delete_record: function(news_id) {
         var base_url = Dom.get('base_url').value;
         if (news_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/user_news_delete/?ajax=1&news_id=' + news_id;
+                var strUrl = base_url + 'SysInfo_Admin/user_news_delete/?ajax=1&news_id=' + news_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.user_news_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.user_news_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3245,7 +3245,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.userNews_search();
+                AdminController.userNews_search();
 
             } else {
                 alert(aryData.strError);
@@ -3272,14 +3272,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/topics_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/topics_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.topics_search_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.topics_search_success,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     topics_search_success: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -3296,19 +3296,19 @@ var MonterController = {
     },
     topics_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/overlay_add_topic/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/overlay_add_topic/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.topics_add_view_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.topics_add_view_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     topics_add_new: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/topics_add_new';
+        var strUrl = base_url + 'SysInfo_Admin/topics_add_new';
         YAHOO.util.Connect.setForm('Frmstage', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.topics_add_new_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.topics_add_new_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
 
@@ -3318,8 +3318,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.topics_search();
+                AdminController.overlayCommon.hide();
+                AdminController.topics_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -3333,8 +3333,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
-            MonterController.autoImeOff();
+            AdminController.showCommonOverlay();
+            AdminController.autoImeOff();
         } catch (e) {
             alert(e.message);
             return;
@@ -3342,10 +3342,10 @@ var MonterController = {
     },
     topics_update_view: function(tp_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/topics_update_view/?ajax=1&tp_id=' + tp_id;
+        var strUrl = base_url + 'SysInfo_Admin/topics_update_view/?ajax=1&tp_id=' + tp_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.topics_update_view_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.topics_update_view_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     topics_update_view_success: function(xmlhttp) {
@@ -3353,7 +3353,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -3362,11 +3362,11 @@ var MonterController = {
     topics_update: function(tp_id) {
         var base_url = Dom.get('base_url').value;
         if (tp_id) {
-            var strUrl = base_url + 'monter_admin/topics_update/?ajax=1&tp_id=' + tp_id;
+            var strUrl = base_url + 'SysInfo_Admin/topics_update/?ajax=1&tp_id=' + tp_id;
             YAHOO.util.Connect.setForm('Frmstage', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.topics_update_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.topics_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -3376,8 +3376,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.topics_search();
+                AdminController.overlayCommon.hide();
+                AdminController.topics_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -3389,12 +3389,12 @@ var MonterController = {
     topics_delete_record: function(tp_id) {
         var base_url = Dom.get('base_url').value;
         if (tp_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/topics_delete/?ajax=1&tp_id=' + tp_id;
+                var strUrl = base_url + 'SysInfo_Admin/topics_delete/?ajax=1&tp_id=' + tp_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.topics_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.topics_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3404,7 +3404,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.topics_search();
+                AdminController.topics_search();
 
             } else {
                 alert(aryData.strError);
@@ -3418,10 +3418,10 @@ var MonterController = {
      */
     present_code_add_view: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/overlay_add_present_code/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/overlay_add_present_code/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.present_code_add_view_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.present_code_add_view_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     present_code_add_view_success: function(xmlhttp) {
@@ -3429,8 +3429,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
-            //MonterController.autoImeOff();
+            AdminController.showCommonOverlay();
+            //AdminController.autoImeOff();
         } catch (e) {
             alert(e.message);
             return;
@@ -3477,11 +3477,11 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/present_code_add';
+        var strUrl = base_url + 'SysInfo_Admin/present_code_add';
         YAHOO.util.Connect.setForm('FormPresentCode');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.presentCodeAddSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.presentCodeAddSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -3489,10 +3489,10 @@ var MonterController = {
         var strJsonData = xmlhttp.responseText;
         var base_url = Dom.get('base_url').value;
         try {
-            MonterController.overlayCommon.hide();
+            AdminController.overlayCommon.hide();
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/present_code_view/';
+                window.location = base_url + 'SysInfo_Admin/present_code_view/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -3551,11 +3551,11 @@ var MonterController = {
 
         var base_url = Dom.get('base_url').value;
         if (pc_id) {
-            var strUrl = base_url + 'monter_admin/present_code_update/?ajax=1&pc_id=' + pc_id;
+            var strUrl = base_url + 'SysInfo_Admin/present_code_update/?ajax=1&pc_id=' + pc_id;
             YAHOO.util.Connect.setForm('Frmstage');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.present_code_update_success,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.present_code_update_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
         }
@@ -3565,8 +3565,8 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.overlayCommon.hide();
-                MonterController.present_code_search();
+                AdminController.overlayCommon.hide();
+                AdminController.present_code_search();
             } else {
                 alert(aryData.strError);
                 return;
@@ -3593,14 +3593,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/present_code_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/present_code_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.topics_search_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.topics_search_success,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     present_code_search_success: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -3618,12 +3618,12 @@ var MonterController = {
     present_code_delete_record: function(pc_id) {
         var base_url = Dom.get('base_url').value;
         if (pc_id) {
-            answer = confirm(MonterController.DELETE_CONFIRM);
+            answer = confirm(AdminController.DELETE_CONFIRM);
             if (answer) {
-                var strUrl = base_url + 'monter_admin/present_code_delete/?ajax=1&pc_id=' + pc_id;
+                var strUrl = base_url + 'SysInfo_Admin/present_code_delete/?ajax=1&pc_id=' + pc_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.present_code_delete_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.present_code_delete_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -3633,7 +3633,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                MonterController.present_code_search();
+                AdminController.present_code_search();
 
             } else {
                 alert(aryData.strError);
@@ -3644,47 +3644,47 @@ var MonterController = {
     },
     present_code_update_view: function(pc_id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/present_code_update_view/?ajax=1&pc_id=' + pc_id;
+        var strUrl = base_url + 'SysInfo_Admin/present_code_update_view/?ajax=1&pc_id=' + pc_id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.topics_update_view_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.topics_update_view_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     // - check onload
     pc_check_present_add: function(object) {
         if (object.selectedIndex == 0) {
-            MonterController.showElement('monsterList1');
-            MonterController.hideElement('quantityBox1');
-            MonterController.hideElement('multiPresent1');
-            MonterController.hideElement('multiPresent2');
+            AdminController.showElement('monsterList1');
+            AdminController.hideElement('quantityBox1');
+            AdminController.hideElement('multiPresent1');
+            AdminController.hideElement('multiPresent2');
         } else if (object.selectedIndex < 8) {
-            MonterController.hideElement('monsterList1');
-            MonterController.showElement('quantityBox1');
-            MonterController.hideElement('multiPresent1');
-            MonterController.hideElement('multiPresent2');
+            AdminController.hideElement('monsterList1');
+            AdminController.showElement('quantityBox1');
+            AdminController.hideElement('multiPresent1');
+            AdminController.hideElement('multiPresent2');
         } else {
-            MonterController.showElement('monsterList1');
-            MonterController.hideElement('quantityBox1');
-            MonterController.showElement('multiPresent1');
-            MonterController.showElement('multiPresent2');
+            AdminController.showElement('monsterList1');
+            AdminController.hideElement('quantityBox1');
+            AdminController.showElement('multiPresent1');
+            AdminController.showElement('multiPresent2');
         }
     },
     pc_check_present_update: function(object) {
         if (object.selectedIndex == 0) {
-            MonterController.showElement('monsterList1');
-            MonterController.hideElement('quantityBox1');
-            MonterController.hideElement('multiPresent1');
-            MonterController.hideElement('multiPresent2');
+            AdminController.showElement('monsterList1');
+            AdminController.hideElement('quantityBox1');
+            AdminController.hideElement('multiPresent1');
+            AdminController.hideElement('multiPresent2');
         } else if (object.selectedIndex < 8) {
-            MonterController.hideElement('monsterList1');
-            MonterController.showElement('quantityBox1');
-            MonterController.hideElement('multiPresent1');
-            MonterController.hideElement('multiPresent2');
+            AdminController.hideElement('monsterList1');
+            AdminController.showElement('quantityBox1');
+            AdminController.hideElement('multiPresent1');
+            AdminController.hideElement('multiPresent2');
         } else {
-            MonterController.showElement('monsterList1');
-            MonterController.hideElement('quantityBox1');
-            MonterController.showElement('multiPresent1');
-            MonterController.showElement('multiPresent2');
+            AdminController.showElement('monsterList1');
+            AdminController.hideElement('quantityBox1');
+            AdminController.showElement('multiPresent1');
+            AdminController.showElement('multiPresent2');
         }
     },
     import_stage_cat: function() {
@@ -3692,17 +3692,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_stage_cat/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_stage_cat/?ajax=1';
             YAHOO.util.Connect.setForm('frmUploadStageCat', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_stage_cat_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_stage_cat_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_stage_cat_success: function(xmlhttp) {
@@ -3732,17 +3732,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_stage/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_stage/?ajax=1';
             YAHOO.util.Connect.setForm('frmUploadStage', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_stage_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_stage_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_stage_success: function(xmlhttp) {
@@ -3772,17 +3772,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_stage_battle/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_stage_battle/?ajax=1';
             YAHOO.util.Connect.setForm('frmUploadStageBattle', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_stage_battle_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_stage_battle_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_stage_battle_success: function(xmlhttp) {
@@ -3812,17 +3812,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_passive_skill/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_passive_skill/?ajax=1';
             YAHOO.util.Connect.setForm('frmPassive', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_passive_skill_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_passive_skill_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadingMobamon').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_passive_skill_success: function(xmlhttp) {
@@ -3852,17 +3852,17 @@ var MonterController = {
             alert(' Please Input Excel Data File !');
             return;
         }
-        answer = confirm(MonterController.IMPORTING_CONFIRM);
+        answer = confirm(AdminController.IMPORTING_CONFIRM);
         if (answer) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/do_import_growth_data/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/do_import_growth_data/?ajax=1';
             YAHOO.util.Connect.setForm('frmUploadGrowthData', true);
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                upload: MonterController.import_growth_success,
-                failure: MonterController.asyncRequestFalse
+                upload: AdminController.import_growth_success,
+                failure: AdminController.asyncRequestFalse
             });
             YAHOO.util.Connect.resetFormState();
-            Dom.get('loadinggrowth').innerHTML = '<span class="status-msg-text">' + MonterController.IMPORTING_TEXT + '</span>';
+            Dom.get('loadinggrowth').innerHTML = '<span class="status-msg-text">' + AdminController.IMPORTING_TEXT + '</span>';
         }
     },
     import_growth_success: function(xmlhttp) {
@@ -3889,11 +3889,11 @@ var MonterController = {
     },
     sendPushService: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/sendRequestPushService';
+        var strUrl = base_url + 'SysInfo_Admin/sendRequestPushService';
         YAHOO.util.Connect.setForm('FrmMobamon', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.pushServiceSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.pushServiceSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -3903,7 +3903,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                //window.location = base_url+'monter_admin/push_service';
+                //window.location = base_url+'SysInfo_Admin/push_service';
             } else {
                 alert(aryData.strError);
                 return;
@@ -3950,11 +3950,11 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/addRankingBonus';
+        var strUrl = base_url + 'SysInfo_Admin/addRankingBonus';
         YAHOO.util.Connect.setForm('FrmMobamon', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.addNewRankingSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.addNewRankingSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -3964,7 +3964,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/mobamon_add_ranking_bonus';
+                window.location = base_url + 'SysInfo_Admin/mobamon_add_ranking_bonus';
             } else {
                 alert(aryData.strError);
                 return;
@@ -3975,10 +3975,10 @@ var MonterController = {
     },
     ranking_load_update: function(id) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/ranking_load_update/?ajax=1&ranking_id=' + id;
+        var strUrl = base_url + 'SysInfo_Admin/ranking_load_update/?ajax=1&ranking_id=' + id;
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.ranking_load_update_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.ranking_load_update_success,
+            failure: AdminController.asyncRequestFalse
         });
     },
     ranking_load_update_success: function(xmlhttp) {
@@ -3986,7 +3986,7 @@ var MonterController = {
         var aryData = Json.parse(strJsonData);
         try {
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -3994,10 +3994,10 @@ var MonterController = {
     },
     view_add_ranking_bonus: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/load_add_ranking_bonus/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/load_add_ranking_bonus/?ajax=1';
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.LoadAddRankingSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.LoadAddRankingSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     LoadAddRankingSuccess: function(xmlhttp) {
@@ -4005,7 +4005,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -4013,13 +4013,13 @@ var MonterController = {
     },
     ranking_delete_record: function(ranking_id) {
         var base_url = Dom.get('base_url').value;
-        answer = confirm(MonterController.DELETE_CONFIRM);
+        answer = confirm(AdminController.DELETE_CONFIRM);
         if (answer) {
             if (ranking_id) {
-                var strUrl = base_url + 'monter_admin/ranking_delete/?ajax=1&ranking_id=' + ranking_id;
+                var strUrl = base_url + 'SysInfo_Admin/ranking_delete/?ajax=1&ranking_id=' + ranking_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.delRankingSuccess,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.delRankingSuccess,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -4030,7 +4030,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/mobamon_add_ranking_bonus';
+                window.location = base_url + 'SysInfo_Admin/mobamon_add_ranking_bonus';
             } else {
                 alert(aryData.strError);
             }
@@ -4067,12 +4067,12 @@ var MonterController = {
         }
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/updateRankingBonus/?ajax=1&ranking_id=' + ranking_id;
+        var strUrl = base_url + 'SysInfo_Admin/updateRankingBonus/?ajax=1&ranking_id=' + ranking_id;
 
         YAHOO.util.Connect.setForm('FrmMobamon', true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.updateRankingSuccess,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.updateRankingSuccess,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -4082,7 +4082,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/mobamon_add_ranking_bonus';
+                window.location = base_url + 'SysInfo_Admin/mobamon_add_ranking_bonus';
             } else {
                 alert(aryData.strError);
                 return;
@@ -4108,14 +4108,14 @@ var MonterController = {
         var strPost = '';
         strPost += 'orderType=' + orderType + '&orderField=' + orderField;
 
-        var strUrl = base_url + 'monter_admin/log_search/?ajax=1&pageNo=' + page;
+        var strUrl = base_url + 'SysInfo_Admin/log_search/?ajax=1&pageNo=' + page;
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.log_search_success,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.log_search_success,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
-        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + MonterController.SEARCHING_TEXT + '</span>';
+        Dom.get('loading').innerHTML = '<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>';
     },
     log_search_success: function(xmlhttp) {
         var strJsonData = xmlhttp.responseText;
@@ -4135,10 +4135,10 @@ var MonterController = {
         answer = confirm('Are you sure fixed this bug ?');
         if (answer) {
             if (log_id) {
-                var strUrl = base_url + 'monter_admin/log_update_status/?ajax=1&log_id=' + log_id;
+                var strUrl = base_url + 'SysInfo_Admin/log_update_status/?ajax=1&log_id=' + log_id;
                 YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                    success: MonterController.log_update_success,
-                    failure: MonterController.asyncRequestFalse
+                    success: AdminController.log_update_success,
+                    failure: AdminController.asyncRequestFalse
                 });
             }
         }
@@ -4149,7 +4149,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
-                window.location = base_url + 'monter_admin/log_view';
+                window.location = base_url + 'SysInfo_Admin/log_view';
             } else {
                 alert(aryData.strError);
             }
@@ -4198,11 +4198,11 @@ var MonterController = {
     },
     gacha_banner_update: function(lang) {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/gacha_banner_update/?ajax=1&lang='+lang;
+        var strUrl = base_url + 'SysInfo_Admin/gacha_banner_update/?ajax=1&lang='+lang;
         YAHOO.util.Connect.setForm('FrmMobamon'+lang, true);
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            upload: MonterController.gacha_banner_update_success,
-            failure: MonterController.asyncRequestFalse
+            upload: AdminController.gacha_banner_update_success,
+            failure: AdminController.asyncRequestFalse
         });
         YAHOO.util.Connect.resetFormState();
     },
@@ -4212,7 +4212,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
                 var base_url = Dom.get('base_url').value;
-                window.location = base_url + 'monter_admin/gacha_banner_load_update/';
+                window.location = base_url + 'SysInfo_Admin/gacha_banner_load_update/';
 				alert(aryData.strError);
             } else {
                 alert(aryData.strError);
@@ -4228,11 +4228,11 @@ var MonterController = {
         //alert(orderType);
         var strPost = '';
 
-        var strUrl = base_url + 'monter_admin/mobamon_add_ranking_bonus/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/mobamon_add_ranking_bonus/?ajax=1';
         YAHOO.util.Connect.setForm('frmsearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.searchRankingbonusSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.searchRankingbonusSuccess,
+            failure: AdminController.asyncRequestFalse
         }, strPost);
 
     },
@@ -4254,11 +4254,11 @@ var MonterController = {
 
         if (confirm('値を変更しても宜しいですか？')) {
             var base_url = Dom.get('base_url').value;
-            var strUrl = base_url + 'monter_admin/saveOption/?ajax=1';
+            var strUrl = base_url + 'SysInfo_Admin/saveOption/?ajax=1';
             YAHOO.util.Connect.setForm('FrmSearch');
             YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-                success: MonterController.changeMaintenanceSuccess,
-                failure: MonterController.asyncRequestFalse
+                success: AdminController.changeMaintenanceSuccess,
+                failure: AdminController.asyncRequestFalse
             });
 
         }
@@ -4270,7 +4270,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
                 var base_url = Dom.get('base_url').value;
-                window.location = base_url + 'monter_admin/option/';
+                window.location = base_url + 'SysInfo_Admin/option/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -4283,11 +4283,11 @@ var MonterController = {
     addBlackList: function() {
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/addBlackList/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/addBlackList/?ajax=1';
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.addBlackListSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.addBlackListSuccess,
+            failure: AdminController.asyncRequestFalse
         });
 
     },
@@ -4298,7 +4298,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
                 var base_url = Dom.get('base_url').value;
-                window.location = base_url + 'monter_admin/option/';
+                window.location = base_url + 'SysInfo_Admin/option/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -4311,11 +4311,11 @@ var MonterController = {
     delBlackList: function() {
 
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/delBlackList/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/delBlackList/?ajax=1';
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.delBlackListSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.delBlackListSuccess,
+            failure: AdminController.asyncRequestFalse
         });
 
     },
@@ -4326,7 +4326,7 @@ var MonterController = {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
                 var base_url = Dom.get('base_url').value;
-                window.location = base_url + 'monter_admin/option/';
+                window.location = base_url + 'SysInfo_Admin/option/';
             } else {
                 alert(aryData.strError);
                 return;
@@ -4338,11 +4338,11 @@ var MonterController = {
     },
     viewListGacha: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/viewListGacha/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/viewListGacha/?ajax=1';
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.viewListGachaSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.viewListGachaSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     viewListGachaSuccess: function(xmlhttp) {
@@ -4350,7 +4350,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -4358,11 +4358,11 @@ var MonterController = {
     },
     viewListCheckRank: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/viewListCheckRank/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/viewListCheckRank/?ajax=1';
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.viewListCheckRankSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.viewListCheckRankSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     viewListCheckRankSuccess: function(xmlhttp) {
@@ -4370,7 +4370,7 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
@@ -4378,11 +4378,11 @@ var MonterController = {
     },
     viewMonster6star: function() {
         var base_url = Dom.get('base_url').value;
-        var strUrl = base_url + 'monter_admin/viewMonster6star/?ajax=1';
+        var strUrl = base_url + 'SysInfo_Admin/viewMonster6star/?ajax=1';
         YAHOO.util.Connect.setForm('FrmSearch');
         YAHOO.util.Connect.asyncRequest('POST', strUrl, {
-            success: MonterController.viewMonster6starSuccess,
-            failure: MonterController.asyncRequestFalse
+            success: AdminController.viewMonster6starSuccess,
+            failure: AdminController.asyncRequestFalse
         });
     },
     viewMonster6starSuccess: function(xmlhttp) {
@@ -4390,13 +4390,10 @@ var MonterController = {
         try {
             var aryData = Json.parse(strJsonData);
             Dom.get('CommonOverlay').innerHTML = aryData.html;
-            MonterController.showCommonOverlay();
+            AdminController.showCommonOverlay();
         } catch (e) {
             alert(e.message);
             return;
         }
     }
-
-
-
 };

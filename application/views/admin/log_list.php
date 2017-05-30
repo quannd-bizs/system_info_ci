@@ -19,19 +19,10 @@
                 foreach ($data as $v) {
                     ?>
                     <tr  class="<?php if ($i % 2 == 0) { ?>filter<?php } ?>">
-                        <td><?php echo  $v['log_id']; ?></td>
-                        <td><?php echo  $v['type_os']; ?></td>
-                        <td><?php echo  $v['device']; ?></td>
-                        <td><?php echo  $v['status']; ?></td> 
-                        <td><?php echo  $v['user_id']; ?></td>
-                        <td>
-                            <a href="<?php echo base_url() ?>monter_admin/log_detail/<?php echo $v['log_id']; ?>">
-                                <?php echo  $v['title']; ?>
-                            </a>
-                        </td>
-                        <td><?php echo  $v['log_date']; ?></td>                                                        
+                      
+                        <td><?php echo  $v['last_reported_at']; ?></td>                                                        
                         <td align="center">
-                            <a href="<?php echo base_url() ?>monter_admin/log_detail/<?php echo $v['log_id']; ?>">
+                            <a href="<?php echo base_url() ?>SysInfo_Admin/log_detail/<?php echo $v['id']; ?>">
                                 <img src="<?php echo base_url() ?>www/images/common/icon-edit.gif"/>
                             </a>
                         </td>

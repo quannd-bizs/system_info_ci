@@ -4,7 +4,7 @@
         <meta name="Description" content="Default Style" />
         <meta name="Version" content="2.1.1" />
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <title>D-Hearts Monter Management System</title>
+        <title>BIPVN SERVER INFO System</title>
 
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
             <meta content="utf-8" http-equiv="encoding">
@@ -49,13 +49,13 @@
                     <script type="text/javascript" src="<?php echo base_url(); ?>www/lightbox/jquery-ui-1.8.18.custom.min.js"></script>
                     <script type="text/javascript" src="<?php echo base_url(); ?>www/lightbox/jquery.smooth-scroll.min.js"></script>
                     <script >
-                        jQuery(document).ready(function($) {
+                        jQuery(document).ready(function ($) {
                             $('a').smoothScroll({
                                 speed: 1000,
                                 easing: 'easeInOutCubic'
                             });
 
-                            $('.showOlderChanges').on('click', function(e){
+                            $('.showOlderChanges').on('click', function (e) {
                                 $('.changelog .old').slideDown('slow');
                                 $(this).fadeOut();
                                 e.preventDefault();
@@ -77,7 +77,7 @@
                                                 <tr>
                                                     <th class="banner" align="left">
                                                         <strong>
-                                                            <a href="<?php echo base_url() ?>tms" style="color: white">DHearts VN</a>
+                                                            <a href="<?php echo base_url() ?>tms" style="color: white">BIPVN</a>
                                                         </strong>
                                                     </th>
                                                 </tr>
@@ -90,35 +90,10 @@
                                         <table width="100%" cellspacing="0" cellpadding="3">
                                             <tbody>
                                                 <tr>
-
                                                     <td>
-                                                        <a href="<?php echo base_url() ?>monter_admin/stage_category_view">Stage Category</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/stage_view">Stage</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/stage_battle_view">Stage Battle</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/mobamon_view">Mobamon</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/skill_view">Skill</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/pass_skill_view">Pass Skill</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/fragment_view">Fragment</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/growth_view">Growth</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/news_view">News</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/user_news_view">User News</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/import_view">Data Management</a>                                        
-<!-- Mieng Comment                                      | <a href="<?php echo base_url() ?>monter_admin/images_management_view">FileManagement</a>-->
-                                                        | <a href="<?php echo base_url() ?>monter_admin/gacha_banner_load_update">Gacha Banner</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/help_view">Help</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/topics_view">Topics</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/push_service">PushService</a>
-                                                        | <a href="<?php echo base_url() ?>monster_report/index">Report</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/mobamon_add_ranking_bonus">RankingBonus</a>                                                        
-                                                        | <a href="<?php echo base_url() ?>monter_admin/log_view">Log Bugs</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/present_code_view">Present Code</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/option">Option</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/group_time_view">Group Time</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/log_user_view">Log Users Action</a>
-                                                        | <a href="<?php echo base_url() ?>monter_admin/list_user_need_log_view">List Users Need Log</a>
-
+                                                        | <a href="<?php echo base_url() ?>SysInfo_Admin/help_view">Help</a>                                                     
+                                                        | <a href="<?php echo base_url() ?>SysInfo_Admin/log_view">Log Bugs</a>
                                                     </td>
-
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -135,7 +110,7 @@
                                                                                                 <a style="cursor: pointer;" onclick="">My Info</a> |
                                                                                                 <b><a href="">MyTask</a></b> |
                                                                                                 <a href="">Today</a> |-->
-                                                        <a href="<?php echo base_url() ?>monter_admin/logout">Logout</a>
+                                                        <a href="<?php echo base_url() ?>SysInfo_Admin/logout">Logout</a>
                                                     </td>
                                                 </tr>
                                             </tbody>

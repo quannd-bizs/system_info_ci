@@ -61,7 +61,7 @@
                         <div class="clearfix"></div>
                         <div align="center">
                             <table align="center">
-                                <td><input type="button" onclick="MonterController.log_search();" class="button" value="  Search " name="cmdSearch" style="width: 100px;"/></td>
+                                <td><input type="button" onclick="AdminController.log_search();" class="button" value="  Search " name="cmdSearch" style="width: 100px;"/></td>
                             </table>
                         </div>                            
                     </form>
@@ -88,7 +88,7 @@
 </div>
 <script type="text/javascript" >
     window.onload = function (){
-        MonterController.log_search();
+        AdminController.log_search();
     }
 </script>
 

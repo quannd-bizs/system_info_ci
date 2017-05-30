@@ -8,7 +8,7 @@
             </td>
             <td align="left" width="100%" nowrap="nowrap"><h1>Growth Management System</h1></td>
             <td>
-                <input type="button" onclick="MonterController.log_update_stattus('<?php echo $aryLogs['log_id']; ?>');" value="Fixed" class="button" width="200"/>
+                <input type="button" onclick="AdminController.log_update_stattus('<?php echo $aryLogs['id']; ?>');" value="Fixed" class="button" width="200"/>
             </td>
         </tr>
     </tbody>
