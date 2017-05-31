@@ -70,8 +70,20 @@
 </div>
 <script type="text/javascript" src="<?php echo base_url() ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" >
-    window.onload = AdminController.log_search();
+//    window.onload = AdminController.log_search();
+var url = '<? echo base_url() . 'sysinfo_admin/log_search';?>';
+    window.onload = $.get(url,  function (data) {
+        try {
+            var aryData = $.parseJSON(data);
+            $('#result').html = aryData.html;
+            $('#strPaging1').html = aryData.strPaging;
+            $('#strPaging2').html = aryData.strPaging;
+            $('#loading').html = '';
 
+        } catch (e) {
+            alert(e.message);
+        }
+    });
     /*function log_search(orderType, orderField, page) {
         var base_url = Dom.get('base_url').value;
 

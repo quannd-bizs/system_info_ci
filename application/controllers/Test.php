@@ -3,20 +3,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Test extends CI_Controller {
 
-	function __construct(){
+/*	function __construct(){
 		parent::__construct();
 		$this->load->library('javascript');
 
-		/*$this->load->library(
+		$this->load->library(
 	        'javascript',
 	        array(
 	                'js_library_driver' => 'scripto',
 	                'autoload' => FALSE
 	        )
-		);*/
-		$this->load->library('javascript/jquery');
+		);
+//		$this->load->library('javascript/jquery');
 		// $this->load->library('javascript/jquery', FALSE);
-	}
+	}*/
 	/**
 	 * Index Page for this controller.
 	 *

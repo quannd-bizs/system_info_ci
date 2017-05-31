@@ -11,15 +11,14 @@
 		background-color: green;
 	}
 	</style>
-	<!-- <? $this->load->library('javascript/jquery'); ?> -->
-	<script type="text/javascript" src=jquery-3.2.1.min.js></script>
+    <script type="text/javascript" src=www/js/common/jquery/jquery-3.2.1.min.js></script>
 </head>
 <body>
 <div id = "circle">
-SHOW/HIDE
+<?php echo base_url(). "sysinfo_admin/log_search"; ?>
 <br>
 </div>
-<iframe src="http://vietnamnet.vn/"></iframe>
+<!--<iframe src="http://vietnamnet.vn/"></iframe>-->
 
 <script type="text/javascript">
 	/*if(typeof jQuery == "undefined"){
@@ -27,10 +26,16 @@ SHOW/HIDE
 	}else{
 		alert("JQUERY is installed correctly!");
 	}*/
+    var url1 = "<?php echo base_url(). "sysinfo_admin/log_search"; ?>";
 	$("#circle").click(function(){
 		// $("#circle").html("This is a text");
 		// alert("clicked");
-		$("iframe").attr("src", "http://bipvn.com.vn");
+//		$("iframe").attr("src", "http://bipvn.com.vn");
+        
+        $.get(url1, function(data){
+//            alert(data);
+            $("a").html(data);
+        });
 	});
 </script>
 
