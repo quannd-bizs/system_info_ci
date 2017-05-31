@@ -93,4 +93,137 @@ class CI_Controller {
 		return self::$instance;
 	}
 
+ /**
+     *
+     * @return <type> 
+     */
+    public function getAllPostParams() {
+        return $_POST;
+    }
+
+    /**
+     *
+     * @param <type> $paramName
+     * @return <type> 
+     */
+    public function getPostParam($key) {
+        if (isset($_POST[$key])) {
+            return $_POST[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     *
+     * @param <type> $key
+     * @return <type> 
+     */
+    public function getParam($key) {
+        if (isset($_GET[$key])) {
+            return $_GET[$key];
+        }
+    }
+
+    /**
+     *
+     * @param <type> $paramKey
+     * @return <type> 
+     */
+    public function getParamOnUrlByKey($paramKey) {
+        if (isset($this->_paramsByUrl[$paramKey]) && $this->_paramsByUrl[$paramKey] != '?ajax=1') {
+            return $this->_paramsByUrl[$paramKey];
+        }
+    }
+
+    /**
+     *
+     * @param <type> $key
+     * @param <type> $value 
+     */
+    public function setSession($key, $value) {
+        $_SESSION[$key] = & $value;
+    }
+
+    /**
+     *
+     * @param <type> $key
+     * @return <type> 
+     */
+    public function getSession($key) {
+        if ($this->hasSession($key)) {
+            return $_SESSION[$key];
+        }
+    }
+
+    /**
+     *
+     * @param <type> $key 
+     */
+    public function clearSession($key = '') {
+        if ($key == '') {
+            $_SESSION = array();
+            unset($_SESSION);
+            @session_destroy();
+        } else {
+            unset($_SESSION[$key]);
+        }
+    }
+
+    public function getSessionId() {
+        return session_id();
+    }
+
+    public function setCookieData($key, $value, $lifeTime = 0) {
+        if ($lifeTime <= 0) {
+            $lifeTime = (3600 * 24 * 30); //30 day
+        }
+        setcookie($key, $value, time() + $lifeTime, '/', '', 0);
+    }
+
+    public function clearCookie($key) {
+        setcookie($key, "", -3600);
+	}
+
+    public function getCookieData($key) {
+        $value = $_COOKIE[$key];
+        return $value;
+    }
+
+    public function hasCookie($key) {
+        return isset($_COOKIE[$key]);
+    }
+
+    public function startSession() {
+        session_cache_expire(10000);
+        ini_set('session.gc_maxlifetime', 10000 * 60);
+        session_start();
+    }
+
+    public function hasSession($key) {
+        return isset($_SESSION[$key]);
+    }
+
+    public function redirectURL($url, $delayTime = 0) {
+        // prevent header injections
+        $url = str_replace(array("\n", "\r"), '', $url);
+
+        if (!headers_sent()) {
+            if ((int) $delayTime < 1) {
+                header("Location: {$url}");
+            } else {
+                header("Refresh: {$delayTime}; URL={$url}");
+            }
+        }
+
+        $html = '<html>' .
+                '<head>' .
+                '<meta http-equiv="refresh" content="%d;url=%s"/>' .
+                '</head>' .
+                '</html>';
+
+        $html = sprintf($html, $delayTime, $url);
+        echo $html;
+        exit;
+    }
 }
