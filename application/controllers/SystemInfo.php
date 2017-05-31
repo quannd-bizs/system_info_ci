@@ -22,7 +22,7 @@ class SystemInfo extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->library('common');
+		$this->load->library('my_common');
 		$this->load->model('dataserver');
 	}
 
@@ -38,20 +38,22 @@ class SystemInfo extends CI_Controller {
 		for ($i = 0; $i < count($in); $i++) {
 			$serverId = array('server_id' => $in[$i]["id"]);
 			$this->dataserver->SelectServerId($serverId, $result);
-			$serverInfo = $in[$i]["summary"];
-			$serverInfo["server_id"] =  $in[$i]["id"];
-			$serverInfo["health_status"] = $in[$i]["health_status"];
-			$serverInfo["last_reported_at"] = $in[$i]["last_reported_at"];
-			
-			if(count($result) < 1){
-				$in[$i]["server_id"] = $in[$i]["id"];
-				unset($in[$i]["id"]);
-				unset($in[$i]["links"]);
-				unset($in[$i]["health_status"]);
-				unset($in[$i]["summary"]);
-				$this->dataserver->SaveServerId($in[$i]);
+			if(isset($in[$i]["summary"])){
+				$serverInfo = $in[$i]["summary"];
+				$serverInfo["server_id"] =  $in[$i]["id"];
+				$serverInfo["health_status"] = $in[$i]["health_status"];
+				$serverInfo["last_reported_at"] = $in[$i]["last_reported_at"];
+				
+				if(count($result) < 1){
+					$in[$i]["server_id"] = $in[$i]["id"];
+					unset($in[$i]["id"]);
+					unset($in[$i]["links"]);
+					unset($in[$i]["health_status"]);
+					unset($in[$i]["summary"]);
+					$this->dataserver->SaveServerId($in[$i]);
+				}
+				$this->dataserver->SaveServerInfo($serverInfo);
 			}
-			$this->dataserver->SaveServerInfo($serverInfo);
 		}
 	}
 
@@ -86,7 +88,7 @@ class SystemInfo extends CI_Controller {
 	 if ($html === false) {
         // die('error: ' . curl_error($curl));
         $json = array();
-        $this->common->echo_result($json, -100, 'Error: ' . curl_error($curl));
+        $this->my_common->echo_result($json, -100, 'Error: ' . curl_error($curl));
         exit();
     }
     // curl_close($curl);

@@ -1,5 +1,5 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 /*
  *  
  */
@@ -14,7 +14,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
     }
 }
 
-require_once 'MY_ControllerAdmin.php';
+require_once APPPATH.'core/'.'MY_ControllerAdmin.php';
 
 //require_once 'KLogger.php';
 
@@ -26,10 +26,6 @@ class SysInfo_Admin extends MY_ControllerAdmin {
     protected $pageKey = 1;
     protected $orderType = "ASC";
 
-//for import
-
-    const TITLE_ROW_START_IMPORT = "<begin>";
-    const TITLE_ROW_END_IMPORT = "<end>";
     
     public function __construct() {
         parent::__construct();
@@ -83,8 +79,6 @@ class SysInfo_Admin extends MY_ControllerAdmin {
     /**
      * Login screen
      *
-     * @author : Haimv
-     * @since 2012/02/01
      */
     public function admin_login() {
         $loginData = array();
@@ -107,8 +101,6 @@ class SysInfo_Admin extends MY_ControllerAdmin {
     /**
      * Logout action
      *
-     * @author : Haimv
-     * @since 2012/02/01
      */
     public function logout() {
         $this->session->unset_userdata();
@@ -156,18 +148,16 @@ public function log_view() {
         $aryError = array();
 //get condtion for search
         $aryCondition = $this->getAllPostParams();
-         echo json_encode($aryCondition);
 //get result from search
-        $record_per_page = 200;
+        $record_per_page = 100;
         $intIsOk = $this->sysinfo_admin_model->search_log($aryCondition, $aryData, $pageKey, $record_per_page);
 //throw client
-        echo json_encode($aryResult);
-//        $aryResult = array();
-//        $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
-//        $aryResult['html'] = $this->load->view('admin/log_list', $aryData, true);
-//        $aryResult['intIsOk'] = $intIsOk;
-//        header("Content-Type: text/html; charset=UTF-8");
-//        echo json_encode($aryResult);
+       $aryResult = array();
+       $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
+       $aryResult['html'] = $this->load->view('admin/log_list', $aryData, true);
+       $aryResult['intIsOk'] = $intIsOk;
+       header("Content-Type: text/html; charset=UTF-8");
+       echo json_encode($aryResult);
     }
 
     /**
