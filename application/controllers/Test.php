@@ -37,4 +37,17 @@ class Test extends CI_Controller {
 		// $this->load->view('welcome_message');
 		$this->load->view('jquery/test');
 	}
+    /***************
+    /*
+    * widget 
+    */
+    public function weather(){
+        $this->load->view('jquery/weather');
+    }
+    
+    public function widget(){
+        $this->load->view('widget/test');
+    }
+    
+    /*****************/
 }

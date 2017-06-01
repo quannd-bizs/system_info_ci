@@ -10,6 +10,7 @@
                 <th align="center">Disk%</th>
                 <th align="center">Disk Free (Byte)</th>
                 <th align="center">DiskIO Utilize %</th>
+                <th align="center">Date</th>
                 <th align="center">Time</th>
                 <th colspan="2">Edit</th>
             </tr>
@@ -29,8 +30,8 @@
                         <td><?php echo  $v['fullest_disk']; ?></td> 
                         <td><?php echo  $v['fullest_disk_free']; ?></td> 
                         <td><?php echo  $v['disk_io']; ?></td> 
-                        
-                        <td><?php echo  $v['last_reported_at']; ?></td>                                                        
+                        <td><?php echo  $v['last_reported_at']; ?></td>
+                        <td><?php echo  $v['time']; ?></td>
                         <td align="center">
                             <a href="<?php echo base_url() ?>SysInfo_Admin/log_detail/<?php echo $v['id']; ?>">
                                 <img src="<?php echo base_url() ?>www/images/common/icon-edit.gif"/>

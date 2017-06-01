@@ -14,7 +14,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
     }
 }
 
-require_once APPPATH.'core/'.'MY_ControllerAdmin.php';
+require_once APPPATH.'core/MY_ControllerAdmin.php';
 
 //require_once 'KLogger.php';
 
@@ -151,6 +151,7 @@ public function log_view() {
 //get result from search
         $record_per_page = 100;
         $intIsOk = $this->sysinfo_admin_model->search_log($aryCondition, $aryData, $pageKey, $record_per_page);
+//        var_dump($aryCondition);
 //throw client
        $aryResult = array();
        $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
