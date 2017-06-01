@@ -29,3 +29,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.sublime-project
 doc
 /doc
+/system/cache

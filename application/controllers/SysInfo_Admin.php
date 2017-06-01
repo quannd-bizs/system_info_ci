@@ -103,7 +103,7 @@ class SysInfo_Admin extends MY_ControllerAdmin {
      *
      */
     public function logout() {
-        $this->session->unset_userdata();
+        $this->session->unset_userdata('member_session');
         $this->session->sess_destroy();
         $this->load->view('admin/admin_login');
     }
