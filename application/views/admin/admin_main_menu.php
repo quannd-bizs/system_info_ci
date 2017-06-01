@@ -84,8 +84,8 @@
         <div id="select_city_box_content">
             <h2 class="title">BIPVN SYSTEM</h2>
             <ul>
-                <li><a href="<? echo base_url(); ?>SysInfo_Admin/help_view/">HELP</a></li>
-                <li><a href="<? echo base_url(); ?>SysInfo_Admin/log_view/">LOGS MANAGEMENT</a></li>
+                <li><a href="<?php echo base_url(); ?>SysInfo_Admin/help_view/">HELP</a></li>
+                <li><a href="<?php echo base_url(); ?>SysInfo_Admin/log_view/">LOGS MANAGEMENT</a></li>
             </ul>
         </div>
     </div>
