@@ -90,7 +90,7 @@ class SysInfo_Admin_Model extends MY_Model {
 //                $sql .=" AND server_id = '%{$aryCondition['server_id']}%'";
 //            }
 
-           /* if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) != '') {
+            if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) != '') {
                 $strFromDate = str_replace('/', '-', trim($aryCondition['log_date_from']));
                 $str = $aryCondition['log_date_to'];
                 $aryCondition['log_date_to'] = $this->add_date($str, 1);
@@ -106,7 +106,7 @@ class SysInfo_Admin_Model extends MY_Model {
                 $aryCondition['log_date_to'] = $this->add_date($str, 1);
                 $strToDate = str_replace('/', '-', trim($aryCondition['log_date_to']));
                 $sql .=" AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
-            }*/
+            }
 
 
             $sql .= " ORDER BY id DESC";
