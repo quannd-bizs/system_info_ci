@@ -1,0 +1,584 @@
+/* 
+    Document   : newCascadeStyleSheet
+    Created on : 2012/01/11, 14:52:40
+    Author     : HAIMV
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: none repeat scroll 0 0 #FFFFFF;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body, td, th, input, select, textarea, option, optgroup {
+    color: #000000;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}
+input[type="text"], input[type="password"] {
+    padding: 2px;
+}
+select {
+    padding: 1px;
+}
+textarea {
+    padding: 2px;
+}
+a, a:visited {
+    color: #003366;
+    cursor: pointer;
+    text-decoration: underline;
+}
+a img {
+    border: 0 none;
+}
+form {
+    margin: 0;
+    padding: 0;
+}
+label {
+    cursor: pointer;
+}
+#header .div1 {
+    background: url("../../images/my_admin/header.png") repeat-x scroll 0 0 transparent;
+    height: 56px;
+    min-width: 900px;
+    padding: 0 30px;
+}
+#header .div2 {
+    color: #FFFFFF;
+    float: left;
+    padding: 18px 0 0;
+}
+#header .div3 {
+    color: #FFFFFF;
+    float: right;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    padding: 15px 0 0;
+    text-align: right;
+}
+#header .div2 span {
+    font-weight: bold;
+}
+#menu {
+    background: url("../../images/my_admin/menu.png") repeat-x scroll 0 0 transparent;
+    clear: both;
+    height: 34px;
+    min-width: 900px;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
+}
+#menu > ul.left {
+    float: left;
+}
+#menu > ul.right {
+    float: right;
+}
+#menu > ul {
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+#menu > ul ul {
+    background: url("../../images/my_admin/transparent.png") repeat scroll 0 0 transparent;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#menu > ul a {
+    color: #FFFFFF;
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+}
+#menu > ul > li + li {
+    background: url("../../images/my_admin/split.png") no-repeat scroll left center transparent;
+}
+#menu > ul .top, #menu > ul li li.sfhover {
+    color: #FFFFFF;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    padding: 10px 15px 9px 17px;
+    text-align: center;
+}
+#menu > ul ul li {
+    padding: 2px;
+}
+#menu > ul .selected .top {
+    background: url("../../images/my_admin/selected.png") repeat-x scroll 0 0 transparent;
+    color: #FFFFFF;
+}
+#menu > ul .selected:hover a.top, #menu > ul .sfhover a.top {
+}
+#menu > ul .parent {
+    background: url("../../images/my_admin/arrow-right.png") no-repeat scroll 95% center transparent;
+}
+#menu > ul li {
+    float: left;
+    list-style: none outside none;
+}
+#menu > ul li ul {
+    position: absolute;
+}
+#menu > ul li li {
+    clear: both;
+}
+#menu > ul li ul a {
+    color: #FFFFFF;
+    height: 15px;
+    width: 145px;
+}
+#menu > ul li ul ul {
+    margin: -27px 0 0 157px;
+}
+#menu > ul li li:hover, #menu > ul li li.sfhover {
+    background: none repeat scroll 0 0 #333333;
+    color: #000000;
+}
+#container {
+    height: 100%;
+}
+body > #container {
+    height: auto;
+    min-height: 100%;
+}
+#content {
+    background: url("../../images/my_admin/background.png") repeat-x scroll 0 1px #FFFFFF;
+    min-width: 900px;
+    padding: 10px 30px 128px;
+}
+#footer {
+    background: url("../../images/my_admin/footer.png") repeat-x scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #333333;
+    font-size: 12px;
+    height: 90px;
+    margin-top: -128px;
+    padding-top: 38px;
+    position: relative;
+    text-align: center;
+}
+#footer a {
+    color: #333333;
+    text-decoration: underline;
+}
+.breadcrumb, .breadcrumb a {
+    color: #666666;
+    font-size: 12px;
+    margin-bottom: 15px;
+}
+.success {
+    background: url("../../images/my_admin/success.png") no-repeat scroll 10px center #EAF7D9;
+    border: 1px solid #BBDF8D;
+    color: #555555;
+    margin-bottom: 15px;
+    padding: 10px 10px 10px 33px;
+}
+.warning {
+    background: url("../../images/my_admin/warning.png") no-repeat scroll 10px center #FFD1D1;
+    border: 1px solid #F8ACAC;
+    color: #555555;
+    margin-bottom: 15px;
+    padding: 10px 10px 10px 33px;
+}
+.attention {
+    background: url("../../images/my_admin/attention.png") no-repeat scroll 10px center #FFF5CC;
+    border: 1px solid #F2DD8C;
+    color: #555555;
+    margin-bottom: 15px;
+    padding: 10px 10px 10px 33px;
+}
+.required {
+    color: #FF0000;
+    font-weight: bold;
+}
+.error {
+    color: #FF0000;
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 3px;
+}
+.help {
+    color: #666666;
+    display: block;
+    font-family: Verdana,Geneva,sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+}
+.icon {
+    cursor: pointer;
+    vertical-align: middle;
+}
+.image {
+    cursor: pointer;
+}
+.box {
+    margin-bottom: 15px;
+}
+.box > .heading {
+    background: url("../../images/my_admin/box.png") repeat-x scroll 0 0 transparent;
+    border: 1px solid #DBDBDB;
+    border-radius: 7px 7px 0 0;
+    height: 38px;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+.box > .heading h1 {
+    color: #003A88;
+    float: left;
+    font-size: 16px;
+    margin: 0;
+    padding: 11px 0 0;
+}
+.box > .heading h1 img {
+    float: left;
+    margin-left: 3px;
+    margin-right: 8px;
+    margin-top: -1px;
+}
+.box > .heading .buttons {
+    float: right;
+    padding-top: 8px;
+}
+.box > .content {
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    border-right: 1px solid #CCCCCC;
+    min-height: 300px;
+    overflow: auto;
+    padding: 10px;
+}
+a.button, .list a.button {
+    background: url("../../images/my_admin/button-left.png") no-repeat scroll left top transparent;
+    color: #FFFFFF;
+    display: inline-block;
+    margin-right: 5px;
+    padding-left: 8px;
+    text-decoration: none;
+}
+a.button span {
+    background: url("../../images/my_admin/button-right.png") no-repeat scroll right top transparent;
+    color: #FFFFFF;
+    display: block;
+    padding: 5px 10px 5px 2px;
+    text-decoration: none;
+}
+table.filter {
+    background: none repeat scroll 0 0 #E7EFEF;
+    border: 1px solid #C6D7D7;
+    margin-bottom: 15px;
+    width: 100%;
+}
+table.filter td {
+    padding: 5px;
+}
+.list {
+    border-collapse: collapse;
+    border-left: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    margin-bottom: 20px;
+    width: 100%;
+}
+.list td {
+    border-bottom: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+}
+.list thead td {
+    background-color: #EFEFEF;
+    padding: 0 5px;
+}
+.list thead td a, .list thead td {
+    color: #222222;
+    font-weight: bold;
+    text-decoration: none;
+}
+.list tbody td a {
+    text-decoration: underline;
+}
+.list tbody td {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding: 0 5px;
+    vertical-align: middle;
+}
+.list .left {
+    padding: 7px;
+    text-align: left;
+}
+.list .right {
+    padding: 7px;
+    text-align: right;
+}
+.list .center {
+    padding: 7px;
+    text-align: center;
+}
+.list .asc {
+    background: url("../../images/my_admin/asc.png") no-repeat scroll right center transparent;
+    padding-right: 15px;
+}
+.list .desc {
+    background: url("../../images/my_admin/desc.png") no-repeat scroll right center transparent;
+    padding-right: 15px;
+}
+.list .filter td {
+    background: none repeat scroll 0 0 #E7EFEF;
+    padding: 5px;
+}
+.pagination {
+    border-top: 1px solid #DDDDDD;
+    display: inline-block;
+    padding-top: 6px;
+    width: 100%;
+}
+.pagination .links {
+    float: right;
+    padding-top: 6px;
+}
+.pagination .links a {
+    border: 1px solid #DDDDDD;
+    color: #A3A3A3;
+    font-size: 12px;
+    padding: 4px 10px;
+    text-decoration: none;
+}
+.pagination .links b {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #269BC6;
+    color: #269BC6;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 4px 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.pagination .links span {
+    border: 1px solid #DDDDDD;
+    color: #A3A3A3;
+    font-size: 12px;
+    padding: 4px 10px;
+    text-decoration: none;
+}
+
+
+.pagination .results {
+    float: right;
+    font-size: 12px;
+    padding-top: 6px;
+    padding: 5px;
+}
+table.form {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    width: 100%;
+}
+table.form > tbody > tr > td:first-child {
+    width: 200px;
+}
+table.form > tbody > tr > td {
+    border-bottom: 1px dotted #CCCCCC;
+    color: #000000;
+    padding: 10px;
+}
+.scrollbox {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #CCCCCC;
+    height: 100px;
+    overflow-y: scroll;
+    width: 350px;
+}
+.scrollbox img {
+    float: right;
+}
+.htabs {
+    border-bottom: 1px solid #DDDDDD;
+    height: 30px;
+    line-height: 16px;
+    margin-bottom: 15px;
+    padding: 0 0 0 10px;
+}
+.htabs a {
+    background: url("../../images/my_admin/tab.png") repeat-x scroll 0 0 #FFFFFF;
+    border-left: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    color: #000000;
+    display: none;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 2px;
+    padding: 7px 15px 6px;
+    text-align: center;
+    text-decoration: none;
+}
+.htabs a.selected {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-bottom: 7px;
+}
+.vtabs {
+    border-right: 1px solid #DDDDDD;
+    display: block;
+    float: left;
+    min-height: 300px;
+    padding: 10px 0;
+    width: 190px;
+}
+.vtabs a {
+    display: none;
+}
+.vtabs a, .vtabs span {
+    background: none repeat scroll 0 0 #F7F7F7;
+    border-bottom: 1px solid #DDDDDD;
+    border-left: 1px solid #DDDDDD;
+    border-top: 1px solid #DDDDDD;
+    clear: both;
+    color: #000000;
+    display: block;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    padding: 6px 14px 7px 15px;
+    text-align: right;
+    text-decoration: none;
+    width: 160px;
+}
+.vtabs a.selected {
+    background: none repeat scroll 0 0 #FFFFFF;
+    padding-right: 15px;
+}
+.vtabs a img, .vtabs span img {
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+}
+.vtabs-content {
+    margin-left: 205px;
+}
+.scrollbox div {
+    padding: 3px;
+}
+.scrollbox div input {
+    margin: 0 3px 0 0;
+    padding: 0;
+}
+.scrollbox div.even {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.scrollbox div.odd {
+    background: none repeat scroll 0 0 #E4EEF7;
+}
+.overview {
+    float: left;
+    margin-bottom: 20px;
+    width: 49%;
+}
+.overview table {
+    width: 100%;
+}
+.overview td + td {
+    text-align: right;
+}
+.statistic {
+    float: right;
+    margin-bottom: 20px;
+    width: 49%;
+}
+.range {
+    color: #FFFFFF;
+    float: right;
+    vertical-align: middle;
+}
+.range {
+    padding-right: 1px;
+    padding-top: 1px;
+}
+.range, .range select {
+    font-size: 11px;
+}
+.latest {
+    clear: both;
+}
+.latest tbody td {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.dashboard-heading {
+    background: none repeat scroll 0 0 #547C96;
+    border-bottom: 1px solid #8EAEC3;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+}
+.dashboard-content {
+    background: none repeat scroll 0 0 #FCFCFC;
+    border: 1px solid #8EAEC3;
+    min-height: 180px;
+    padding: 10px;
+}
+
+
+/*searching msg*/
+.searching-msg {
+    height: 20px;
+    left: 50%;
+    line-height: 20px;
+    margin-left: -200px;
+    padding: 5px;
+    position: absolute;
+    text-align: center;
+    width: 400px;
+}
+
+.status-msg-text{
+    font-size:12px;
+    padding:2px 0px 2px 7px;
+    text-align:center;
+    color:#FFF;
+    background-color:#349dce !important;
+    border:1px solid #fff;
+    -moz-border-radius:5px;
+}
+
+
+.autocomplete_completionListElement {
+    background-color: inherit;
+    border: 1px solid buttonshadow;
+    color: windowtext;
+    height: 200px;
+    list-style-type: none;
+    margin: 0 !important;
+    overflow: auto;
+    text-align: left;
+}
+.autocomplete_highlightedListItem {
+    background-color: #FFFF99;
+    color: black;
+    padding: 1px;
+}
+.autocomplete_listItem {
+    background-color: window;
+    color: windowtext;
+    padding: 1px;
+}
