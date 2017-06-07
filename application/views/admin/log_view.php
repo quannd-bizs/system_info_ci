@@ -22,13 +22,15 @@
                             <table align="center" width="100%" cellspacing="0" cellpadding="3" border="0">
                                 <tbody>
                                     <tr>
-                                        <td width="10%"  style="width: 200px;">  <strong>Server ID</strong> </td>
-                                <select id="server_id" name="server_id" value ='' width="10%" >
+                                        <td width="10%"  style="width: 70px;">  <strong>Server ID</strong> </td>
+                                <td>
+                                    <select id="server_id" name="server_id" value ='' width="10%" >
                                     <option value=''></option>
                                     <?php foreach($arrayServerId as $value) { ?>
                                         <option value=<?php echo $value['server_id']; ?>> <?php echo $value['name'] ?></option>
                                     <?php } ?>
-                                </select>
+                                    </select>
+                                </td>
                                 <td width = "7%"><strong>Range Date</strong></td>
                                 <td width = "30%">
                                     <input type = "text" value = "<?php
@@ -53,7 +55,7 @@
                         <div class = "clearfix"></div>
                         <div align = "center">
                             <table align = "center">
-                                <td><input type = "button" onclick = "AdminController.log_search();" class = "button" value = "  Search " name = "cmdSearch" style = "width: 100px;"/></td>
+                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  Search " name = "cmdSearch" style = "width: 100px;"/></td>
                             </table>
                         </div>
                     </form>
@@ -81,11 +83,12 @@
 </div>
 <script type="text/javascript" src="<?php echo base_url() ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" >
-    window.onload = AdminController.log_search();
-    $('#server_id').attr('value',  $('#select_ServerId').attr('value'));
+    $('#server_id').val();
     function selectServerId(select){
         $('#server_id').attr('value', select.selectedOptions[0].value);
+        AdminController.log_search();
     }
+    window.onload = AdminController.log_search();
 </script>
 
 

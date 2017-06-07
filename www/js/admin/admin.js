@@ -7,16 +7,12 @@
  *  @since: 2012/05  
  */
 var Connect = YAHOO.util.Connect,
-        Panel = YAHOO.widget.Panel,
-        KeyListener = YAHOO.util.KeyListener,
-        Event = YAHOO.util.Event,
-        Dom = YAHOO.util.Dom,
-        Json = YAHOO.lang.JSON;
+    Panel = YAHOO.widget.Panel,
+    KeyListener = YAHOO.util.KeyListener,
+    Event = YAHOO.util.Event,
+    Dom = YAHOO.util.Dom,
+    Json = YAHOO.lang.JSON;
 
-//monter_avata = 80X80, 50X50
-//full 240X240
-//fragment 60X60
-//Huynv added
 var firstTimeClickViewGroupTime = 0;
 
 var fragment_width = 60, fragment_height = 60;
@@ -2678,7 +2674,7 @@ var AdminController = {
     },
     delRankingSuccess: function (xmlhttp) {
         var strJsonData = xmlhttp.responseText;
-        var base_url = Dom.get('base_url').value;
+        var base_url = $('#base_url').val();
         try {
             var aryData = Json.parse(strJsonData);
             if (aryData.intIsOk == 1) {
@@ -2692,7 +2688,7 @@ var AdminController = {
     },
 
     log_search: function (orderType, orderField, page) {
-        var base_url = $('#base_url').value;
+        var base_url = $('#base_url').val();
 
         if (orderField == undefined) {
             orderField = '';
@@ -2705,12 +2701,17 @@ var AdminController = {
         if (page == undefined) {
             page = 1;
         }
-        var strPost = 'orderType=' + orderType + '&orderField=' + orderField;
+        var strPost = '&orderType=' + orderType + '&orderField=' + orderField;
 
-        var url = base_url + 'SysInfo_Admin/logSearch/?ajax=1&pageNo=' + page + strPost;
-        $.post(url, postData, function (data) {
+        var url = base_url + 'SysInfo_Admin/log_search?ajax=1&pageNo=' + page + strPost;
+        var form = $('#frmSearch');
+        var from = $('#log_date_from').val();
+        var to = $('#log_date_to').val();
+        var svid = $('#server_id').val();
+        var postData = {log_date_from:from, log_date_to: to, server_id: svid};
+        $.post(url, postData, function(responseData, textStatus, jqXHR) {
             try {
-                var aryData = $.parseJSON(data);
+                var aryData = $.parseJSON(responseData);
                 $('#result').html(aryData.html);
                 $('#strPaging1').html(aryData.strPaging);
                 $('#strPaging2').html(aryData.strPaging);
@@ -2718,10 +2719,10 @@ var AdminController = {
             } catch (e) {
                 alert(e.message);
             }
-        }).always(function () {
+        }).always(function() {
             $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
-        }).fail(function () {
-            alert('Sorry ! System Error !');
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
         });
     },
 

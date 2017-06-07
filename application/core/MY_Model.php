@@ -132,7 +132,94 @@ class MY_Model extends CI_Model {
         return $flag;
     }
 
-  
+    /**
+     *
+     * @param <type> $sql
+     * @param <type> $tmpResult
+     * @return <type> 
+     */
+    public function getRecord($sql, &$tmpResult, $type = 0, $id = null,$time = 300) {
+
+        $intIsOk = self::CI_IS_OK;
+        $key = "";
+        try {
+           // $sql = 'SELECT SQL_CALC_FOUND_ROWS ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
+           $sql = 'SELECT ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
+
+
+            $tmpResult = false;
+            //$this->writeLogSqlTime("START : " . date('Y-m-d H:i:s') ." ->", $sql);
+            
+            if ($type > 0 && $id != null) {
+                // $key = "america" . $type . $id;
+                $key = $type . $id;
+                $memcache_obj = $this->createMemcache();
+                $tmpResult = $memcache_obj->get("{$key}");
+            }
+            if ($tmpResult == false) {
+            // use slave database
+                // $this->_resource = $this->db_slave->query($sql);
+            // use master database
+            $this->_resource = $this->db_master->query($sql);
+                if ($this->_resource) {
+                    $result = $this->_resource->result_array();
+                }else{
+                    $this->writeLogSql($result, $sql);
+                }
+                if ($result) {
+                    $tmpResult = $this->_resource->result_array();
+
+                    if ($type > 0 && $id != null) {
+                        $this->setMemcache($memcache_obj, "{$key}", $tmpResult,$time);
+                    }
+                }
+            } else {
+                //  var_dump($tmpResult);
+            }
+            //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
+        } catch (Exception $ex) {
+            //show_error('DB Exception!');
+            $intIsOk = self::CI_ERR_DB_EXCEPTION;
+        }
+
+        return $intIsOk;
+    }
+
+    /**
+     * Search DAO
+     * 
+     */
+    public function searchResult($sql, &$result, $pageKey = "pageNo", $recordPerPage = 20, $orderField = null, $orderType = null, $type = 0, $id = null) {
+        $tmpResult = array();
+        $totalRecord = 0;
+        
+        // $totalRecord = $this->db_slave->query($sql)->num_rows();
+         $totalRecord = $this->db_master->query($sql)->num_rows();
+        $pageIndex = $pageKey;
+        $pageIndex = (is_numeric($pageIndex) && $pageIndex > 0) ? $pageIndex : 1;
+        $offset = ($pageIndex - 1) * $recordPerPage;
+
+        //order if exits
+        if ($orderField && $orderType) {
+            $order = " ORDER BY $orderField $orderType ";
+        } else {
+            $order = "";
+        }
+
+        $sql .=" $order LIMIT " . $offset . "," . $recordPerPage;
+
+        $flag = $this->getRecord($sql, $tmpResult, $type, $id);
+
+        if ($flag == 1) {
+            $result['totalPage'] = ceil($totalRecord / $recordPerPage);
+            $result['totalRecord'] = $totalRecord;
+            $result['recordFirst'] = $offset + 1;
+            $result['recordLast'] = ($offset + $recordPerPage > $totalRecord) ? $totalRecord : $offset + $recordPerPage;
+            $result['pageIndex'] = $pageIndex;
+            $result['data'] = $tmpResult;
+        }
+        return $flag;
+    }
 
     /**
      *
