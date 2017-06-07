@@ -2709,7 +2709,9 @@ var AdminController = {
         var to = $('#log_date_to').val();
         var svid = $('#server_id').val();
         var postData = {log_date_from:from, log_date_to: to, server_id: svid};
-        $.post(url, postData, function(responseData, textStatus, jqXHR) {
+        
+        $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
+        $.post(url, postData).done(function(responseData, textStatus, jqXHR) {
             try {
                 var aryData = $.parseJSON(responseData);
                 $('#result').html(aryData.html);
@@ -2719,8 +2721,6 @@ var AdminController = {
             } catch (e) {
                 alert(e.message);
             }
-        }).always(function() {
-            $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
         }).fail(function (jqXHR, textStatus, errorThrown) {
             console.log(errorThrown);
         });
