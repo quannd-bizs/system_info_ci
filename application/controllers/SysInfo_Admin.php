@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
  *  
@@ -14,7 +15,7 @@ function exceptions_error_handler($severity, $message, $filename, $lineno) {
     }
 }
 
-require_once APPPATH.'core/MY_ControllerAdmin.php';
+require_once APPPATH . 'core/MY_ControllerAdmin.php';
 
 //require_once 'KLogger.php';
 
@@ -26,15 +27,14 @@ class SysInfo_Admin extends MY_ControllerAdmin {
     protected $pageKey = 1;
     protected $orderType = "ASC";
 
-    
     public function __construct() {
         parent::__construct();
-        $this->load->model('sysinfo_admin_model');        
+        $this->load->model('SysinfoAdminModel');
 
         $aryMemberSession = array();
         $aryMemberSession = $this->session->userdata('member_session');
         $this->login_name = $aryMemberSession['member_username'];
-     
+
         /// For sort
         if (isset($_GET['pageNo'])) {
             $this->pageKey = $_GET['pageNo'];
@@ -60,7 +60,7 @@ class SysInfo_Admin extends MY_ControllerAdmin {
      * @since 2012/02/01
      */
     public function index() {
-       
+
         $aryMemberSession = $this->session->userdata('member_session');
         if ($aryMemberSession) {
             redirect(base_url() . 'sysinfo_admin/admin_main_menu');
@@ -84,7 +84,7 @@ class SysInfo_Admin extends MY_ControllerAdmin {
         $loginData = array();
         $aryError = array();
         $loginData = $this->getAllPostParams();
-        $intIsOk = $this->sysinfo_admin_model->selectLoginInfo($loginData, $result);
+        $intIsOk = $this->SysinfoAdminModel->selectLoginInfo($loginData, $result);
         if ($intIsOk == 1 && true == isset($result[0])) {
             $this->session->set_userdata('member_session', $result[0]);
             $this->login_name = $result[0]['member_username'];
@@ -122,16 +122,20 @@ class SysInfo_Admin extends MY_ControllerAdmin {
             return false;
         }
     }
-public function log_view() {
+
+    public function log_view() {
         if ($this->checkLogin() == false) {
             return;
         }
 
 //check member session the access data
-        $aryData = array();
-        $aryData['user_login'] = $this->login_name;
+        $array = array();
+
 //to client
-        $this->load->view('admin/log_view', $aryData);
+        $this->SysinfoAdminModel->selectServerInfo($array);
+        $arrayData['user_login'] = $this->login_name;
+        $arrayData['arrayServerId'] = $array;
+        $this->load->view('admin/log_view', $arrayData);
     }
 
     public function log_search() {
@@ -150,15 +154,14 @@ public function log_view() {
         $aryCondition = $this->getAllPostParams();
 //get result from search
         $record_per_page = 100;
-        $intIsOk = $this->sysinfo_admin_model->search_log($aryCondition, $aryData, $pageKey, $record_per_page);
+        $intIsOk = $this->SysinfoAdminModel->searchLog($aryCondition, $aryData, $pageKey, $record_per_page);
 //        var_dump($aryCondition);
 //throw client
-       $aryResult = array();
-       $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
-       $aryResult['html'] = $this->load->view('admin/log_list', $aryData, true);
-       $aryResult['intIsOk'] = $intIsOk;
-       header("Content-Type: text/html; charset=UTF-8");
-       echo json_encode($aryResult);
+        $aryResult = array();
+        $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
+        $aryResult['html'] = $this->load->view('admin/log_list', $aryData, true);
+        $aryResult['intIsOk'] = $intIsOk;
+        echo json_encode($aryResult);
     }
 
     /**
@@ -175,7 +178,7 @@ public function log_view() {
 
         $id = $this->uri->segment(3, 0);
         if ($id) {
-            $intIsOk = $this->sysinfo_admin_model->get_log_info($id, $aryLogs);
+            $intIsOk = $this->SysinfoAdminModel->get_log_info($id, $aryLogs);
             if ($intIsOk == 1) {
                 $aryData['aryLogs'] = $aryLogs[0];
                 $this->load->view('admin/log_detail', $aryData);
@@ -201,7 +204,7 @@ public function log_view() {
                 'status' => 2
             );
             $condition = array('log_id' => $log_id);
-            $intIsOk = $this->sysinfo_admin_model->update(SysInfo_Admin_Model::TABLE_LOG, $data, $condition);
+            $intIsOk = $this->SysinfoAdminModel->update(SysInfoAdminModel::TABLE_LOG, $data, $condition);
             if ($intIsOk == -2) {
                 $aryError[] = 'update error';
             }
@@ -230,4 +233,5 @@ public function log_view() {
                     </script>
                     ";
     }
+
 }

@@ -20,7 +20,7 @@
 
         <input type="hidden" value="<?php echo base_url() ?>" name="base_url" id="base_url"/>
         <link rel="shortcut icon" href="<?php echo base_url() ?>www/images/favicon.ico" type="image/ico" />
-        <script type="text/javascript" src="<?php echo base_url() ?>www/js/monter/monter.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>www/js/admin/admin.js"></script>
     </head>
 
     <body class="yui-skin-sam">

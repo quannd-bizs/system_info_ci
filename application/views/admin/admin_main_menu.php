@@ -18,7 +18,7 @@
             h2.secondary a{color:#1d3652}
 
             body {
-                background: url("<?php echo base_url(); ?>www/images/monter/bg.png") repeat scroll 0 0 #EFEFEF;
+                background: url("<?php echo base_url(); ?>www/images/admin/bg.png") repeat scroll 0 0 #EFEFEF;
             }
             #select_city_box {
                 width: 100%;
@@ -43,7 +43,7 @@
                 font-weight: bold;
                 text-align: center;
                 padding: 10px 0px;
-                background: white url(<?php echo base_url(); ?>www/images/monter/rongbay-btn.png) repeat-x 0px -1569px;
+                background: white url(<?php echo base_url(); ?>www/images/admin/rongbay-btn.png) repeat-x 0px -1569px;
 
                 color: #fff;
                 border-top-left-radius: 5px;
@@ -58,7 +58,7 @@
             }
 
             #select_city_box_content ul li a {
-                background: white url(<?php echo base_url(); ?>www/images/monter/rongbay-split.png) repeat-x 0px -388px;
+                background: white url(<?php echo base_url(); ?>www/images/admin/rongbay-split.png) repeat-x 0px -388px;
                 border: 1px #d8d8d8 solid;
                 border-radius: 5px;
                 -moz-border-radius: 5px;

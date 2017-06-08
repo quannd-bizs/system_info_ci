@@ -14,7 +14,6 @@
                 <th align="center">Time</th>
                 <th colspan="2">Edit</th>
             </tr>
-            <!-- begin list TMS-->
 
             <?php if (isset($data[0])) { ?>
                 <?php
@@ -22,16 +21,16 @@
                 foreach ($data as $v) {
                     ?>
                     <tr  class="<?php if ($i % 2 == 0) { ?>filter<?php } ?>">
-                        <td><?php echo  $v['id']; ?></td>     
-                        <td><?php echo  $v['server_id']; ?></td>     
-                        <td><?php echo  $v['cpu']; ?></td>     
-                        <td><?php echo  $v['memory_used']; ?></td> 
-                        <td><?php echo  $v['memory_total']; ?></td> 
-                        <td><?php echo  $v['fullest_disk']; ?></td> 
-                        <td><?php echo  $v['fullest_disk_free']; ?></td> 
-                        <td><?php echo  $v['disk_io']; ?></td> 
-                        <td><?php echo  $v['last_reported_at']; ?></td>
-                        <td><?php echo  $v['time']; ?></td>
+                        <td><?php echo $v['id']; ?></td>     
+                        <td><?php echo $v['server_id']; ?></td>     
+                        <td><?php echo $v['cpu']; ?></td>     
+                        <td><?php echo $v['memory_used']; ?></td> 
+                        <td><?php echo $v['memory_total']; ?></td> 
+                        <td><?php echo $v['fullest_disk']; ?></td> 
+                        <td><?php echo $v['fullest_disk_free']; ?></td> 
+                        <td><?php echo $v['disk_io']; ?></td> 
+                        <td><?php echo $v['last_reported_at']; ?></td>
+                        <td><?php echo $v['time']; ?></td>
                         <td align="center">
                             <a href="<?php echo base_url() ?>SysInfo_Admin/log_detail/<?php echo $v['id']; ?>">
                                 <img src="<?php echo base_url() ?>www/images/common/icon-edit.gif"/>
@@ -44,13 +43,10 @@
             <?php } else { ?>
                 <tr><td colspan="15" align="center" style="height: 20px;"> No Data !</td></tr>
             <?php } ?>
-            <!-- End list TMS-->
         </tbody>
     </table>
     <div style="clear: both"></div>
-    <div id="strPaging2" style="margin: 10px;"></div><br/>
     <table align="center">
         <tr align="center" valign="middle"></tr>
     </table>
-
 </form>

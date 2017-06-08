@@ -25,16 +25,16 @@
                 <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>www/css/tms/main.css" media="all" />
 
 
-                <script type="text/javascript" src="<?php echo base_url() ?>www/js/monter/jquery-1.6.4.min.js"></script>
-                <link rel="stylesheet"  type="text/css" href="<?php echo base_url(); ?>www/js/monter/forms.css">
-                    <script type="text/javascript" src="<?php echo base_url() ?>www/js/monter/forms.js"></script>
+                <script type="text/javascript" src="<?php echo base_url() ?>www/js/admin/jquery-1.6.4.min.js"></script>
+                <link rel="stylesheet"  type="text/css" href="<?php echo base_url(); ?>www/js/admin/forms.css">
+                    <script type="text/javascript" src="<?php echo base_url() ?>www/js/admin/forms.js"></script>
 
                     <input type="hidden" value="<?php echo base_url(); ?>" name="base_url" id="base_url"/>
                     <link rel="shortcut icon" href="<?php echo base_url() ?>www/images/favicon.ico" type="image/ico" />
 
                     <script type="text/javascript" src="<?php echo base_url() ?>www/common/ckeditorCustom/ckeditor.js"></script>
 
-                    <script type="text/javascript" src="<?php echo base_url() ?>www/js/monter/monter.js"></script>
+                    <script type="text/javascript" src="<?php echo base_url() ?>www/js/admin/admin.js"></script>
 
                     <input type="hidden" name="cal_status" id="cal_status" />
                     <div id="calContainer" style="display:none;position:absolute;z-index:100000"></div>
@@ -103,10 +103,7 @@
                                                 <tr>
                                                     <td width="100%">Welcome: <?php echo $user_login ?></td>
                                                     <td nowrap="nowrap">
-                                                        <!--                                        <a href="#">Help</a> |
-                                                                                                <a style="cursor: pointer;" onclick="">My Info</a> |
-                                                                                                <b><a href="">MyTask</a></b> |
-                                                                                                <a href="">Today</a> |-->
+                                                        <a href="">Today: <?php echo date('Y-m-d H:m:i'); ?></a> |
                                                         <a href="<?php echo base_url() ?>SysInfo_Admin/logout">Logout</a>
                                                     </td>
                                                 </tr>
