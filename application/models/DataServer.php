@@ -30,7 +30,9 @@ const TABLE_SERVER_INFO = 'server_info';
         $intIsOk = self::CI_IS_OK;
         try {
             if (is_array($aryData)) {
-                $intIsOk = $this->insert((string)self::TABLE_SERVER_INFO, $aryData);
+                $server_id = $aryData["server_id"];
+                unset($aryData["server_id"]);
+                $intIsOk = $this->insert('server_' . $server_id, $aryData);
             } else {
                 $intIsOk = self::CI_ERR_EX_OTHER;
             }

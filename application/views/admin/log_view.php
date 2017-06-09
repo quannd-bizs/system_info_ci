@@ -55,7 +55,9 @@
                         <div class = "clearfix"></div>
                         <div align = "center">
                             <table align = "center">
-                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  Search " name = "cmdSearch" style = "width: 100px;"/></td>
+                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  List All " name = "cmdSearch" style = "width: 100px;"/></td>
+                           
+                                <td><input type = "button" onclick = "AdminController.monitor_list()" class = "button" value = "  Monitor List " name = "monitor_list" style = "width: 100px;"/></td>
                             </table>
                         </div>
                     </form>

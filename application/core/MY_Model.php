@@ -36,9 +36,6 @@ class MY_Model extends CI_Model {
     private $_resource;
     private $LastInsertedID;
 
-    const MEMCACHE_HOST = "127.0.0.1";
-    const MEMCACHE_PORT = 11211;
-
     /**
      * Class constructor
      */
@@ -138,29 +135,18 @@ class MY_Model extends CI_Model {
      * @param <type> $tmpResult
      * @return <type> 
      */
-    public function getRecord($sql, &$tmpResult, $type = 0, $id = null,$time = 300) {
+    public function getRecord($sql, &$tmpResult) {
 
         $intIsOk = self::CI_IS_OK;
-        $key = "";
+
         try {
-           // $sql = 'SELECT SQL_CALC_FOUND_ROWS ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
-           $sql = 'SELECT ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
+          
+               $sql = 'SELECT ' . mb_substr(trim($sql), 6, mb_strlen(trim($sql), "UTF-8"), "UTF-8");
 
-
-            $tmpResult = false;
-            //$this->writeLogSqlTime("START : " . date('Y-m-d H:i:s') ." ->", $sql);
-            
-            if ($type > 0 && $id != null) {
-                // $key = "america" . $type . $id;
-                $key = $type . $id;
-                $memcache_obj = $this->createMemcache();
-                $tmpResult = $memcache_obj->get("{$key}");
-            }
-            if ($tmpResult == false) {
             // use slave database
                 // $this->_resource = $this->db_slave->query($sql);
             // use master database
-            $this->_resource = $this->db_master->query($sql);
+                $this->_resource = $this->db_master->query($sql);
                 if ($this->_resource) {
                     $result = $this->_resource->result_array();
                 }else{
@@ -168,19 +154,12 @@ class MY_Model extends CI_Model {
                 }
                 if ($result) {
                     $tmpResult = $this->_resource->result_array();
-
-                    if ($type > 0 && $id != null) {
-                        $this->setMemcache($memcache_obj, "{$key}", $tmpResult,$time);
-                    }
                 }
-            } else {
-                //  var_dump($tmpResult);
+                //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
+            } catch (Exception $ex) {
+                //show_error('DB Exception!');
+                $intIsOk = self::CI_ERR_DB_EXCEPTION;
             }
-            //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
-        } catch (Exception $ex) {
-            //show_error('DB Exception!');
-            $intIsOk = self::CI_ERR_DB_EXCEPTION;
-        }
 
         return $intIsOk;
     }
@@ -533,43 +512,6 @@ class MY_Model extends CI_Model {
         @fwrite($ourFileHandle, $message . "\n");
         @fwrite($ourFileHandle, "**************************************************************************" . "\n");
         @fclose($ourFileHandle);
-    }
-
-    public function testMemcache() {
-        $memcache = new Memcache;
-        $memcache->connect(self::MEMCACHE_HOST, 11211) or die("Cannot Connect");
-
-        $version = $memcache->getVersion();
-        echo "サーバーのバージョン: ". $version . "<br/>\n";
-    }
-
-    /**
-     * Create Memcache
-     */
-    public function createMemcache() {
-        $memcache_obj = new Memcache;
-        $memcache_obj->connect(self::MEMCACHE_HOST, self::MEMCACHE_PORT);
-        return $memcache_obj;
-    }
-
-    /**
-     * Set Memcache
-     * @param <type> $memcache_obj
-     * @param <type> $key
-     * @param <type> $data
-     */
-    public function setMemcache($memcache_obj, $key, $data,$time) {
-        if($time < 0){
-            $time = 300;
-        }
-        $memcache_obj->set($key, $data, false, $time);
-
-    }
-    public function deleteMemcache($type = 0, $id = null) {
-        $key = $type . $id;
-        $memcache_obj = $this->createMemcache();
-        $memcache_obj->delete($key);
-        
     }
 
     private function writeLogSqlTime($Title, $sql = "") {

@@ -2725,7 +2725,44 @@ var AdminController = {
             console.log(errorThrown);
         });
     },
+    monitor_list: function (orderType, orderField, page) {
+        var base_url = $('#base_url').val();
 
+        if (orderField == undefined) {
+            orderField = '';
+        }
+
+        if (orderType == undefined) {
+            orderType = 'DESC';
+        }
+
+        if (page == undefined) {
+            page = 1;
+        }
+        var strPost = '&orderType=' + orderType + '&orderField=' + orderField;
+
+        var url = base_url + 'SysInfo_Admin/monitor_list?ajax=1&pageNo=' + page + strPost;
+        var form = $('#frmSearch');
+        var from = $('#log_date_from').val();
+        var to = $('#log_date_to').val();
+        var svid = $('#server_id').val();
+        var postData = {log_date_from:from, log_date_to: to, server_id: svid};
+        
+        $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
+        $.post(url, postData).done(function(responseData, textStatus, jqXHR) {
+            try {
+                var aryData = $.parseJSON(responseData);
+                $('#result').html(aryData.html);
+                $('#strPaging1').html(aryData.strPaging);
+                $('#strPaging2').html(aryData.strPaging);
+                $('#loading').html('');
+            } catch (e) {
+                alert(e.message);
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        });
+    },
     log_update_stattus: function (log_id) {
         var base_url = Dom.get('base_url').value;
         answer = confirm('Are you sure fixed this bug ?');
