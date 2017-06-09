@@ -77,8 +77,9 @@ class SysInfoAdminModel extends MY_Model {
         try {
             // $this->select(self::TABLE_SERVER, null, $aryResult);
               $sql = "SELECT 
+                        `select`,
                         server_id,
-                        name
+                        name 
                     FROM " . self::TABLE_SERVER . " GROUP BY server_id";
             
             $intIsOk = $this->getRecord($sql, $aryResult);
@@ -94,7 +95,6 @@ class SysInfoAdminModel extends MY_Model {
             //sql
             $sql = "SELECT 
                        id                   ,
-                       server_id            ,
                        cpu                  ,
                        cpu_stolen           ,
                        disk_io              ,

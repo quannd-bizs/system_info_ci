@@ -25,9 +25,8 @@
                                         <td width="10%"  style="width: 70px;">  <strong>Server ID</strong> </td>
                                 <td>
                                     <select id="server_id" name="server_id" value ='' width="10%" >
-                                    <option value=''></option>
                                     <?php foreach($arrayServerId as $value) { ?>
-                                        <option value=<?php echo $value['server_id']; ?>> <?php echo $value['name'] ?></option>
+                                        <option value=<?php echo $value['server_id'] . "selected = " . (($value['select']==true)? "selected" : "") ?> > <?php echo $value['name'] ?></option>
                                     <?php } ?>
                                     </select>
                                 </td>
@@ -85,7 +84,6 @@
 </div>
 <script type="text/javascript" src="<?php echo base_url() ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" >
-    $('#server_id').val();
     function selectServerId(select){
         $('#server_id').attr('value', select.selectedOptions[0].value);
         AdminController.log_search();
