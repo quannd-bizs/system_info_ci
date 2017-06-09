@@ -1,7 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-//X-Api-Key					16b31a35130b0023a8d49a86551f5bb45a52bf9069bf384																
+//X-Api-Key for Application					16b31a35130b0023a8d49a86551f5bb45a52bf9069bf384																
+//X-Api-Key for Server					9cffbfa5d0abad7dff571e5e05119a921a247bac7f5eeaa																
 class SystemInfo extends CI_Controller {
 
 	/**
@@ -62,10 +63,10 @@ class SystemInfo extends CI_Controller {
 	*/
 	public function GetServer($isShow = Null){
 
-// curl -X GET 'https://api.newrelic.com/v2/servers.json' -H 'X-Api-Key:16b31a35130b0023a8d49a86551f5bb45a52bf9069bf384' -i										
+// curl -X GET 'https://api.newrelic.com/v2/servers.json' -H 'X-Api-Key:9cffbfa5d0abad7dff571e5e05119a921a247bac7f5eeaa' -i										
 							
 	$curl = curl_init();
- 	$header[0] = "X-Api-Key: 16b31a35130b0023a8d49a86551f5bb45a52bf9069bf384";	
+ 	$header[0] = "X-Api-Key: 9cffbfa5d0abad7dff571e5e05119a921a247bac7f5eeaa";	
  	$header[] = "Content-Type: application/json";
  	$header[] = "Accept-Encoding: gzip, deflate";
 
