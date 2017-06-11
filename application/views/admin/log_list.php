@@ -3,7 +3,7 @@
         <tbody>
             <tr style="height: 20px;">
                 <th align="center">ID</th>
-                <th align="center">Server ID</th>
+<!--                <th align="center">Server ID</th>-->
                 <th align="center">CPU %</th>
                 <th align="center">Memory %</th>
                 <th align="center">Memory Total (Byte)</th>
@@ -22,7 +22,6 @@
                     ?>
                     <tr  class="<?php if ($i % 2 == 0) { ?>filter<?php } ?>">
                         <td><?php echo $v['id']; ?></td>     
-                        <td><?php echo $v['server_id']; ?></td>     
                         <td><?php echo $v['cpu']; ?></td>     
                         <td><?php echo $v['memory_used']; ?></td> 
                         <td><?php echo $v['memory_total']; ?></td> 

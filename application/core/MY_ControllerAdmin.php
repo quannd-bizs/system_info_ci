@@ -776,7 +776,7 @@ class MY_ControllerAdmin extends CI_Controller {
 
     function add_date($orgDate, $year, $mth, $day) {
         $cd = strtotime($orgDate);
-        $retDAY = date('Y-m-d', mktime(0, 0, 0, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
+        $retDAY = date('Y/m/d', mktime(0, 0, 0, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
         return $retDAY;
     }
 

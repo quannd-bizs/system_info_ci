@@ -26,7 +26,7 @@
                                 <td>
                                     <select id="server_id" name="server_id" value ='' width="10%" >
                                     <?php foreach($arrayServerId as $value) { ?>
-                                        <option value=<?php echo $value['server_id'] . "selected = " . (($value['select']==true)? "selected" : "") ?> > <?php echo $value['name'] ?></option>
+                                        <option value=<?php echo $value['server_id'] . " selected = " . (($value['select']==true)? "selected" : "") ?> > <?php echo $value['name'] ?></option>
                                     <?php } ?>
                                     </select>
                                 </td>

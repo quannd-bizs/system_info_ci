@@ -168,12 +168,12 @@ class MY_Model extends CI_Model {
      * Search DAO
      * 
      */
-    public function searchResult($sql, &$result, $pageKey = "pageNo", $recordPerPage = 20, $orderField = null, $orderType = null, $type = 0, $id = null) {
+    public function searchResult($sql, &$result, $pageKey = "pageNo", $recordPerPage = 20, $orderField = null, $orderType = null) {
         $tmpResult = array();
         $totalRecord = 0;
         
         // $totalRecord = $this->db_slave->query($sql)->num_rows();
-         $totalRecord = $this->db_master->query($sql)->num_rows();
+        $totalRecord = $this->db_master->query($sql)->num_rows();
         $pageIndex = $pageKey;
         $pageIndex = (is_numeric($pageIndex) && $pageIndex > 0) ? $pageIndex : 1;
         $offset = ($pageIndex - 1) * $recordPerPage;
@@ -185,9 +185,9 @@ class MY_Model extends CI_Model {
             $order = "";
         }
 
-        $sql .=" $order LIMIT " . $offset . "," . $recordPerPage;
-
-        $flag = $this->getRecord($sql, $tmpResult, $type, $id);
+        $sql .=" {$order} LIMIT " . $offset . "," . $recordPerPage;
+        $this->writeLogLog("Show SQL", $sql);
+        $flag = $this->getRecord($sql, $tmpResult);
 
         if ($flag == 1) {
             $result['totalPage'] = ceil($totalRecord / $recordPerPage);
@@ -479,7 +479,7 @@ class MY_Model extends CI_Model {
 
     function add_date($orgDate, $year, $mth, $day) {
         $cd = strtotime($orgDate);
-        $retDAY = date('Y-m-d', mktime(0, 0, 0, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
+        $retDAY = date('Y/m/d', mktime(0, 0, 0, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
         return $retDAY;
     }
 

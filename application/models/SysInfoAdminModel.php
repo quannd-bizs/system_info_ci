@@ -105,32 +105,38 @@ class SysInfoAdminModel extends MY_Model {
                        fullest_disk_free    ,
 --                       health_status        ,
                        DATE_FORMAT(last_reported_at, '%Y/%m/%d') as last_reported_at,
-                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
-                    FROM " . self::TABLE_LOG . " WHERE 1=1 ";
+                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as time, 
+                       DATE_FORMAT(last_reported_at, '%H') as hour
+                    FROM " ;
             // By condtion
             if ($aryCondition['server_id'] !== '') {
-                $sql .= " AND server_id = '{$aryCondition['server_id']}'";
+                $sql .= "server_" . $aryCondition['server_id'];
+            }else{
+
             }
+            $sql .= " WHERE ";
 
             $strFromDate = $aryCondition['log_date_from'];
             $strToDate = $aryCondition['log_date_to'];
 
             if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) != '') {
                 $strToDate = $this->add_date($strToDate, 1);
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) == '') {
                 $strToDate = $this->add_date($strFromDate, 1);
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else if (trim($aryCondition['log_date_from']) == '' && trim($aryCondition['log_date_to']) != '') {
                 $strFromDate = $this->add_date($strToDate, -1);
                 $strToDate = $this->add_date($strToDate, 1);
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else {
                 $strFromDate = $this->add_date(date('Y/m/d'), -1);
-                $sql .= " AND last_reported_at >= '{$strFromDate}' ";
+                $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
-            $sql .= " ORDER BY last_reported_at DESC, time DESC";
+            $sql .= " GROUP BY last_reported_at, hour
+                      ORDER BY last_reported_at DESC,
+                      hour DESC";
             $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
         } catch (ADODB_Exception $e) {
             $intIsOk = self::CI_ERR_DB_EXCEPTION;
@@ -154,8 +160,7 @@ class SysInfoAdminModel extends MY_Model {
         try {
             //sql
             $sql = "SELECT 
-                        id                  ,
-                        server_id           ,
+                       id                   ,
                        cpu                  ,
                        cpu_stolen           ,
                        disk_io              ,
@@ -167,29 +172,30 @@ class SysInfoAdminModel extends MY_Model {
 --                       health_status        ,
                        DATE_FORMAT(last_reported_at, '%Y/%m/%d') as last_reported_at,
                        DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
-                    FROM " . self::TABLE_LOG . " WHERE 1=1 ";
+                    FROM " ;
             // By condtion
             if ($aryCondition['server_id'] !== '') {
-                $sql .= " AND server_id = '{$aryCondition['server_id']}'";
+                $sql .= "server_" . $aryCondition['server_id'];
+            }else{
             }
+            $sql .= " WHERE ";
 
             $strFromDate = $aryCondition['log_date_from'];
             $strToDate = $aryCondition['log_date_to'];
 
             if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) != '') {
                 $strToDate = $this->add_date($strToDate, 1);
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) == '') {
                 $strToDate = $this->add_date($strFromDate, 1);
-                ;
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else if (trim($aryCondition['log_date_from']) == '' && trim($aryCondition['log_date_to']) != '') {
                 $strFromDate = $this->add_date($strToDate, -1);
                 $strToDate = $this->add_date($strToDate, 1);
-                $sql .= " AND last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
+                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else {
-                $strFromDate = $this->add_date(date('Y/m/d'), -7);
-                $sql .= " AND last_reported_at >= '{$strFromDate}' ";
+                $strFromDate = $this->add_date(date('Y/m/d'), -1);
+                $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
             $sql .= " ORDER BY last_reported_at DESC, time DESC";
@@ -210,13 +216,13 @@ class SysInfoAdminModel extends MY_Model {
 
     public function add_date($orgDate, $day, $mth = 0, $yr = 0) {
         $cd = strtotime($orgDate);
-        $retDAY = date('Y-m-d', mktime(0, 0, 0, date('m', $cd), date('d', $cd) + $day, date('Y', $cd)));
+        $retDAY = date('Y/m/d', mktime(0, 0, 0, date('m', $cd), date('d', $cd) + $day, date('Y', $cd)));
         return $retDAY;
     }
 
     public function add_date_full($orgDate, $year, $mth, $day, $hour, $minute, $second) {
         $cd = strtotime($orgDate);
-        $retDAY = date('Y-m-d H:i:s', mktime(date('H', $cd) + $hour, date('i', $cd) + $minute, date('s', $cd) + $second, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
+        $retDAY = date('Y/m/d H:i:s', mktime(date('H', $cd) + $hour, date('i', $cd) + $minute, date('s', $cd) + $second, date('m', $cd) + $mth, date('d', $cd) + $day, date('Y', $cd) + $year));
         return $retDAY;
     }
 
