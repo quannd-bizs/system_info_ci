@@ -104,8 +104,8 @@ class SysInfoAdminModel extends MY_Model {
                        fullest_disk         ,
                        fullest_disk_free    ,
 --                       health_status        ,
-                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as last_reported_at,
-                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as time, 
+                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
+                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as `time`, 
                        DATE_FORMAT(last_reported_at, '%H') as hour
                     FROM " ;
             // By condtion
@@ -134,8 +134,8 @@ class SysInfoAdminModel extends MY_Model {
                 $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
-            $sql .= " GROUP BY last_reported_at, hour
-                      ORDER BY last_reported_at DESC,
+            $sql .= " GROUP BY `date`, hour
+                      ORDER BY `date` DESC,
                       hour DESC";
             $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
         } catch (ADODB_Exception $e) {
@@ -170,7 +170,7 @@ class SysInfoAdminModel extends MY_Model {
                        fullest_disk         ,
                        fullest_disk_free    ,
 --                       health_status        ,
-                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as last_reported_at,
+                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
                        DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
                     FROM " ;
             // By condtion
@@ -198,7 +198,7 @@ class SysInfoAdminModel extends MY_Model {
                 $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
-            $sql .= " ORDER BY last_reported_at DESC, time DESC";
+            $sql .= " ORDER BY `date` DESC, time DESC";
             $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
         } catch (ADODB_Exception $e) {
             $intIsOk = self::CI_ERR_DB_EXCEPTION;

@@ -186,7 +186,7 @@ class MY_Model extends CI_Model {
         }
 
         $sql .=" {$order} LIMIT " . $offset . "," . $recordPerPage;
-        $this->writeLogLog("Show SQL", $sql);
+        // $this->writeLogLog("Show SQL", $sql);
         $flag = $this->getRecord($sql, $tmpResult);
 
         if ($flag == 1) {
