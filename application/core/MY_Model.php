@@ -148,13 +148,11 @@ class MY_Model extends CI_Model {
             // use master database
                 $this->_resource = $this->db_master->query($sql);
                 if ($this->_resource) {
-                    $result = $this->_resource->result_array();
-                }else{
-                    $this->writeLogSql($result, $sql);
-                }
-                if ($result) {
                     $tmpResult = $this->_resource->result_array();
+                }else{
+                    $this->writeLogSql($tmpResult, $sql);
                 }
+                
                 //$this->writeLogSqlTime("END : " . date('Y-m-d H:i:s') ." <-");
             } catch (Exception $ex) {
                 //show_error('DB Exception!');
@@ -173,7 +171,9 @@ class MY_Model extends CI_Model {
         $totalRecord = 0;
         
         // $totalRecord = $this->db_slave->query($sql)->num_rows();
-        $totalRecord = $this->db_master->query($sql)->num_rows();
+        $RES = $this->db_master->query($sql);
+        $totalRecord = $RES->num_rows();
+        
         $pageIndex = $pageKey;
         $pageIndex = (is_numeric($pageIndex) && $pageIndex > 0) ? $pageIndex : 1;
         $offset = ($pageIndex - 1) * $recordPerPage;
@@ -187,7 +187,9 @@ class MY_Model extends CI_Model {
 
         $sql .=" {$order} LIMIT " . $offset . "," . $recordPerPage;
         // $this->writeLogLog("Show SQL", $sql);
-        $flag = $this->getRecord($sql, $tmpResult);
+        $tmpResult = $RES->result_array();
+        $flag = $RES? 1 : 0;
+        // $flag = $this->getRecord($sql, $tmpResult);
 
         if ($flag == 1) {
             $result['totalPage'] = ceil($totalRecord / $recordPerPage);
