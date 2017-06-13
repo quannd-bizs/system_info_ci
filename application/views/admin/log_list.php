@@ -4,6 +4,7 @@
             <tr style="height: 20px;">
                 <th align="center">ID</th>
 <!--                <th align="center">Server ID</th>-->
+                <th align="center">Status</th>
                 <th align="center">CPU %</th>
                 <th align="center">Memory %</th>
                 <th align="center">Memory Total (Byte)</th>
@@ -12,7 +13,6 @@
                 <th align="center">DiskIO Utilize %</th>
                 <th align="center">Date</th>
                 <th align="center">Time</th>
-                <th colspan="2">Edit</th>
             </tr>
 
             <?php if (isset($data[0])) { ?>
@@ -22,6 +22,7 @@
                     ?>
                     <tr  class="<?php if ($i % 2 == 0) { ?>filter<?php } ?>">
                         <td><?php echo $v['id']; ?></td>     
+                        <td><?php echo $v['health_status']; ?></td>     
                         <td><?php echo $v['cpu']; ?></td>     
                         <td><?php echo $v['memory_used']; ?></td> 
                         <td><?php echo $v['memory_total']; ?></td> 
@@ -30,11 +31,6 @@
                         <td><?php echo $v['disk_io']; ?></td> 
                         <td><?php echo $v['date']; ?></td>
                         <td><?php echo $v['time']; ?></td>
-                        <td align="center">
-                            <a href="<?php echo base_url() ?>SysInfo_Admin/log_detail/<?php echo $v['id']; ?>">
-                                <img src="<?php echo base_url() ?>www/images/common/icon-edit.gif"/>
-                            </a>
-                        </td>
                     </tr>
                     <?php $i++; ?>            
                 <?php } ?>

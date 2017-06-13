@@ -24,7 +24,7 @@
                                     <tr>
                                         <td width="10%"  style="width: 70px;">  <strong>Server ID</strong> </td>
                                 <td>
-                                    <select id="server_id" name="server_id" value ='' width="10%" >
+                                    <select id="server_id" name="server_id" value ='' width="10%" onchange="selectServerId(this)">
                                     <?php foreach($arrayServerId as $value) { ?>
                                         <option value=<?php echo $value['server_id'] . " selected = " . (($value['select']==true)? "selected" : "") ?> > <?php echo $value['name'] ?></option>
                                     <?php } ?>
@@ -56,7 +56,7 @@
                             <table align = "center">
                                 <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  List All " name = "cmdSearch" style = "width: 100px;"/></td>
                            
-                                <td><input type = "button" onclick = "AdminController.monitor_list()" class = "button" value = "  Monitor List " name = "monitor_list" style = "width: 100px;"/></td>
+                                <td><input type = "button" onclick = "AdminController.monitor_list()" class = "btn_monitor_list" value = "  Monitor List " name = "monitor_list" style = "width: 100px;"/></td>
                             </table>
                         </div>
                     </form>
@@ -84,11 +84,12 @@
 </div>
 <script type="text/javascript" src="<?php echo base_url() ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" >
+//    $('#server_id').click(selectServerId(this));
     function selectServerId(select){
         $('#server_id').attr('value', select.selectedOptions[0].value);
-        AdminController.log_search();
+        AdminController.monitor_list();
     }
-    window.onload = AdminController.log_search();
+    window.onload = AdminController.monitor_list();
 </script>
 
 

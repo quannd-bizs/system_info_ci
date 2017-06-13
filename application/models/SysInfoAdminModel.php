@@ -103,7 +103,7 @@ class SysInfoAdminModel extends MY_Model {
                        memory_total         ,
                        fullest_disk         ,
                        fullest_disk_free    ,
---                       health_status        ,
+                       health_status        ,
                        DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
                        DATE_FORMAT(last_reported_at, '%H:%i:%s') as `time`, 
                        DATE_FORMAT(last_reported_at, '%H') as hour
@@ -130,7 +130,7 @@ class SysInfoAdminModel extends MY_Model {
                 $strToDate = $this->add_date($strToDate, 1);
                 $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else {
-                $strFromDate = $this->add_date(date('Y/m/d'), -1);
+                $strFromDate = $this->add_date(date('Y/m/d'), -7);
                 $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
@@ -169,7 +169,7 @@ class SysInfoAdminModel extends MY_Model {
                        memory_total         ,
                        fullest_disk         ,
                        fullest_disk_free    ,
---                       health_status        ,
+                       health_status        ,
                        DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
                        DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
                     FROM " ;
