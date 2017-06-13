@@ -7,6 +7,7 @@
                 <th align="center">Status</th>
                 <th align="center">CPU %</th>
                 <th align="center">Memory %</th>
+                <th align="center">Memory Used</th>
                 <th align="center">Memory Total (Byte)</th>
                 <th align="center">Disk%</th>
                 <th align="center">Disk Free (Byte)</th>
@@ -24,6 +25,7 @@
                         <td><?php echo $v['id']; ?></td>     
                         <td><?php echo $v['health_status']; ?></td>     
                         <td><?php echo $v['cpu']; ?></td>     
+                        <td><?php echo $v['memory']; ?></td> 
                         <td><?php echo $v['memory_used']; ?></td> 
                         <td><?php echo $v['memory_total']; ?></td> 
                         <td><?php echo $v['fullest_disk']; ?></td> 

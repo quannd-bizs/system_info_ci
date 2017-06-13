@@ -31,6 +31,10 @@ const TABLE_SERVER_INFO = 'server_info';
         try {
             if (is_array($aryData)) {
                 $server_id = $aryData["server_id"];
+                // Convert Byte to Mega Byte
+                $aryData['memory_used'] /= 1048576;
+                $aryData['memory_total'] /= 1048576;
+                $aryData['fullest_disk_free'] /= 1048576;
                 unset($aryData["server_id"]);
                 $intIsOk = $this->insert('server_' . $server_id, $aryData);
             } else {
