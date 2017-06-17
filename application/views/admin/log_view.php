@@ -24,10 +24,9 @@
                                     <tr>
                                         <td width="10%"  style="width: 70px;">  <strong>Server ID</strong> </td>
                                 <td>
-                                    <select id="server_id" name="server_id" value ='' width="10%" >
-                                    <option value=''></option>
+                                    <select id="server_id" name="server_id" value ='' width="10%" onchange="selectServerId(this)">
                                     <?php foreach($arrayServerId as $value) { ?>
-                                        <option value=<?php echo $value['server_id']; ?>> <?php echo $value['name'] ?></option>
+                                        <option value=<?php echo $value['server_id'] . " selected = " . (($value['select']==true)? "selected" : "") ?> > <?php echo $value['name'] ?></option>
                                     <?php } ?>
                                     </select>
                                 </td>
@@ -55,7 +54,9 @@
                         <div class = "clearfix"></div>
                         <div align = "center">
                             <table align = "center">
-                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  Search " name = "cmdSearch" style = "width: 100px;"/></td>
+                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  List All " name = "cmdSearch" style = "width: 100px;"/></td>
+                           
+                                <td><input type = "button" onclick = "AdminController.monitor_list()" class = "btn_monitor_list" value = "  Monitor List " name = "monitor_list" style = "width: 100px;"/></td>
                             </table>
                         </div>
                     </form>
@@ -65,10 +66,10 @@
                     <!--Begin list tms -->
                     <div id = "strPaging1" style = "margin: 10px;"></div>
                     <div style = "clear: both;padding-top: 10px;"></div>
-                    <div id = "result">
-                        <?php include 'log_list.php';
-                        ?>
-                    </div>
+        
+                <div id = "result">
+                    <?php include 'log_list.php'; ?>
+                </div>
                     <div style="clear: both"></div>
                     <div id="strPaging2" style="margin: 10px;"></div>
                     <!--  end list tms-->
@@ -83,12 +84,12 @@
 </div>
 <script type="text/javascript" src="<?php echo base_url() ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" >
-    $('#server_id').val();
+//    $('#server_id').click(selectServerId(this));
     function selectServerId(select){
         $('#server_id').attr('value', select.selectedOptions[0].value);
-        AdminController.log_search();
+        AdminController.monitor_list();
     }
-    window.onload = AdminController.log_search();
+    window.onload = AdminController.monitor_list();
 </script>
 
 
