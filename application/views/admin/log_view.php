@@ -66,10 +66,10 @@
                     <!--Begin list tms -->
                     <div id = "strPaging1" style = "margin: 10px;"></div>
                     <div style = "clear: both;padding-top: 10px;"></div>
-                    <div id = "result">
-                        <?php include 'log_list.php';
-                        ?>
-                    </div>
+        
+                <div id = "result">
+                    <?php include 'log_list.php'; ?>
+                </div>
                     <div style="clear: both"></div>
                     <div id="strPaging2" style="margin: 10px;"></div>
                     <!--  end list tms-->

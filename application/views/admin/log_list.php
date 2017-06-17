@@ -1,21 +1,19 @@
-<form name="frmsearch" method="POST" action="">
-    <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tbl">   
-        <tbody>
-            <tr style="height: 20px;">
-                <th align="center">ID</th>
-<!--                <th align="center">Server ID</th>-->
-                <th align="center">Status</th>
-                <th align="center">CPU %</th>
-                <th align="center">Memory %</th>
-                <th align="center">Memory Used</th>
-                <th align="center">Memory Total (Byte)</th>
-                <th align="center">Disk%</th>
-                <th align="center">Disk Free (Byte)</th>
-                <th align="center">DiskIO Utilize %</th>
-                <th align="center">Date</th>
-                <th align="center">Time</th>
-            </tr>
-
+         <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tbl">   
+            <tbody>
+                <tr style="height: 20px;">
+                    <th align="center">ID</th>
+    <!--                <th align="center">Server ID</th>-->
+                    <th align="center">Status</th>
+                    <th align="center">CPU %</th>
+                    <th align="center">Memory %</th>
+                    <th align="center">Memory Used (MB)</th>
+                    <th align="center">Memory Total (MB)</th>
+                    <th align="center">Disk%</th>
+                    <th align="center">Disk Free (MB)</th>
+                    <th align="center">DiskIO Utilize %</th>
+                    <th align="center">Date</th>
+                    <th align="center">Time</th>
+                </tr>
             <?php if (isset($data[0])) { ?>
                 <?php
                 $i = 1;
@@ -40,10 +38,7 @@
             <?php } else { ?>
                 <tr><td colspan="15" align="center" style="height: 20px;"> No Data !</td></tr>
             <?php } ?>
-        </tbody>
-    </table>
-    <div style="clear: both"></div>
-    <table align="center">
-        <tr align="center" valign="middle"></tr>
-    </table>
-</form>
+     </tbody>
+        </table>
+        <div style="clear: both"></div>
+    <table align="center"> <tr align="center" valign="middle"></tr> </table>
