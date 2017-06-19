@@ -208,9 +208,8 @@
             return this
         }
     })
-})(jQuery)
+})
 $(function(){
     if($('#skill-form').length)$('#skill-form').forms()
 //if($('#newsletter-alt-form').length)$('#newsletter-alt-form').forms()
-    
 })
