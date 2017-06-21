@@ -52,6 +52,29 @@ class SystemInfo extends CI_Controller {
 					unset($in[$i]["health_status"]);
 					unset($in[$i]["summary"]);
 					$this->dataserver->SaveServerId($in[$i]);
+					
+					//If table not Create yet => Add new table Server Infor
+					//'SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO"; ==> Invalid query: '-- SET time_zone = "+00:00";
+					$dropServerSQL = 'DROP TABLE IF EXISTS `server_'. $in[$i]["server_id"] . '`; '; 
+					$this->dataserver->querySql($dropServerSQL);
+					
+					$createServerSQL= 					
+					 'CREATE TABLE IF NOT EXISTS `server_'. $in[$i]["server_id"] . '` (
+					  `id` int(11) NOT NULL AUTO_INCREMENT,
+					  `cpu` decimal(8,2) DEFAULT NULL,
+					  `cpu_stolen` decimal(8,2) DEFAULT NULL,
+					  `disk_io` decimal(8,2) DEFAULT NULL,
+					  `memory` decimal(8,2) DEFAULT NULL,
+					  `memory_used` bigint(20) DEFAULT NULL,
+					  `memory_total` bigint(20) DEFAULT NULL,
+					  `fullest_disk` decimal(8,2) DEFAULT NULL,
+					  `fullest_disk_free` bigint(20) DEFAULT NULL,
+					  `health_status` varchar(20) DEFAULT NULL,
+					  `last_reported_at` datetime DEFAULT CURRENT_TIMESTAMP,
+					  PRIMARY KEY (`id`)
+					) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT="Server detail Information realtime" AUTO_INCREMENT=1;';
+
+					$this->dataserver->querySql($createServerSQL);
 				}
 				$this->dataserver->SaveServerInfo($serverInfo);
 			}
