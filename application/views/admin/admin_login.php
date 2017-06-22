@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta name="Description" content="" />
@@ -9,18 +8,12 @@
         
         <title>Login</title>
 
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>www/js/common/yui2.8.2/container/assets/skins/sam/container.css" media="screen"/>
-        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/yui2.8.2/yahoo-dom-event/yahoo-dom-event.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/yui2.8.2/json/json-min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/yui2.8.2/connection/connection-min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/yui2.8.2/container/container-min.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/yui2.8.2/container/container_core-debug.js"></script>
-
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>www/css/tms/main.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="../../www/css/tms/main.css" media="all" />
 
         <input type="hidden" value="<?php echo base_url() ?>" name="base_url" id="base_url"/>
-        <link rel="shortcut icon" href="<?php echo base_url() ?>www/images/favicon.ico" type="image/ico" />
-        <script type="text/javascript" src="<?php echo base_url() ?>www/js/admin/admin.js"></script>
+        <link rel="shortcut icon" href="../../www/images/favicon.ico" type="image/ico" />
+        <script type="text/javascript" src="../../www/js/admin/admin.js"></script>
+        <script type="text/javascript" src="../../www/js/common/jquery/jquery-3.2.1.min.js"></script>
     </head>
 
     <body class="yui-skin-sam">
