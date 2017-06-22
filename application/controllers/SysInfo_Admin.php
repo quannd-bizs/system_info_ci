@@ -166,32 +166,6 @@ class SysInfo_Admin extends MY_ControllerAdmin {
         echo json_encode($aryResult);
  }
 
-    public function log_search() {
-//check member session the access data
-        $aryData = array();
-        $aryData['user_login'] = $this->login_name;
-        if (isset($_GET['pageNo'])) {
-            $pageKey = $_GET['pageNo'];
-        } else {
-            $pageKey = 1;
-        }
-//order column
-        $aryCondition = array();
-        $aryError = array();
-//get condtion for search
-        $aryCondition = $this->getAllPostParams();
-//get result from search
-        $record_per_page = 100;
-        $intIsOk = $this->SysinfoAdminModel->searchLog($aryCondition, $aryData, $pageKey, $record_per_page);
-//        var_dump($aryCondition);
-//throw client
-        $aryResult = array();
-        $aryResult['strPaging'] = $this->load->view('admin/log_paging', $aryData, true);
-        $aryResult['html'] = $this->load->view('admin/log_list', $aryData, true);
-        $aryResult['intIsOk'] = $intIsOk;
-        echo json_encode($aryResult);
-    }
-
     /**
      * Detail log info
      */

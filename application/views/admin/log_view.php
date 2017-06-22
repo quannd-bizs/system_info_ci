@@ -53,19 +53,22 @@
                         <div class = "clearfix"></div>
                         <div align = "center">
                             <table align = "center">
-                                <td><input type = "button" onclick = "AdminController.log_search()" class = "button" value = "  List All " name = "cmdSearch" style = "width: 100px;"/></td>
-                           
-                                <td><input type = "button" onclick = AdminController.monitor_list() class = "btn_monitor_list" value = "  Monitor List " name = "monitor_list" style = "width: 100px;"/></td>
                           <div id="select_interval">
-                              <h2><legend>Monitor Interval </legend></h2>
-                            <label for="radio-1">Every 2 minute</label>
-                            <input type="radio" name="radio-interval" id="radio-1" value = 0>
-                            <label for="radio-2">Every 1 hour</label>
-                            <input type="radio" name="radio-interval" id="radio-2" value = 1 checked="checked">
-<!--
-                            <label for="radio-3">London</label>
-                            <input type="radio" name="radio-1" id="radio-3">
--->
+                          <fieldset>
+                            <legend><h2> Monitor Interval</h2> </legend>
+                            <label for="radio-1">Every 1 minute</label>
+                            <input type="radio" name="radio-interval" id="radio-1" value = 0 checked="checked">
+                            <label for="radio-2">Every 2 minute</label>
+                            <input type="radio" name="radio-interval" id="radio-2" value = 1>
+                            <label for="radio-3">Every 5 minute</label>
+                            <input type="radio" name="radio-interval" id="radio-3" value = 2>
+                            <label for="radio-4">Every 30 minute</label>
+                            <input type="radio" name="radio-interval" id="radio-4" value = 3>
+                            <label for="radio-5">Every 1 hour</label>
+                            <input type="radio" name="radio-interval" id="radio-5" value = 4>
+                            <label for="radio-6">Every 12 hour</label>
+                            <input type="radio" name="radio-interval" id="radio-6" value = 5>
+                          </fieldset>
                           </div>
 
                             </table>
@@ -107,18 +110,18 @@
         var tabIndex = select.selectedOptions[0].index;
         $('#server_tab').tabs('option', 'active', tabIndex);
     }
-//    $('#select_interval').checkboxradio();
-    $('#select_interval').buttonset();
+    // $('input:radio[name=radio-interval]').checkboxradio();
+   $('#select_interval').buttonset();
     var logType = $('#select_interval :radio:checked').val();
     $('input:radio[name=radio-interval]').click(function(){
         var logType = $(this).val();
         AdminController.loadTab(logType);
     });
     $('#server_tab').tabs();
-    $('#log_date_from').datepicker();
-    $('#log_date_to').datepicker();
+    $('#log_date_from').datepicker({altFormat: "yy/mm/dd"});
+    $('#log_date_to').datepicker({altFormat: "yy/mm/dd"});
+    $.datepicker.setDefaults( $.datepicker.regional[ "en" ] );
     
-//    var tabIndex = $('#server_tab').tabs("option", "active");
     /*
     * get Server Id from selection
     */
