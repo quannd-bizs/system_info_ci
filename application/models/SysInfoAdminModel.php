@@ -174,10 +174,10 @@ class SysInfoAdminModel extends MY_Model {
                        DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
                     FROM " ;
             // By condtion
-            if ($aryCondition['server_id'] !== '') {
+            // if ($aryCondition['server_id'] !== '') {
                 $sql .= "server_" . $aryCondition['server_id'];
-            }else{
-            }
+            // }else{
+            // }
             $sql .= " WHERE ";
 
             $strFromDate = $aryCondition['log_date_from'];

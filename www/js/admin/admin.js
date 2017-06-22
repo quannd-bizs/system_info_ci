@@ -69,31 +69,54 @@ var AdminController = {
             alert('Sorry ! System Error !');
         });
     },
-    log_search: function (orderType, orderField, page) {
+    /***
+    *   Load Server Infor from Tab
+    ***/
+   loadTab: function (type, server_id){
+     switch(type){
+            case '0':    
+                AdminController.log_search(server_id);
+                break;
+            case '1':
+                AdminController.monitor_list(server_id);
+                break;
+            default: break;
+        }
+   },
+    /***
+    *   Get Server ID from Tab
+    ***/
+    getServerId: function(){
+        var tabIndex = $('#server_tab').tabs("option", "active");
+        var tab = $('.server_tab')[tabIndex];
+        var serverId = $(tab).attr("value");
+        return serverId;
+    }, 
+    
+    log_search: function (serverId) {
         var base_url = $('#base_url').val();
 
-        if (orderField == undefined) {
-            orderField = '';
+      if (serverId == undefined) 
+        {  
+            serverId = this.getServerId(); 
         }
 
-        if (orderType == undefined) {
-            orderType = 'DESC';
-        }
-
-        if (page == undefined) {
-            page = 1;
-        }
+        var orderType = 'DESC';
+        var orderField = '';
+        var page = 1;
         var strPost = '&orderType=' + orderType + '&orderField=' + orderField;
 
         var url = base_url + 'SysInfo_Admin/log_search?ajax=1&pageNo=' + page + strPost;
-        var form = $('#frmSearch'), from = $('#log_date_from').val(), to = $('#log_date_to').val(), svid = $('#server_id').val();
-        var postData = {log_date_from:from, log_date_to: to, server_id: svid};
+        var form = $('#frmSearch'), 
+            from = $('#log_date_from').val(),
+            to = $('#log_date_to').val();
+        var postData = {log_date_from:from, log_date_to: to, server_id: serverId};
         
         $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
         $.post(url, postData).done(function(responseData, textStatus, jqXHR) {
             try {
                 var aryData = $.parseJSON(responseData);
-                $('#svr_' + svid).html(aryData.html);
+                $('#svr_' + serverId).html(aryData.html);
                 $('#strPaging1').html(aryData.strPaging);
                 $('#strPaging2').html(aryData.strPaging);
                 $('#loading').html('');
@@ -108,10 +131,8 @@ var AdminController = {
         var base_url = $('#base_url').val();
 
         if (serverId == undefined) 
-        {
-            var tabIndex = $('#server_tab').tabs("option", "active");
-            var tab = $('.server_tab')[tabIndex];
-            serverId = $(tab).attr("value");
+        {  
+            serverId = this.getServerId(); 
         }
 
         var orderType = 'DESC';
