@@ -248,6 +248,19 @@ class SysInfo_Admin extends MY_ControllerAdmin {
         echo json_encode($aryResult);
     }
 
+    /*** 
+    *   Excute & Set Auto Get Log Info
+    */
+    public function auto_log()
+    {
+        if ($this->checkLogin() == false) {
+            return;
+        }
+
+        $arrayData['user_login'] = $this->login_name;
+        $this->load->view('admin/log_auto', $arrayData);
+    }
+
     /**
      * Get Date
      * 
