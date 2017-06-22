@@ -24,6 +24,15 @@
         <script src="../../www/jquery-ui.js/jquery-1.12.4.min.js"></script>
         <script src="../../www/jquery-ui/jquery-ui.min.js"></script>
         <link href="../../www/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        
+        <script type="text/javascript">
+            function updatePresentTime(){
+                $.get('../../SysInfo_Admin/getDateTime').done(function(dateNow){
+                    $('#present_date_time').html("Today: " + dateNow);
+                });
+            }
+            setInterval(updatePresentTime, 5000);
+        </script>
     </head>
 
     <body class="yui-skin-sam">
@@ -66,7 +75,7 @@
                                 <tr>
                                     <td width="100%">Welcome: <?php echo $user_login ?></td>
                                     <td nowrap="nowrap">
-                                        <a href="">Today: <?php echo date('Y-m-d H:m:i'); ?></a> |
+                                        <a id = "present_date_time" href="">Today: <?php echo date('Y-m-d H:i:s'); ?></a> |
                                         <a href="../../SysInfo_Admin/logout">Logout</a>
                                     </td>
                                 </tr>

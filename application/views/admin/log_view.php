@@ -140,6 +140,19 @@
         var logType = $('#select_interval :radio:checked').val();
         AdminController.loadTab(logType, server_id);
     });
+    
+    function timeAutoUpdate(){
+        var logType = $('#select_interval :radio:checked').val();
+        setTimeout(timeAutoUpdate, 120000);
+        
+        AdminController.loadTab(logType);
+    }
+    
+    $(function() {
+        timeAutoUpdate();
+    });
+
+   
 </script>
 
 

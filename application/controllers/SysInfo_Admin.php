@@ -249,6 +249,14 @@ class SysInfo_Admin extends MY_ControllerAdmin {
     }
 
     /**
+     * Get Date
+     * 
+     */
+    public function getDateTime() {
+        echo date('Y-m-d H:i:s');
+    }
+
+    /**
      * view script error dialog
      * 
      */
