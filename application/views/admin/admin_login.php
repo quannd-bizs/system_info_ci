@@ -8,12 +8,12 @@
         
         <title>Login</title>
 
-        <link rel="stylesheet" type="text/css" href="../www/css/tms/main.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>www/css/tms/main.css" media="all" />
 
         <input type="hidden" value="<?php echo base_url() ?>" name="base_url" id="base_url"/>
-        <link rel="shortcut icon" href="../www/images/favicon.ico" type="image/ico" />
-        <script type="text/javascript" src="../www/js/admin/admin.js"></script>
-        <script type="text/javascript" src="../www/js/common/jquery/jquery-3.2.1.min.js"></script>
+        <link rel="shortcut icon" href="<?php echo base_url(); ?>www/images/favicon.ico" type="image/ico" />
+        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/admin/admin.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/common/jquery/jquery-3.2.1.min.js"></script>
     </head>
 
     <body class="yui-skin-sam">
