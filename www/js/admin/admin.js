@@ -73,15 +73,29 @@ var AdminController = {
     *   Load Server Infor from Tab
     ***/
    loadTab: function (type, server_id){
+    var interval = 1;
      switch(type){
             case '0':    
-                AdminController.log_search(server_id);
+                interval = 1;
                 break;
             case '1':
-                AdminController.monitor_list(server_id);
+                interval = 2;
+                break;
+            case '2':    
+                interval = 5;
+                break;
+            case '3':
+                interval = 30;
+                break;
+            case '4':    
+                interval = 60;
+                break;
+            case '5':
+                interval = 720;
                 break;
             default: break;
         }
+    AdminController.monitor_list(server_id, interval);
    },
     /***
     *   Get Server ID from Tab
@@ -93,46 +107,16 @@ var AdminController = {
         return serverId;
     }, 
     
-    log_search: function (serverId) {
-        var base_url = $('#base_url').val();
-
-      if (serverId == undefined) 
-        {  
-            serverId = this.getServerId(); 
-        }
-
-        var orderType = 'DESC';
-        var orderField = '';
-        var page = 1;
-        var strPost = '&orderType=' + orderType + '&orderField=' + orderField;
-
-        var url = base_url + 'SysInfo_Admin/log_search?ajax=1&pageNo=' + page + strPost;
-        var form = $('#frmSearch'), 
-            from = $('#log_date_from').val(),
-            to = $('#log_date_to').val();
-        var postData = {log_date_from:from, log_date_to: to, server_id: serverId};
-        
-        $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
-        $.post(url, postData).done(function(responseData, textStatus, jqXHR) {
-            try {
-                var aryData = $.parseJSON(responseData);
-                $('#svr_' + serverId).html(aryData.html);
-                $('#strPaging1').html(aryData.strPaging);
-                $('#strPaging2').html(aryData.strPaging);
-                $('#loading').html('');
-            } catch (e) {
-                alert(e.message);
-            }
-        }).fail(function (jqXHR, textStatus, errorThrown) {
-            console.log(errorThrown);
-        });
-    },
-    monitor_list: function (serverId) {
+    monitor_list: function (serverId, _interval) {
         var base_url = $('#base_url').val();
 
         if (serverId == undefined) 
         {  
             serverId = this.getServerId(); 
+        }
+        if (_interval == undefined) 
+        {  
+            _interval = 1; 
         }
 
         var orderType = 'DESC';
@@ -145,7 +129,7 @@ var AdminController = {
         var from = $('#log_date_from').val();
         var to = $('#log_date_to').val();
 //        var svid = $('#server_id').val();
-        var postData = {log_date_from:from, log_date_to: to, server_id: serverId};
+        var postData = {log_date_from:from, log_date_to: to, server_id: serverId, interval: _interval};
         
         $('#loading').html('<span class="status-msg-text">' + AdminController.SEARCHING_TEXT + '</span>');
         $.post(url, postData).done(function(responseData, textStatus, jqXHR) {

@@ -89,62 +89,6 @@ class SysInfoAdminModel extends MY_Model {
         }
     }
 
- public function listInterval($aryCondition, &$aryResult, $pageKey, $recordPerPage) {
-        $intIsOk = self::CI_IS_OK;
-        try {
-            //sql
-            $sql = "SELECT 
-                       id                   ,
-                       cpu                  ,
-                       cpu_stolen           ,
-                       disk_io              ,
-                       memory               ,
-                       memory_used          ,
-                       memory_total         ,
-                       fullest_disk         ,
-                       fullest_disk_free    ,
-                       health_status        ,
-                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
-                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as `time`, 
-                       DATE_FORMAT(last_reported_at, '%H') as hour
-                    FROM " ;
-            // By condtion
-            if ($aryCondition['server_id'] !== '') {
-                $sql .= "server_" . $aryCondition['server_id'];
-            }else{
-
-            }
-            $sql .= " WHERE ";
-
-            $strFromDate = $aryCondition['log_date_from'];
-            $strToDate = $aryCondition['log_date_to'];
-
-            if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) != '') {
-                $strToDate = $this->add_date($strToDate, 1);
-                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
-            } else if (trim($aryCondition['log_date_from']) != '' && trim($aryCondition['log_date_to']) == '') {
-                $strToDate = $this->add_date($strFromDate, 1);
-                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
-            } else if (trim($aryCondition['log_date_from']) == '' && trim($aryCondition['log_date_to']) != '') {
-                $strFromDate = $this->add_date($strToDate, -1);
-                $strToDate = $this->add_date($strToDate, 1);
-                $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
-            } else {
-                $strFromDate = $this->add_date(date('Y/m/d'), -7);
-                $sql .= "  last_reported_at >= '{$strFromDate}' ";
-            }
-
-            $sql .= " GROUP BY `date`, hour
-                      ORDER BY `date` DESC,
-                      hour DESC";
-            $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
-        } catch (ADODB_Exception $e) {
-            $intIsOk = self::CI_ERR_DB_EXCEPTION;
-            throw $e;
-        }
-        //if OK
-        return $intIsOk;
-    }
     /**
      * Search log
      * 
@@ -155,31 +99,38 @@ class SysInfoAdminModel extends MY_Model {
      * @return type
      * @throws ADODB_Exception
      */
-    public function searchLog($aryCondition, &$aryResult, $pageKey, $recordPerPage) {
+ public function listInterval($aryCondition, &$aryResult, $pageKey, $recordPerPage) {
         $intIsOk = self::CI_IS_OK;
         try {
             //sql
             $sql = "SELECT 
-                       id                   ,
-                       cpu                  ,
-                       cpu_stolen           ,
-                       disk_io              ,
-                       memory               ,
-                       memory_used          ,
-                       memory_total         ,
-                       fullest_disk         ,
-                       fullest_disk_free    ,
-                       health_status        ,
-                       DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
-                       DATE_FORMAT(last_reported_at, '%H:%i:%s') as time
-                    FROM " ;
-            // By condtion
-            // if ($aryCondition['server_id'] !== '') {
-                $sql .= "server_" . $aryCondition['server_id'];
-            // }else{
-            // }
-            $sql .= " WHERE ";
+                           id                   ,
+                           cpu                  ,
+                           cpu_stolen           ,
+                           disk_io              ,
+                           memory               ,
+                           memory_used          ,
+                           memory_total         ,
+                           fullest_disk         ,
+                           fullest_disk_free    ,
+                           health_status        ,
+                           DATE_FORMAT(last_reported_at, '%Y/%m/%d') as `date`,
+                           DATE_FORMAT(last_reported_at, '%H:%i:%s') as `time`, 
+                           DATE_FORMAT(last_reported_at, '%H') as `hour` ";        
+            $interval = $aryCondition['interval'];
 
+            $sql .= " FROM server_" . $aryCondition['server_id'];
+            $sql .= " WHERE ";
+            $groupByHour = false;
+            if($interval != 1){
+                 if($interval > 60){
+                    $groupByHour = true;
+                    $interval /= 60;
+                    $sql .= "  DATE_FORMAT(last_reported_at, '%H') % " . $interval . ' = 0 AND '; 
+                }else{
+                    $sql .= "  DATE_FORMAT(last_reported_at, '%i') % " . $interval . ' = 0 AND ';
+                }
+            }
             $strFromDate = $aryCondition['log_date_from'];
             $strToDate = $aryCondition['log_date_to'];
 
@@ -194,11 +145,18 @@ class SysInfoAdminModel extends MY_Model {
                 $strToDate = $this->add_date($strToDate, 1);
                 $sql .= "  last_reported_at BETWEEN '{$strFromDate}' AND '{$strToDate}' ";
             } else {
-                $strFromDate = $this->add_date(date('Y/m/d'), -1);
+                $strFromDate = $this->add_date(date('Y/m/d'), $groupByHour?-7:-1);
                 $sql .= "  last_reported_at >= '{$strFromDate}' ";
             }
 
-            $sql .= " ORDER BY `date` DESC, time DESC";
+            if($groupByHour){
+                $sql .= " GROUP BY `hour`";
+            }else{
+                $sql .= " GROUP BY `time`";
+            }
+
+            $sql .= " ORDER BY id DESC";
+            log_message('debug', $sql);
             $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
         } catch (ADODB_Exception $e) {
             $intIsOk = self::CI_ERR_DB_EXCEPTION;

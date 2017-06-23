@@ -9,25 +9,25 @@
         <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
         <meta content="utf-8" http-equiv="encoding">
 
-        <link rel="stylesheet" type="text/css" href="../../www/css/tms/main.css" media="all" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>www/css/tms/main.css" media="all" />
 
-        <input type="hidden" value="../../" name="base_url" id="base_url"/>
-        <link rel="shortcut icon" href="../../www/images/favicon.ico" type="image/ico" />
+        <input type="hidden" value="<?php echo base_url(); ?>" name="base_url" id="base_url"/>
+        <link rel="shortcut icon" href="<?php echo base_url(); ?>www/images/favicon.ico" type="image/ico" />
 
-        <script type="text/javascript" src="../../www/common/ckeditorCustom/ckeditor.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>www/common/ckeditorCustom/ckeditor.js"></script>
 
-        <script type="text/javascript" src="../../www/js/admin/admin.js"></script>
+        <script type="text/javascript" src="<?php echo base_url(); ?>www/js/admin/admin.js"></script>
 
         <input type="hidden" name="cal_status" id="cal_status" /> 
         <div id="calContainer" style="display:none;position:absolute;z-index:100000"></div>
 
-        <script src="../../www/jquery-ui.js/jquery-1.12.4.min.js"></script>
-        <script src="../../www/jquery-ui/jquery-ui.min.js"></script>
-        <link href="../../www/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+        <script src="<?php echo base_url(); ?>www/jquery-ui.js/jquery-1.12.4.min.js"></script>
+        <script src="<?php echo base_url(); ?>www/jquery-ui/jquery-ui.min.js"></script>
+        <link href="<?php echo base_url(); ?>www/jquery-ui/jquery-ui.min.css" rel="stylesheet">
         
         <script type="text/javascript">
             function updatePresentTime(){
-                $.get('../../SysInfo_Admin/getDateTime').done(function(dateNow){
+                $.get('<?php echo base_url(); ?>SysInfo_Admin/getDateTime').done(function(dateNow){
                     $('#present_date_time').html("Today: " + dateNow);
                 });
             }
@@ -46,7 +46,7 @@
                                 <tr>
                                     <th class="banner" align="left">
                                         <strong>
-                                            <a href="../../tms" style="color: white">BIPVN</a>
+                                            <a href="<?php echo base_url(); ?>tms" style="color: white">BIPVN</a>
                                         </strong>
                                     </th>
                                 </tr>
@@ -60,8 +60,8 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        | <a href="../../SysInfo_Admin/help_view">Help</a>                                                     
-                                        | <a href="../../SysInfo_Admin/log_view">Log Bugs</a>
+                                        | <a href="<?php echo base_url(); ?>SysInfo_Admin/help_view">Help</a>                                                     
+                                        | <a href="<?php echo base_url(); ?>SysInfo_Admin/log_view">Log Bugs</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -76,7 +76,7 @@
                                     <td width="100%">Welcome: <?php echo $user_login ?></td>
                                     <td nowrap="nowrap">
                                         <a id = "present_date_time" href="">Today: <?php echo date('Y-m-d H:i:s'); ?></a> |
-                                        <a href="../../SysInfo_Admin/logout">Logout</a>
+                                        <a href="<?php echo base_url(); ?>SysInfo_Admin/logout">Logout</a>
                                     </td>
                                 </tr>
                             </tbody>
