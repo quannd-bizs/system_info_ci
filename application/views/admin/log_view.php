@@ -118,9 +118,8 @@
         AdminController.loadTab(logType);
     });
     $('#server_tab').tabs();
-    $('#log_date_from').datepicker({altFormat: "yy/mm/dd"});
-    $('#log_date_to').datepicker({altFormat: "yy/mm/dd"});
-    $.datepicker.setDefaults( $.datepicker.regional[ "en" ] );
+    $('#log_date_from').datepicker({dateFormat: "yy/mm/dd"});
+    $('#log_date_to').datepicker({dateFormat: "yy/mm/dd"});
     
     /*
     * get Server Id from selection

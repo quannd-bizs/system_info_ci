@@ -102,7 +102,6 @@ class SysInfoAdminModel extends MY_Model {
  public function listInterval($aryCondition, &$aryResult, $pageKey, $recordPerPage) {
         $intIsOk = self::CI_IS_OK;
         try {
-            //sql
             $sql = "SELECT 
                            id                   ,
                            cpu                  ,
@@ -156,7 +155,7 @@ class SysInfoAdminModel extends MY_Model {
             }
 
             $sql .= " ORDER BY id DESC";
-            log_message('debug', $sql);
+            // log_message('debug', $sql);
             $intIsOk = $this->searchResult($sql, $aryResult, $pageKey, $recordPerPage);
         } catch (ADODB_Exception $e) {
             $intIsOk = self::CI_ERR_DB_EXCEPTION;
