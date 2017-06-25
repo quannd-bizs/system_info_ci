@@ -31,18 +31,10 @@
                                 </td>
                                 <td width = "7%"><strong>Range Date</strong></td>
                                 <td width = "30%">
-                                    <input type = "text" value = "<?php
-                                    if (isset($oldCondition['log_date_from']) == true) {
-                                        echo $oldCondition['log_date_from'];
-                                    }
-                                    ?>" onmouseover = "" onclick = "" id = "log_date_from" name = "log_date_from" style = "width:55pt;" maxlength = "10" />
+                                    <input type = "text" value = "<?php echo date('Y/m/d'); ?>" onmouseover = "" onclick = "" id = "log_date_from" name = "log_date_from" style = "width:55pt;" maxlength = "10" />
                                   
                                     ~
-                                    <input type = "text" value = "<?php
-                                    if (isset($oldCondition['log_date_to']) == true) {
-                                        echo $oldCondition['log_date_to'];
-                                    }
-                                    ?>" onmouseover = "" onclick = "" id = "log_date_to" name = "log_date_to" style = "width:55pt"maxlength = "10"/>
+                                    <input type = "text" value = "<?php echo date('Y/m/d'); ?>" onmouseover = "" onclick = "" id = "log_date_to" name = "log_date_to" style = "width:55pt"maxlength = "10"/>
                                    
                                 </td>
                                 </tr>
