@@ -75,8 +75,8 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-//	'hostname' => 'localhost',
-	'hostname' => '172.168.10.199',
+	'hostname' => 'localhost',
+	// 'hostname' => '172.168.10.199',
 	'username' => 'mmd',
 	'password' => 'mmd',
 	'database' => 'sinfo_db',
