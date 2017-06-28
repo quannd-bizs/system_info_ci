@@ -23,13 +23,17 @@
 
         <script src="<?php echo base_url(); ?>www/jquery-ui.js/jquery-1.12.4.min.js"></script>
         <script src="<?php echo base_url(); ?>www/jquery-ui/jquery-ui.min.js"></script>
+<!--        https://github.com/JDMcKinstry/jQuery-Date-->
+        <script src="<?php echo base_url(); ?>www/js/common/jQuery.date.min.js"></script>
+        
         <link href="<?php echo base_url(); ?>www/jquery-ui/jquery-ui.min.css" rel="stylesheet">
         
         <script type="text/javascript">
             function updatePresentTime(){
-                $.get('<?php echo base_url(); ?>SysInfo_Admin/getDateTime').done(function(dateNow){
+                /*$.get('<?php echo base_url(); ?>SysInfo_Admin/getDateTime').done(function(dateNow){
                     $('#present_date_time').html("Today: " + dateNow);
-                });
+                });*/
+                $('#present_date_time').html("Today: " + $.date(Date.now(), "Y-m-d H:i:s"));
             }
             setInterval(updatePresentTime, 5000);
         </script>

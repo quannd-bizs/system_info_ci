@@ -110,7 +110,7 @@
         AdminController.loadTab(logType);
     });
     $('#server_tab').tabs();
-    $('#log_date_from').datepicker({dateFormat: "yy/mm/dd"});
+    $('#log_date_from').datepicker({dateFormat: "yy/mm/dd"});    
     $('#log_date_to').datepicker({dateFormat: "yy/mm/dd"});
     
     /*

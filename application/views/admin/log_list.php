@@ -21,7 +21,7 @@
                     ?>
                     <tr  class="<?php if ($i % 2 == 0) { ?>filter<?php } ?>">
                         <td><?php echo $v['id']; ?></td>     
-                        <td><?php echo $v['health_status']; ?></td>     
+                        <td  align="center"><img src ="../../www/images/common/signal/<?php echo $v['health_status'].'.png"'; ?>/></td>     
                         <td><?php echo $v['cpu']; ?></td>     
                         <td><?php echo $v['memory']; ?></td> 
                         <td><?php echo $v['memory_used']; ?></td> 
